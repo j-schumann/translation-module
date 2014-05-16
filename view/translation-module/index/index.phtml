@@ -1,0 +1,55 @@
+<h3><?php echo $this->translate('view.translation.index.index.heading'); ?></h3>
+<p>
+    <?php echo $this->translate('view.translation.index.index.intro'); ?>
+</p>
+<div class="flash-messenger">
+    <?php $this->flashMessenger()->renderAll(); ?>
+</div>
+<a href="<?php echo $this->url('translation/management/build'); ?>" title="<?php echo $this->translate('view.translation.management.gotoBuild'); ?>">
+    <?php echo $this->translate('view.translation.management.gotoBuild'); ?>
+</a>
+<br />
+<table>
+    <tr>
+        <th>
+            <?php echo $this->translate(array('view.translation.string.count', $this->stringCount)); ?>
+        </th>
+        <td>
+            <a href="<?php echo $this->url('translation/string'); ?>" title="<?php echo $this->translate('view.translation.string.showAll'); ?>">
+                <?php echo $this->translate('view.translation.string.showAll'); ?>
+            </a>
+            <br />
+            <a href="<?php echo $this->url('translation/string/create'); ?>" title="<?php echo $this->translate('view.translation.string.gotoCreate'); ?>">
+                <?php echo $this->translate('view.translation.string.gotoCreate'); ?>
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            <?php echo $this->translatePlural(array(array('view.translation.language.countSingular', 'view.translation.language.countPlural'), $this->languageCount), $this->languageCount); ?>
+        </th>
+        <td>
+            <a href="<?php echo $this->url('translation/language'); ?>" title="<?php echo $this->translate('view.translation.language.showAll'); ?>">
+                <?php echo $this->translate('view.translation.language.showAll'); ?>
+            </a>
+            <br />
+            <a href="<?php echo $this->url('translation/language/create'); ?>" title="<?php echo $this->translate('view.translation.language.gotoCreate'); ?>">
+                <?php echo $this->translate('view.translation.language.gotoCreate'); ?>
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            <?php echo $this->translate(array('view.translation.module.count', $this->moduleCount)); ?>
+        </th>
+        <td>
+            <a href="<?php echo $this->url('translation/module'); ?>" title="<?php echo $this->translate('view.translation.module.showAll'); ?>">
+                <?php echo $this->translate('view.translation.module.showAll'); ?>
+            </a>
+            <br />
+            <a href="<?php echo $this->url('translation/module/create'); ?>" title="<?php echo $this->translate('view.translation.module.gotoCreate'); ?>">
+                <?php echo $this->translate('view.translation.module.gotoCreate'); ?>
+            </a>
+        </td>
+    </tr>
+</table>

@@ -1,0 +1,22 @@
+{
+    "name": "vrok/translation-module",
+    "description": "Vrok Translation Module",
+    "license": "private",
+    "homepage": "http://www.vrok.de/",
+
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.4",
+        "doctrine/doctrine-orm-module": "0.8.*@dev",
+        "gedmo/doctrine-extensions": "2.3.*",
+        "zendframework/zendframework": "2.3.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "TranslationModule": "src/"
+        },
+        "classmap": [
+            "./Module.php"
+        ]
+    }
+}

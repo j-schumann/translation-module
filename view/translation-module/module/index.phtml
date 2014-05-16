@@ -1,0 +1,46 @@
+<h3><?php echo $this->translate('view.translation.module.index.heading'); ?></h3>
+<p>
+    <?php echo $this->translate('view.translation.module.index.intro'); ?>
+</p>
+<div class="flash-messenger">
+    <?php $this->flashMessenger()->renderAll(); ?>
+</div>
+<a href="<?php echo $this->url('translation/module/create'); ?>" title="<?php echo $this->translate('view.translation.module.gotoCreate'); ?>">
+    <?php echo $this->translate('view.translation.module.gotoCreate'); ?>
+</a>
+<br />
+
+<?php if (count($this->modules)) : ?>
+<table id="translation-modules-list">
+    <thead>
+        <tr>
+            <th>
+                <?php echo $this->translate('view.translation.module.name'); ?>
+            </th>
+            <th>
+                <?php echo $this->translate('view.actions'); ?>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+    <?php foreach($this->modules as $module) : ?>
+        <tr>
+            <td><?php echo $module->getName(); ?></td>
+            <td>
+                <a href="<?php echo $this->url('translation/module/edit', array('id' => $module->getId())); ?>" title="<?php echo $this->translate('view.translation.module.gotoEdit'); ?>">
+                    <?php echo $this->translate('view.translation.module.gotoEdit'); ?>
+                </a>
+                <br />
+                <a href="<?php echo $this->url('translation/module/delete', array('id' => $module->getId())); ?>" title="<?php echo $this->translate('view.translation.module.gotoDelete'); ?>">
+                    <?php echo $this->translate('view.translation.module.gotoDelete'); ?>
+                </a>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+    </tbody>
+</table>
+<?php else : ?>
+<p>
+    <?php echo $this->translate('message.translation.noModulesFound'); ?>
+</p>
+<?php endif; ?>

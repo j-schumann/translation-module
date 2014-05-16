@@ -1,0 +1,80 @@
+<h3><?php echo $this->translate('view.translation.string.index.heading'); ?></h3>
+<p>
+    <?php echo $this->translate('view.translation.string.index.intro'); ?>
+</p>
+<div class="flash-messenger">
+    <?php $this->flashMessenger()->renderAll(); ?>
+</div>
+<a href="<?php echo $this->url('translation/string/create'); ?>" title="<?php echo $this->translate('view.translation.string.gotoCreate'); ?>">
+    <?php echo $this->translate('view.translation.string.gotoCreate'); ?>
+</a>
+<br />
+<?php
+    $this->form->setAttribute('action', $this->url('translation/string'));
+    echo $this->formDecorator($this->form);
+?>
+<?php if (count($this->strings)) : ?>
+<table id="translation-strings-list">
+    <thead>
+        <tr>
+            <th>
+                <?php echo $this->translate('view.translation.string.string'); ?>
+            </th>
+            <th>
+                <?php echo $this->translate('view.translation.string.module'); ?>
+            </th>
+            <th>
+                <?php echo $this->translate('view.translation.string.translations'); ?>
+            </th>
+            <th>
+                <?php echo $this->translate('view.actions'); ?>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+    <?php foreach($this->strings as $string) : ?>
+        <?php //           \Doctrine\Common\Util\Debug::dump($string, 4); ?>
+        <tr>
+            <td><?php echo $string->getString(); ?></td>
+            <td><?php echo $string->getModule()->getName(); ?></td>
+            <td>
+                <?php foreach($string->getTranslations() as $translation) : ?>
+                    <span class="translation-language">
+                        <?php echo $translation->getLanguage()->getName(); ?>:
+                    </span>
+                    <br />
+                    <span class="translation-translation">
+                        <?php
+                            $value = $translation->getTranslation();
+                            if ($value === null) {
+                                echo '--';
+                            }
+                            elseif ($value === '') {
+                                echo '&lt;leer&gt;';
+                            }
+                            else {
+                                echo  $value;
+                            }
+                        ?>
+                    </span><br />
+                <?php endforeach; ?>
+            </td>
+            <td>
+                <a href="<?php echo $this->url('translation/string/edit', array('id' => $string->getId())); ?>" title="<?php echo $this->translate('view.translation.string.gotoEdit'); ?>">
+                    <?php echo $this->translate('view.translation.string.gotoEdit'); ?>
+                </a>
+                <br />
+                <a href="<?php echo $this->url('translation/string/delete', array('id' => $string->getId())); ?>" title="<?php echo $this->translate('view.translation.string.gotoDelete'); ?>">
+                    <?php echo $this->translate('view.translation.string.gotoDelete'); ?>
+                </a>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+    </tbody>
+</table>
+<?php else : ?>
+<br />
+<p>
+    <?php echo $this->translate('message.translation.noStringsFound'); ?>
+</p>
+<?php endif; ?>

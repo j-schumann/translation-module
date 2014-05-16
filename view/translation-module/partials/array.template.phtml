@@ -1,0 +1,12 @@
+<?php
+echo "<?php\nreturn array(\n";
+foreach($this->translations as $key => $value)
+{
+    if (!is_integer($key)) {
+        echo "'".$key."' => ";
+    }
+    // use addcslashes() here to only escape the single quotes used as string delimiter
+    // we use single quotes so vsprintf() params like %1$s do not get interpreted.
+    echo "'".addcslashes($value, "'")."',\n";
+}
+echo ");\n";

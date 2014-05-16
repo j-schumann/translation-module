@@ -1,0 +1,54 @@
+<h3><?php echo $this->translate('view.translation.language.index.heading'); ?></h3>
+<p>
+    <?php echo $this->translate('view.translation.language.index.intro'); ?>
+</p>
+<div class="flash-messenger">
+    <?php $this->flashMessenger()->renderAll(); ?>
+</div>
+<a href="<?php echo $this->url('translation/language/create'); ?>" title="<?php echo $this->translate('view.translation.language.gotoCreate'); ?>">
+    <?php echo $this->translate('view.translation.language.gotoCreate'); ?>
+</a>
+<br />
+
+<?php if (count($this->languages)) : ?>
+<table id="translation-languages-list">
+    <thead>
+        <tr>
+            <th>
+                <?php echo $this->translate('view.translation.language.name'); ?>
+            </th>
+            <th>
+                <?php echo $this->translate('view.translation.language.locale'); ?>
+            </th>
+            <th>
+                <?php echo $this->translate('view.translation.language.parent'); ?>
+            </th>
+            <th>
+                <?php echo $this->translate('view.actions'); ?>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+    <?php foreach($this->languages as $language) : ?>
+        <tr>
+            <td><?php echo $language->getName(); ?></td>
+            <td><?php echo $language->getLocale(); ?></td>
+            <td><?php echo $language->getParent() ? $language->getParent()->getName() : ''; ?></td>
+            <td>
+                <a href="<?php echo $this->url('translation/language/edit', array('id' => $language->getId())); ?>" title="<?php echo $this->translate('view.translation.language.gotoEdit'); ?>">
+                    <?php echo $this->translate('view.translation.language.gotoEdit'); ?>
+                </a>
+                <br />
+                <a href="<?php echo $this->url('translation/language/delete', array('id' => $language->getId())); ?>" title="<?php echo $this->translate('view.translation.language.gotoDelete'); ?>">
+                    <?php echo $this->translate('view.translation.language.gotoDelete'); ?>
+                </a>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+    </tbody>
+</table>
+<?php else : ?>
+<p>
+    <?php echo $this->translate('message.translation.noLanguagesFound'); ?>
+</p>
+<?php endif; ?>
