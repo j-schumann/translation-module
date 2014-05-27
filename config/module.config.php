@@ -290,8 +290,6 @@ return array(
     ),
 
     'service_manager' => array(
-        'invokables' => array(
-        ),
         'factories' => array(
             'Navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
             'TranslationModule\Service\Translation' => 'TranslationModule\Service\TranslationFactory',
@@ -300,27 +298,16 @@ return array(
 
     'translator' => array(
         'event_manager_enabled' => true,
-        'translation_dir'           => 'data/translations',
+        'translation_dir'       => 'data/translations',
     ),
 
     'view_manager' => array(
         'template_map' => array(
-            'translation-module/index/index'=> __DIR__ . '/../view/translation-module/index/index.phtml',
-            'translation-module/moduleForm'=> __DIR__ . '/../view/translation-module/partials/moduleForm.phtml',
+            'translation-module/index/index' => __DIR__ . '/../view/translation-module/index/index.phtml',
+            'translation-module/moduleForm'  => __DIR__ . '/../view/translation-module/partials/moduleForm.phtml',
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',
-        ),
-        'strategies' => array(
-        //    'RouteNotFoundStrategy',
-        ),
-    ),
-
-    // Placeholder for console routes
-    'console' => array(
-        'router' => array(
-            'routes' => array(
-            ),
         ),
     ),
 );

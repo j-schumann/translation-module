@@ -33,7 +33,6 @@
     </thead>
     <tbody>
     <?php foreach($this->strings as $string) : ?>
-        <?php //           \Doctrine\Common\Util\Debug::dump($string, 4); ?>
         <tr>
             <td><?php echo $string->getString(); ?></td>
             <td><?php echo $string->getModule()->getName(); ?></td>

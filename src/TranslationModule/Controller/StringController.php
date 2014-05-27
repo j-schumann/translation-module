@@ -60,7 +60,6 @@ class StringController extends AbstractActionController
                 '%'.$sessionContainer['stringFilter']['translationSearch'].'%');
         }
 
-        \Zend\Debug\Debug::dump($qb->getQuery()->getSQL());
         $strings = $qb->getQuery()->getResult();
 
         return $this->createViewModel(array(
