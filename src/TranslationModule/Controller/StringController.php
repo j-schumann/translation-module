@@ -161,7 +161,7 @@ class StringController extends AbstractActionController
 
         $form = $this->getServiceLocator()->get('FormElementManager')
                 ->get('Vrok\Form\ConfirmationForm');
-        $form->setMessage(array('message.string.language.confirmDelete',
+        $form->setConfirmationMessage(array('message.string.language.confirmDelete',
             $string->getString()));
 
         $viewModel = $this->createViewModel(array(

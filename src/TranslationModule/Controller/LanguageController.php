@@ -119,7 +119,7 @@ class LanguageController extends AbstractActionController
 
         $form = $this->getServiceLocator()->get('FormElementManager')
                 ->get('Vrok\Form\ConfirmationForm');
-        $form->setMessage(array('message.translation.language.confirmDelete',
+        $form->setConfirmationMessage(array('message.translation.language.confirmDelete',
             $language->getName()));
 
         $viewModel = $this->createViewModel(array(

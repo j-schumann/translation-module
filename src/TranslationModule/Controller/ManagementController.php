@@ -20,7 +20,7 @@ class ManagementController extends AbstractActionController
     {
         $form = $this->getServiceLocator()->get('FormElementManager')
                 ->get('Vrok\Form\ConfirmationForm');
-        $form->setMessage('message.translation.management.confirmBuild');
+        $form->setConfirmationMessage('message.translation.management.confirmBuild');
 
         $viewModel = $this->createViewModel(array(
             'form'   => $form,

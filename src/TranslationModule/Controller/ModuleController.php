@@ -24,13 +24,6 @@ class ModuleController extends AbstractActionController
         $em = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
         $repository = $em->getRepository('TranslationModule\Entity\Module');
         $modules = $repository->findAll();
-        $this->flashMessenger()
-                ->addSuccessMessage('success');
-        $this->flashMessenger()
-                ->addInfoMessage('info');
-        $this->flashMessenger()
-                ->addMessage('default');
-
         return $this->createViewModel(array('modules' => $modules));
     }
 
@@ -124,7 +117,7 @@ class ModuleController extends AbstractActionController
 
         $form = $this->getServiceLocator()->get('FormElementManager')
                 ->get('Vrok\Form\ConfirmationForm');
-        $form->setMessage(array('message.translation.module.confirmDelete',
+        $form->setConfirmationMessage(array('message.translation.module.confirmDelete',
             $module->getName()));
 
         $viewModel = $this->createViewModel(array(
