@@ -22,12 +22,16 @@ return array(
     'navigation' => array(
         'default' => array(
             array(
-                'label' => 'Translation',
-                'route' => 'translation',
+                'label'     => 'Translation',
+                'route'     => 'translation',
+                'resource'  => 'controller/TranslationModule\Controller\Index',
+                'privilege' => 'index',
                 'pages' => array(
                     array(
-                        'label' => 'Strings',
-                        'route' => 'translation/string',
+                        'label'     => 'Strings',
+                        'route'     => 'translation/string',
+                        'resource'  => 'controller/TranslationModule\Controller\String',
+                        'privilege' => 'index',
                         'pages' => array(
                             array(
                                 'label' => 'Create String',
