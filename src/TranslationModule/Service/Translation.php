@@ -194,7 +194,7 @@ class Translation implements ListenerAggregateInterface, ServiceLocatorAwareInte
         $fileName = $this->getFilename($locale, $module);
         $handle = fopen($fileName, 'w', false);
         if (!$handle) {
-            throw new Exception\RuntimeException('Translation: file "'.fileName
+            throw new Exception\RuntimeException('Translation: file "'.$fileName
                 .'" could not be created or overwritten!');
         }
 
