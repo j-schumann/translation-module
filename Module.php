@@ -5,7 +5,7 @@
  * @author      Jakob Schumann <schumann@vrok.de>
  */
 
-namespace Vrok\Translation;
+namespace TranslationModule;
 
 use Zend\EventManager\EventInterface;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
