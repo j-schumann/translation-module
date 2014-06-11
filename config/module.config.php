@@ -22,79 +22,80 @@ return array(
     'navigation' => array(
         'default' => array(
             array(
-                'label'     => 'Translation',
+                'label'     => 'navigation.translation',
                 'route'     => 'translation',
                 'resource'  => 'controller/TranslationModule\Controller\Index',
                 'privilege' => 'index',
+                'order'     => 1000,
                 'pages' => array(
                     array(
-                        'label'     => 'Strings',
+                        'label'     => 'navigation.translation.string',
                         'route'     => 'translation/string',
                         'resource'  => 'controller/TranslationModule\Controller\String',
                         'privilege' => 'index',
                         'pages' => array(
                             array(
-                                'label' => 'Create String',
+                                'label' => 'navigation.translation.string.create',
                                 'route' => 'translation/string/create',
                             ),
                             array(
-                                'label'   => 'Edit String',
+                                'label'   => 'navigation.translation.string.edit',
                                 'route'   => 'translation/string/edit',
                                 'visible' => false,
                             ),
                             array(
-                                'label'   => 'Delete String',
+                                'label'   => 'navigation.translation.string.delete',
                                 'route'   => 'translation/string/delete',
                                 'visible' => false,
                             ),
                         ),
                     ),
                     array(
-                        'label' => 'Languages',
+                        'label' => 'navigation.translation.language',
                         'route' => 'translation/language',
                         'pages' => array(
                             array(
-                                'label' => 'Create Language',
+                                'label' => 'navigation.translation.language.create',
                                 'route' => 'translation/language/create',
                             ),
                             array(
-                                'label'   => 'Edit Language',
+                                'label'   => 'navigation.translation.language.edit',
                                 'route'   => 'translation/language/edit',
                                 'visible' => false,
                             ),
                             array(
-                                'label'   => 'Delete Language',
+                                'label'   => 'navigation.translation.language.delete',
                                 'route'   => 'translation/language/delete',
                                 'visible' => false,
                             ),
                         ),
                     ),
                     array(
-                        'label' => 'Modules',
+                        'label' => 'navigation.translation.module',
                         'route' => 'translation/module',
                         'pages' => array(
                             array(
-                                'label' => 'Create Module',
+                                'label' => 'navigation.translation.module.create',
                                 'route' => 'translation/module/create',
                             ),
                             array(
-                                'label'   => 'Edit Module',
+                                'label'   => 'navigation.translation.module.edit',
                                 'route'   => 'translation/module/edit',
                                 'visible' => false,
                             ),
                             array(
-                                'label'   => 'Delete Module',
+                                'label'   => 'navigation.translation.module.delete',
                                 'route'   => 'translation/module/delete',
                                 'visible' => false,
                             ),
                         ),
                     ),
                     array(
-                        'label' => 'Management',
+                        'label' => 'navigation.translation.management',
                         'route' => 'translation/management',
                         'pages' => array(
                             array(
-                                'label' => 'Build Translation Files',
+                                'label' => 'navigation.translation.management.build',
                                 'route' => 'translation/management/build',
                             ),
                         ),
