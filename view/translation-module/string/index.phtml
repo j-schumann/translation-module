@@ -15,6 +15,9 @@
 ?>
 <?php if (count($this->strings)) : ?>
 <table id="translation-strings-list">
+
+    
+
     <thead>
         <tr>
             <th>
@@ -23,7 +26,7 @@
             <th>
                 <?php echo $this->translate('view.translation.string.module'); ?>
             </th>
-            <th>
+            <th style="max-width: 20%; overflow: hidden;">
                 <?php echo $this->translate('view.translation.string.translations'); ?>
             </th>
             <th>
@@ -34,9 +37,9 @@
     <tbody>
     <?php foreach($this->strings as $string) : ?>
         <tr>
-            <td><?php echo $string->getString(); ?></td>
+            <td class="word-break"><?php echo $string->getString(); ?></td>
             <td><?php echo $string->getModule()->getName(); ?></td>
-            <td>
+            <td class="word-break small-img" style="max-width: 500px; overflow: hidden;">
                 <?php foreach($string->getTranslations() as $translation) : ?>
                     <span class="translation-language">
                         <?php echo $translation->getLanguage()->getName(); ?>:
