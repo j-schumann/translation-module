@@ -96,7 +96,6 @@ class LanguageController extends AbstractActionController
         }
         $data = $form->getData();
         $repository->updateInstance($language, $data['language']);
-        $em->persist($language);
         $em->flush();
 
         $this->flashMessenger()

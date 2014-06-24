@@ -94,7 +94,6 @@ class ModuleController extends AbstractActionController
         }
 
         $repository->updateInstance($module, $form->getData());
-        $em->persist($module);
         $em->flush();
 
         $this->flashMessenger()
