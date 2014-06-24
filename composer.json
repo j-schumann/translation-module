@@ -6,10 +6,7 @@
 
     "minimum-stability": "dev",
     "require": {
-        "php": ">=5.4",
-        "doctrine/doctrine-orm-module": "0.8.*@dev",
-        "gedmo/doctrine-extensions": "2.3.*",
-        "zendframework/zendframework": "2.3.*"
+        "vrok/vrok-lib": "dev-master"
     },
     "autoload": {
         "psr-0": {
