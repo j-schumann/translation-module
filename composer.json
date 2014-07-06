@@ -4,16 +4,12 @@
     "license": "private",
     "homepage": "http://www.vrok.de/",
 
-    "minimum-stability": "dev",
     "require": {
         "vrok/vrok-lib": "dev-master"
     },
     "autoload": {
         "psr-0": {
             "TranslationModule": "src/"
-        },
-        "classmap": [
-            "./Module.php"
-        ]
+        }
     }
 }
