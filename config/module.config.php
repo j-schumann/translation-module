@@ -308,6 +308,7 @@ return array(
 
     'view_manager' => array(
         'template_map' => array(
+            // @todo necessary?
             'translation-module/index/index' => __DIR__ . '/../view/translation-module/index/index.phtml',
             'translation-module/moduleForm'  => __DIR__ . '/../view/translation-module/partials/moduleForm.phtml',
         ),
