@@ -14,6 +14,9 @@ use Vrok\Form\Form;
  */
 class String extends Form
 {
+    /**
+     * {@inheritDoc}
+     */
     public function init()
     {
         $this->add(array(

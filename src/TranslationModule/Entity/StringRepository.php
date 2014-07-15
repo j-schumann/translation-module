@@ -27,6 +27,8 @@ class StringRepository extends EntityRepository
         $definition = parent::getFormElementDefinition($fieldName);
         switch ($fieldName) {
             case 'id':
+                // no break
+            case 'updatedAt':
                 $definition['type'] = 'hidden';
                 $definition['options']['allowEmpty'] = true;
                 break;

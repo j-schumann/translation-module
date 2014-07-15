@@ -14,7 +14,7 @@ use Vrok\Doctrine\Entity;
 
 /**
  * Translation entry that can be translated into different languages and holds
- * additional information about parameters, occurences etc.
+ * additional information about parameters, occurrences etc.
  *
  * @ORM\Entity
  * @ORM\Table(name="translation_strings")
@@ -120,32 +120,32 @@ class String extends Entity
         return $this;
     }
 // </editor-fold>
-// <editor-fold defaultstate="collapsed" desc="occurences">
+// <editor-fold defaultstate="collapsed" desc="occurrences">
     /**
      * @var string
      * @ORM\Column(type="text", length=65535, nullable=true)
      */
-    protected $occurences;
+    protected $occurrences;
 
     /**
-     * Returns the occurences.
+     * Returns the occurrences.
      *
      * @return string
      */
-    public function getOccurences()
+    public function getOccurrences()
     {
-        return $this->occurences;
+        return $this->occurrences;
     }
 
     /**
-     * Sets the occurences.
+     * Sets the occurrences.
      *
-     * @param string $occurences
+     * @param string $occurrences
      * @return self
      */
-    public function setOccurences($occurences)
+    public function setOccurrences($occurrences)
     {
-        $this->occurences = $occurences;
+        $this->occurrences = $occurrences;
         return $this;
     }
 // </editor-fold>
@@ -195,7 +195,7 @@ class String extends Entity
     /**
      * Retrieve the Translations for this Language.
      *
-     * @return Collection
+     * @return Translation[]
      */
     public function getTranslations()
     {

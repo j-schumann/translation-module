@@ -63,7 +63,7 @@ class Module extends Entity
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="strings">
     /**
-     * @ORM\OneToMany(targetEntity="String", mappedBy="module")
+     * @ORM\OneToMany(targetEntity="String", mappedBy="module", fetch="EXTRA_LAZY")
      */
     protected $strings;
 

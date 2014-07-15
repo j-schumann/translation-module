@@ -15,6 +15,9 @@ use Zend\InputFilter\InputFilterProviderInterface;
  */
 class StringFieldset extends Fieldset implements InputFilterProviderInterface
 {
+    /**
+     * {@inheritdoc}
+     */
     public function init()
     {
         $this->setName('string');
@@ -24,10 +27,12 @@ class StringFieldset extends Fieldset implements InputFilterProviderInterface
         $stringRepository = $this->getEntityManager()
                 ->getRepository('TranslationModule\Entity\String');
 
+        // id for ObjectExists
         $this->add($stringRepository->getFormElementDefinition('id'));
+
         $this->add($stringRepository->getFormElementDefinition('string'));
         $this->add($stringRepository->getFormElementDefinition('context'));
-        $this->add($stringRepository->getFormElementDefinition('occurences'));
+        $this->add($stringRepository->getFormElementDefinition('occurrences'));
         $this->add($stringRepository->getFormElementDefinition('params'));
         $this->add($stringRepository->getFormElementDefinition('module'));
 
@@ -45,10 +50,18 @@ class StringFieldset extends Fieldset implements InputFilterProviderInterface
         }
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getInputFilterSpecification()
     {
         $repository = $this->getEntityManager()
                 ->getRepository('TranslationModule\Entity\String');
-        return $repository->getInputFilterSpecification();
+        $spec = $repository->getInputFilterSpecification();
+
+        // remove or will be set to 0000-00-00 because the InputFilter will return null
+        unset($spec['updatedAt']);
+
+        return $spec;
     }
 }

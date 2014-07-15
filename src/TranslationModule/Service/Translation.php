@@ -143,6 +143,28 @@ class Translation implements ListenerAggregateInterface, ServiceLocatorAwareInte
     }
 
     /**
+     * Returns a list of all configured locales indexed by the language id
+     *
+     * @todo order and select only the necessary columns in DQL
+     * @param string $locale (optional) if set only languages with that locale are returned
+     * @return array    array(languageId => locale)
+     */
+    public function getLocalesById($locale = null)
+    {
+        $languages = $locale
+            ? $this->getLanguageRepository()->findBy(array('locale' => $locale))
+            : $this->getLanguageRepository()->findAll();
+
+        $list = array();
+        foreach($languages as $language) {
+            $list[$language->getId()] = $language->getLocale();
+        }
+
+        asort($list);
+        return $list;
+    }
+
+    /**
      * Returns the filename of the translation file specified by the locale/
      * module combination.
      *
@@ -327,31 +349,147 @@ class Translation implements ListenerAggregateInterface, ServiceLocatorAwareInte
     /**
      * Return the language to use (as base) for the given locale.
      *
-     * @todo metaservice implementieren
      * @param string $locale
      * @return LanguageEntity  language or null if none found
      */
     public function getLanguageForLocale($locale)
     {
-        //$useLanguages = \Default_Service_Meta::get('translation.useLanguages') ?: array();
+        $metaService = $this->getServiceLocator()->get('Vrok\Service\Meta');
+        $useLanguages = $metaService->getValue('translation.useLanguages') ?: array();
 
         // check if there is a default language for the given code and if this language
         // still exists!
-//        if (isset($useLanguages[$code])
-//            && \Model_TranslationLanguage::getById($useLanguages[$code]))
-//        {
-//            return $useLanguages[$code];
-//        }
+        if (isset($useLanguages[$locale])
+            && $language = $this->getLanguageRepository()->find($useLanguages[$locale])
+        ) {
+           return $language;
+        }
 
         $repository = $this->getLanguageRepository();
         $language = $repository->findOneBy(array('locale' => $locale));
 
         if ($language) {
-            //$useLanguages[$locale] = $language->getId();
-            //\Default_Service_Meta::set('translation.useLanguages', $useLanguages);
+            $useLanguages[$locale] = $language->getId();
+            $metaService->setValue('translation.useLanguages', $useLanguages);
         }
 
         return $language;
+    }
+
+    /**
+     * Returns a list of all configured language names indexed by their Id
+     *
+     * @todo filter in DQL
+     * @param string $locale  (optional) if set only languages with that locale are returned
+     * @return array    array(languageId => languageName)
+     */
+    public function getLanguageNames($locale = null)
+    {
+        $languages = $locale
+            ? $this->getLanguageRepository()->findBy(array('locale' => $locale))
+            : $this->getLanguageRepository()->findAll();
+
+        $list = array();
+        foreach($languages as $language) {
+            /* @var $language LanguageEntity */
+            $list[$language->getId()] = $language->getName();
+        }
+
+        asort($list);
+        return $list;
+    }
+
+    /**
+     * Returns a list of all available translation modules.
+     *
+     * @todo filter in DQL
+     * @return array    array(moduleId => moduleName)
+     */
+    public function getModuleNames()
+    {
+        $modules = $this->getModuleRepository()->findAll();
+        $list = array();
+        foreach($modules as $module) {
+            $list[$module->getId()] = $module->getName;
+        }
+
+        asort($list);
+        return $list;
+    }
+
+    /**
+     * Generates an JSON file holding all (matching) translation entries for import
+     * in other instances or for backup.
+     *
+     * @param LanguageEntity $language (optional) if given only entries for that language
+     *     are exported
+     * @param ModuleEntity $module (optional) if given only entries for that module are
+     *     exported
+     */
+    public function export($language = null, $module = null)
+    {
+        $filename = 'translation';
+        $data = array();
+
+        $qb = $this->getStringRepository()->createQueryBuilder('s');
+        $qb->leftJoin('s.translations', 't')
+            // NULL means inherit from parent language, so we don't need it here
+            // If it is an empty string we want to use it, maybe we don't want
+            // to output some phrases in some languages
+            ->where('t.translation IS NOT NULL');
+
+        if ($language) {
+            // we do not filter the translations by language_id as we use
+            // $string->getTranslations() afterwards which will return all anyways
+            $filename .= '_'.preg_replace('/\s+/', '', $language->getName());
+        }
+
+        if ($module) {
+            $qb->andWhere('s.module = :moduleId')
+               ->setParameter('moduleId', $module->getId());
+            $filename .= '_'.$module->getName();
+        }
+
+        $result = $qb->getQuery()->getResult();
+        foreach ($result as $string) {
+            /* @var $string StringEntity */
+            $entry = array(
+                'string'       => $string->getString(),
+                'context'      => $string->getContext(),
+                'params'       => $string->getParams(),
+                'occurrences'  => $string->getOccurrences(),
+                'module'       => $string->getModule()->getName(),
+                'updatedAt'    => $string->getUpdatedAt()->format('Y-m-d H:i:s'),
+                'translations' => array(),
+            );
+
+            foreach($string->getTranslations() as $translation) {
+                /* @var $translation TranslationEntity */
+                if ($language && $language->getId() != $translation->getLanguage()->getId()) {
+                    continue;
+                }
+
+                $entry['translations'][] = array(
+                    'locale'      => $translation->getLanguage()->getLocale(),
+                    'language'    => $translation->getLanguage()->getName(),
+                    'translation' => $translation->getTranslation(),
+                    'updatedAt'   => $translation->getUpdatedAt()->format('Y-m-d H:i:s'),
+                );
+            }
+
+            $data[] = $entry;
+        }
+
+        $json = json_encode($data, JSON_UNESCAPED_UNICODE);
+        $filename .= date('-Ymd').'.json';
+
+        ob_end_clean();
+        header("Content-Type: text/json");
+        header("Content-Length: ".  strlen($json));
+        header('Content-Disposition: attachment;filename='.$filename);
+
+        echo $json;
+        exit;
     }
 
     /**
@@ -437,6 +575,19 @@ class Translation implements ListenerAggregateInterface, ServiceLocatorAwareInte
     public function getEntityManager()
     {
         return $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+    }
+
+    /**
+     * Creates a new Import instance.
+     *
+     * @param array $options
+     * @return Import
+     */
+    public function createImport(array $options = array())
+    {
+        $import = new Import($this);
+        $import->setOptions($options);
+        return $import;
     }
 
     /**

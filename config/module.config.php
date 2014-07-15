@@ -98,6 +98,14 @@ return array(
                                 'label' => 'navigation.translation.management.build',
                                 'route' => 'translation/management/build',
                             ),
+                            array(
+                                'label' => 'navigation.translation.management.export',
+                                'route' => 'translation/management/export',
+                            ),
+                            array(
+                                'label' => 'navigation.translation.management.import',
+                                'route' => 'translation/management/import',
+                            ),
                         ),
                     ),
                 ),
@@ -274,6 +282,24 @@ return array(
                                     'route'    => 'build[/]',
                                     'defaults' => array(
                                         'action'     => 'build'
+                                    ),
+                                ),
+                            ),
+                            'export' => array(
+                                'type'    => 'segment',
+                                'options' => array(
+                                    'route'    => 'export[/]',
+                                    'defaults' => array(
+                                        'action'     => 'export'
+                                    ),
+                                ),
+                            ),
+                            'import' => array(
+                                'type'    => 'segment',
+                                'options' => array(
+                                    'route'    => 'import[/]',
+                                    'defaults' => array(
+                                        'action'     => 'import'
                                     ),
                                 ),
                             ),

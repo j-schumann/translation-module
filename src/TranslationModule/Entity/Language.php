@@ -200,7 +200,7 @@ class Language extends Entity
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="translations">
     /**
-     * @ORM\OneToMany(targetEntity="Translation", mappedBy="language", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="Translation", mappedBy="language", cascade={"remove"}, fetch="EXTRA_LAZY")
      */
     protected $translations;
 
