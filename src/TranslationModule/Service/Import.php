@@ -135,7 +135,6 @@ class Import
         // commit all updates to the database
         $this->service->getEntityManager()->flush();
 
-
         if ($this->deleteNotImported) {
             $this->deleteOldStrings($data);
             $this->service->getEntityManager()->flush();
@@ -266,11 +265,13 @@ class Import
             $this->result['createdStrings']++;
         }
 
+        $string->setModule($module);
         $string->setContext(empty($entry['context']) ? null : $entry['context']);
         $string->setOccurrences(empty($entry['occurrences']) ? null : $entry['occurrences']);
         $string->setParams(empty($entry['params']) ? null : $entry['params']);
-        $string->setUpdatedAt(new \DateTime($entry['updatedAt'], new \DateTimeZone('UTC')));
-        $string->setModule($module);
+        // tell the Timestampable extension: this date is already in UTC!
+        $string->setUpdatedAt(
+                new \DateTime($entry['updatedAt'], new \DateTimeZone('UTC')));
 
         $this->result['importedStrings']++;
         return $string;
@@ -325,7 +326,9 @@ class Import
         }
 
         $translation->setTranslation($entry['translation']);
-        $translation->setUpdatedAt(new \DateTime($entry['updatedAt'], new \DateTimeZone('UTC')));
+        // tell the Timestampable extension: this date is already in UTC!
+        $translation->setUpdatedAt(
+                new \DateTime($entry['updatedAt'], new \DateTimeZone('UTC')));
 
         $this->result['importedTranslations']++;
         return true;
