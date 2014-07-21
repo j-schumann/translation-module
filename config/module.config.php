@@ -21,90 +21,97 @@ return array(
 
     'navigation' => array(
         'default' => array(
-            array(
-                'label'     => 'navigation.translation',
-                'route'     => 'translation',
-                'resource'  => 'controller/TranslationModule\Controller\Index',
-                'privilege' => 'index',
-                'order'     => 1000,
+            'administration' => array(
+                'label' => 'navigation.administration', // default label or none is rendered
+                'uri'   => '#', // we need either a route or an URI to avoid fatal error
+                'order' => 1000,
                 'pages' => array(
                     array(
-                        'label'     => 'navigation.translation.string',
-                        'route'     => 'translation/string',
-                        'resource'  => 'controller/TranslationModule\Controller\String',
+                        'label'     => 'navigation.translation',
+                        'route'     => 'translation',
+                        'resource'  => 'controller/TranslationModule\Controller\Index',
                         'privilege' => 'index',
-                        'pages' => array(
+                        'order'     => 900,
+                        'pages'     => array(
                             array(
-                                'label' => 'navigation.translation.string.create',
-                                'route' => 'translation/string/create',
+                                'label'     => 'navigation.translation.string',
+                                'route'     => 'translation/string',
+                                'resource'  => 'controller/TranslationModule\Controller\String',
+                                'privilege' => 'index',
+                                'pages'     => array(
+                                    array(
+                                        'label' => 'navigation.translation.string.create',
+                                        'route' => 'translation/string/create',
+                                    ),
+                                    array(
+                                        'label'   => 'navigation.translation.string.edit',
+                                        'route'   => 'translation/string/edit',
+                                        'visible' => false,
+                                    ),
+                                    array(
+                                        'label'   => 'navigation.translation.string.delete',
+                                        'route'   => 'translation/string/delete',
+                                        'visible' => false,
+                                    ),
+                                ),
                             ),
                             array(
-                                'label'   => 'navigation.translation.string.edit',
-                                'route'   => 'translation/string/edit',
-                                'visible' => false,
+                                'label' => 'navigation.translation.language',
+                                'route' => 'translation/language',
+                                'pages' => array(
+                                    array(
+                                        'label' => 'navigation.translation.language.create',
+                                        'route' => 'translation/language/create',
+                                    ),
+                                    array(
+                                        'label'   => 'navigation.translation.language.edit',
+                                        'route'   => 'translation/language/edit',
+                                        'visible' => false,
+                                    ),
+                                    array(
+                                        'label'   => 'navigation.translation.language.delete',
+                                        'route'   => 'translation/language/delete',
+                                        'visible' => false,
+                                    ),
+                                ),
                             ),
                             array(
-                                'label'   => 'navigation.translation.string.delete',
-                                'route'   => 'translation/string/delete',
-                                'visible' => false,
-                            ),
-                        ),
-                    ),
-                    array(
-                        'label' => 'navigation.translation.language',
-                        'route' => 'translation/language',
-                        'pages' => array(
-                            array(
-                                'label' => 'navigation.translation.language.create',
-                                'route' => 'translation/language/create',
-                            ),
-                            array(
-                                'label'   => 'navigation.translation.language.edit',
-                                'route'   => 'translation/language/edit',
-                                'visible' => false,
-                            ),
-                            array(
-                                'label'   => 'navigation.translation.language.delete',
-                                'route'   => 'translation/language/delete',
-                                'visible' => false,
-                            ),
-                        ),
-                    ),
-                    array(
-                        'label' => 'navigation.translation.module',
-                        'route' => 'translation/module',
-                        'pages' => array(
-                            array(
-                                'label' => 'navigation.translation.module.create',
-                                'route' => 'translation/module/create',
+                                'label' => 'navigation.translation.module',
+                                'route' => 'translation/module',
+                                'pages' => array(
+                                    array(
+                                        'label' => 'navigation.translation.module.create',
+                                        'route' => 'translation/module/create',
+                                    ),
+                                    array(
+                                        'label'   => 'navigation.translation.module.edit',
+                                        'route'   => 'translation/module/edit',
+                                        'visible' => false,
+                                    ),
+                                    array(
+                                        'label'   => 'navigation.translation.module.delete',
+                                        'route'   => 'translation/module/delete',
+                                        'visible' => false,
+                                    ),
+                                ),
                             ),
                             array(
-                                'label'   => 'navigation.translation.module.edit',
-                                'route'   => 'translation/module/edit',
-                                'visible' => false,
-                            ),
-                            array(
-                                'label'   => 'navigation.translation.module.delete',
-                                'route'   => 'translation/module/delete',
-                                'visible' => false,
-                            ),
-                        ),
-                    ),
-                    array(
-                        'label' => 'navigation.translation.management',
-                        'route' => 'translation/management',
-                        'pages' => array(
-                            array(
-                                'label' => 'navigation.translation.management.build',
-                                'route' => 'translation/management/build',
-                            ),
-                            array(
-                                'label' => 'navigation.translation.management.export',
-                                'route' => 'translation/management/export',
-                            ),
-                            array(
-                                'label' => 'navigation.translation.management.import',
-                                'route' => 'translation/management/import',
+                                'label' => 'navigation.translation.management',
+                                'route' => 'translation/management',
+                                'pages' => array(
+                                    array(
+                                        'label' => 'navigation.translation.management.build',
+                                        'route' => 'translation/management/build',
+                                    ),
+                                    array(
+                                        'label' => 'navigation.translation.management.export',
+                                        'route' => 'translation/management/export',
+                                    ),
+                                    array(
+                                        'label' => 'navigation.translation.management.import',
+                                        'route' => 'translation/management/import',
+                                    ),
+                                ),
                             ),
                         ),
                     ),

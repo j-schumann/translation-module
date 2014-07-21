@@ -14,6 +14,9 @@ use Vrok\Form\Form;
  */
 class StringFilter extends Form
 {
+    /**
+     * {@inheritdoc}
+     */
     public function init()
     {
         $this->add(array(
