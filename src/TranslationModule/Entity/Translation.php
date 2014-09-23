@@ -77,17 +77,10 @@ class Translation extends Entity
      */
     public function setString(String $string)
     {
-        // remove from old string
-        if ($this->string && $this->string !== $string) {
-            $this->string->removeTranslation($this);
-        }
-
         $this->string = $string;
-        $this->string->addTranslation($this);
-
         return $this;
     }
-    // </editor-fold>
+// </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="language">
     /**
      * @var Language
@@ -115,14 +108,7 @@ class Translation extends Entity
      */
     public function setLanguage(Language $language)
     {
-        // remove from old language
-        if ($this->language && $this->language !== $language) {
-            $this->language->removeTranslation($this);
-        }
-
         $this->language = $language;
-        $this->language->addTranslation($this);
-
         return $this;
     }
 // </editor-fold>

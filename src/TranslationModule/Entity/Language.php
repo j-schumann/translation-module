@@ -117,15 +117,7 @@ class Language extends Entity
      */
     public function setParent(Language $parent = null)
     {
-        if ($this->parent && $this->parent !== $parent) {
-            $this->parent->removeChild($this);
-        }
-
         $this->parent = $parent;
-        if ($parent) {
-            $this->parent->addChild($this);
-        }
-
         return $this;
     }
 // </editor-fold>
@@ -144,59 +136,6 @@ class Language extends Entity
     {
         return $this->children;
     }
-
-    /**
-     * Adds the given Language to the collection.
-     * Called by $language->setParent to keep the collection consistent.
-     *
-     * @param Language $child
-     * @return boolean  false if the Language was already in the collection,
-     *  else true
-     */
-    public function addChild(Language $child)
-    {
-        if ($this->children->contains($child)) {
-            return false;
-        }
-        return $this->children->add($child);
-    }
-
-    /**
-     * Removes the given Language from the collection.
-     * Called by $language->setParent to keep the collection consistent.
-     *
-     * @param Language $child
-     * @return boolean     true if the Language was in the collection and was
-     *     removed, else false
-     */
-    public function removeChild(Language $child)
-    {
-        return $this->children->removeElement($child);
-    }
-
-    /**
-     * Proxies to addChild for multiple elements.
-     *
-     * @param Collection $children
-     */
-    public function addChildren($children)
-    {
-        foreach($children as $child) {
-            $this->addChild($child);
-        }
-    }
-
-    /**
-     * Proxies to removeChild for multiple elements.
-     *
-     * @param Collection $children
-     */
-    public function removeChildren($children)
-    {
-        foreach($children as $child) {
-            $this->removeChild($child);
-        }
-    }
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="translations">
     /**
@@ -212,59 +151,6 @@ class Language extends Entity
     public function getTranslations()
     {
         return $this->translations;
-    }
-
-    /**
-     * Adds the given Translation to the collection.
-     * Called by $translation->setLanguage to keep the collection consistent.
-     *
-     * @param Translation $translation
-     * @return boolean  false if the Translation was already in the collection,
-     *  else true
-     */
-    public function addTranslation(Translation $translation)
-    {
-        if ($this->translations->contains($translation)) {
-            return false;
-        }
-        return $this->translations->add($translation);
-    }
-
-    /**
-     * Removes the given Translation from the collection.
-     * Called by $translation->setLanguage to keep the collection consistent.
-     *
-     * @param Translation $translation
-     * @return boolean     true if the Translation was in the collection and was
-     *     removed, else false
-     */
-    public function removeTranslation(Translation $translation)
-    {
-        return $this->translations->removeElement($translation);
-    }
-
-    /**
-     * Proxies to addTranslation for multiple elements.
-     *
-     * @param Collection $translations
-     */
-    public function addTranslations($translations)
-    {
-        foreach($translations as $translation) {
-            $this->addTranslation($translation);
-        }
-    }
-
-    /**
-     * Proxies to removeTranslation for multiple elements.
-     *
-     * @param Collection $translations
-     */
-    public function removeTranslations($translations)
-    {
-        foreach($translations as $translation) {
-            $this->removeTranslation($translation);
-        }
     }
 // </editor-fold>
 }

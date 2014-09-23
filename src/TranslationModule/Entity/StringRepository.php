@@ -87,6 +87,7 @@ class StringRepository extends EntityRepository
         $objectManager = $this->getEntityManager();
         $translations = $data['translations'];
         unset($data['translations']);
+
         parent::updateInstance($instance, $data);
 
         if (!$instance->getId()) {
@@ -117,6 +118,7 @@ class StringRepository extends EntityRepository
                 $element['isNull'] ? NULL: $element['translation']);
             $objectManager->persist($translation);
         }
+
         $objectManager->flush();
     }
 

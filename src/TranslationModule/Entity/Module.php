@@ -76,58 +76,5 @@ class Module extends Entity
     {
         return $this->strings;
     }
-
-    /**
-     * Adds the given string to the collection.
-     * Called by $string->setModule to keep the collection consistent.
-     *
-     * @param String $string
-     * @return boolean  false if the String was already in the collection, else
-     *     true
-     */
-    public function addString(String $string)
-    {
-        if ($this->strings->contains($string)) {
-            return false;
-        }
-        return $this->strings->add($string);
-    }
-
-    /**
-     * Removes the given string from the collection.
-     * Called by $string->setModule to keep the collection consistent.
-     *
-     * @param String $string
-     * @return boolean     true if the String was in the collection and was
-     *     removed, else false
-     */
-    public function removeString(String $string)
-    {
-        return $this->strings->removeElement($string);
-    }
-
-    /**
-     * Proxies to addTranslation for multiple elements.
-     *
-     * @param Collection $strings
-     */
-    public function addStrings($strings)
-    {
-        foreach($strings as $string) {
-            $this->addString($string);
-        }
-    }
-
-    /**
-     * Proxies to removeString for multiple elements.
-     *
-     * @param Collection $strings
-     */
-    public function removeStrings($strings)
-    {
-        foreach($strings as $string) {
-            $this->removeString($string);
-        }
-    }
 // </editor-fold>
 }

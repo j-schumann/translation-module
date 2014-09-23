@@ -29,6 +29,7 @@ class LanguageFieldset extends Fieldset implements InputFilterProviderInterface
             $parent = $this->get('parent');
             $findMethod = $parent->getOption('find_method');
             $findMethod['params']['languageId'] = $data['id'];
+            // use setOptions instead of setOption to trigger the proxy update
             $parent->setOptions(array('find_method' => $findMethod));
         }
     }

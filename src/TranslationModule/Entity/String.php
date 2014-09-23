@@ -175,14 +175,7 @@ class String extends Entity
      */
     public function setModule(Module $module)
     {
-        // remove from old module
-        if ($this->module && $this->module !== $module) {
-            $this->module->removeString($this);
-        }
-
         $this->module = $module;
-        $this->module->addString($this);
-
         return $this;
     }
 // </editor-fold>
@@ -200,59 +193,6 @@ class String extends Entity
     public function getTranslations()
     {
         return $this->translations;
-    }
-
-    /**
-     * Adds the given Translation to the collection.
-     * Called by $translation->setString to keep the collection consistent.
-     *
-     * @param Translation $translation
-     * @return boolean  false if the Translation was already in the collection,
-     *  else true
-     */
-    public function addTranslation(Translation $translation)
-    {
-        if ($this->translations->contains($translation)) {
-            return false;
-        }
-        return $this->translations->add($translation);
-    }
-
-    /**
-     * Removes the given Translation from the collection.
-     * Called by $translation->setString to keep the collection consistent.
-     *
-     * @param Translation $translation
-     * @return boolean     true if the Translation was in the collection and was
-     *     removed, else false
-     */
-    public function removeTranslation(Translation $translation)
-    {
-        return $this->translations->removeElement($translation);
-    }
-
-    /**
-     * Proxies to addTranslation for multiple elements.
-     *
-     * @param Collection $translations
-     */
-    public function addTranslations($translations)
-    {
-        foreach($translations as $translation) {
-            $this->addTranslation($translation);
-        }
-    }
-
-    /**
-     * Proxies to removeTranslation for multiple elements.
-     *
-     * @param Collection $translations
-     */
-    public function removeTranslations($translations)
-    {
-        foreach($translations as $translation) {
-            $this->removeTranslation($translation);
-        }
     }
 // </editor-fold>
 }
