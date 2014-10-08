@@ -14,8 +14,7 @@ use Vrok\Doctrine\EntityRepository;
  */
 class ModuleRepository extends EntityRepository
 {
-    use \Vrok\Doctrine\Traits\GetById;
-    
+
     /**
      * Returns a form element specification to use with the form factory.
      *

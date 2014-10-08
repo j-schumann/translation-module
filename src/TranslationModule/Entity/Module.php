@@ -8,7 +8,6 @@
 namespace TranslationModule\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Vrok\Doctrine\Entity;
 
@@ -70,7 +69,7 @@ class Module extends Entity
     /**
      * Retrieve the Strings assigned to this Module.
      *
-     * @return Collection
+     * @return String[]
      */
     public function getStrings()
     {

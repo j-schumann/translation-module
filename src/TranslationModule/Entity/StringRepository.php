@@ -14,8 +14,6 @@ use Vrok\Doctrine\EntityRepository;
  */
 class StringRepository extends EntityRepository
 {
-    use \Vrok\Doctrine\Traits\GetById;
-
     /**
      * Returns a form element specification to use with the form factory.
      *
@@ -110,7 +108,7 @@ class StringRepository extends EntityRepository
 
         // create translations for any new languages
         foreach($translations as $languageId => $element) {
-            $language = $languageRepository->getById($languageId);
+            $language = $languageRepository->find($languageId);
             $translation = new Translation();
             $translation->setString($instance);
             $translation->setLanguage($language);

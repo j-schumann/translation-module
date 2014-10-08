@@ -14,8 +14,6 @@ use Vrok\Doctrine\EntityRepository;
  */
 class LanguageRepository extends EntityRepository
 {
-    use \Vrok\Doctrine\Traits\GetById;
-
     /**
      * Returns a form element specification to use with the form factory.
      *

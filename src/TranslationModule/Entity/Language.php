@@ -8,7 +8,6 @@
 namespace TranslationModule\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Vrok\Doctrine\Entity;
 
@@ -130,7 +129,7 @@ class Language extends Entity
     /**
      * Retrieve the languages inheriting from this one.
      *
-     * @return Collection
+     * @return Language[]
      */
     public function getChildren()
     {
@@ -146,7 +145,7 @@ class Language extends Entity
     /**
      * Retrieve the Translations for this Language.
      *
-     * @return Collection
+     * @return Translation[]
      */
     public function getTranslations()
     {

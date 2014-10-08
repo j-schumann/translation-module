@@ -193,7 +193,7 @@ class Translation implements ListenerAggregateInterface, ServiceLocatorAwareInte
 
         $repository = $this->getModuleRepository();
         $modules = $moduleId
-            ? array($repository->getById($moduleId))
+            ? array($repository->find($moduleId))
             : $repository->findAll();
 
         foreach($modules as $module) {
