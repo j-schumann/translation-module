@@ -127,8 +127,7 @@ return array(
                 'options' => array(
                     'route'    => '/translation/',
                     'defaults' => array(
-                        '__NAMESPACE__' => 'TranslationModule\Controller',
-                        'controller'    => 'Index',
+                        'controller'    => 'TranslationModule\Controller\Index',
                         'action'        => 'index',
                     ),
                 ),
