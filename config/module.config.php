@@ -3,6 +3,18 @@
  * TranslationModule config
  */
 return array(
+// <editor-fold defaultstate="collapsed" desc="controllers">
+    'controllers' => array(
+        'invokables' => array(
+            'TranslationModule\Controller\Index' => 'TranslationModule\Controller\IndexController',
+            'TranslationModule\Controller\Language' => 'TranslationModule\Controller\LanguageController',
+            'TranslationModule\Controller\Management' => 'TranslationModule\Controller\ManagementController',
+            'TranslationModule\Controller\Module' => 'TranslationModule\Controller\ModuleController',
+            'TranslationModule\Controller\String' => 'TranslationModule\Controller\StringController',
+        ),
+    ),
+// </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="doctrine">
     'doctrine' => array(
         'driver' => array(
             'translation_entities' => array(
@@ -10,47 +22,47 @@ return array(
                 'cache' => 'array',
                 'paths' => array(__DIR__ . '/../src/TranslationModule/Entity')
             ),
-
-            'orm_default' => array(
+                        'orm_default' => array(
                 'drivers' => array(
                     'TranslationModule\Entity' => 'translation_entities'
                 ),
             ),
         ),
     ),
-
+// </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="navigation">
     'navigation' => array(
         'default' => array(
             'administration' => array(
                 'label' => 'navigation.administration', // default label or none is rendered
-                'uri'   => '#', // we need either a route or an URI to avoid fatal error
+                'uri' => '#', // we need either a route or an URI to avoid fatal error
                 'order' => 1000,
                 'pages' => array(
                     array(
-                        'label'     => 'navigation.translation',
-                        'route'     => 'translation',
-                        'resource'  => 'controller/TranslationModule\Controller\Index',
+                        'label' => 'navigation.translation',
+                        'route' => 'translation',
+                        'resource' => 'controller/TranslationModule\Controller\Index',
                         'privilege' => 'index',
-                        'order'     => 900,
-                        'pages'     => array(
+                        'order' => 900,
+                        'pages' => array(
                             array(
-                                'label'     => 'navigation.translation.string',
-                                'route'     => 'translation/string',
-                                'resource'  => 'controller/TranslationModule\Controller\String',
+                                'label' => 'navigation.translation.string',
+                                'route' => 'translation/string',
+                                'resource' => 'controller/TranslationModule\Controller\String',
                                 'privilege' => 'index',
-                                'pages'     => array(
+                                'pages' => array(
                                     array(
                                         'label' => 'navigation.translation.string.create',
                                         'route' => 'translation/string/create',
                                     ),
                                     array(
-                                        'label'   => 'navigation.translation.string.edit',
-                                        'route'   => 'translation/string/edit',
+                                        'label' => 'navigation.translation.string.edit',
+                                        'route' => 'translation/string/edit',
                                         'visible' => false,
                                     ),
                                     array(
-                                        'label'   => 'navigation.translation.string.delete',
-                                        'route'   => 'translation/string/delete',
+                                        'label' => 'navigation.translation.string.delete',
+                                        'route' => 'translation/string/delete',
                                         'visible' => false,
                                     ),
                                 ),
@@ -64,13 +76,13 @@ return array(
                                         'route' => 'translation/language/create',
                                     ),
                                     array(
-                                        'label'   => 'navigation.translation.language.edit',
-                                        'route'   => 'translation/language/edit',
+                                        'label' => 'navigation.translation.language.edit',
+                                        'route' => 'translation/language/edit',
                                         'visible' => false,
                                     ),
                                     array(
-                                        'label'   => 'navigation.translation.language.delete',
-                                        'route'   => 'translation/language/delete',
+                                        'label' => 'navigation.translation.language.delete',
+                                        'route' => 'translation/language/delete',
                                         'visible' => false,
                                     ),
                                 ),
@@ -84,13 +96,13 @@ return array(
                                         'route' => 'translation/module/create',
                                     ),
                                     array(
-                                        'label'   => 'navigation.translation.module.edit',
-                                        'route'   => 'translation/module/edit',
+                                        'label' => 'navigation.translation.module.edit',
+                                        'route' => 'translation/module/edit',
                                         'visible' => false,
                                     ),
                                     array(
-                                        'label'   => 'navigation.translation.module.delete',
-                                        'route'   => 'translation/module/delete',
+                                        'label' => 'navigation.translation.module.delete',
+                                        'route' => 'translation/module/delete',
                                         'visible' => false,
                                     ),
                                 ),
@@ -119,44 +131,45 @@ return array(
             ),
         ),
     ),
-
+// </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="router">
     'router' => array(
         'routes' => array(
             'translation' => array(
-                'type'    => 'Literal',
+                'type' => 'Literal',
                 'options' => array(
-                    'route'    => '/translation/',
+                    'route' => '/translation/',
                     'defaults' => array(
-                        'controller'    => 'TranslationModule\Controller\Index',
-                        'action'        => 'index',
+                        'controller' => 'TranslationModule\Controller\Index',
+                        'action' => 'index',
                     ),
                 ),
                 'may_terminate' => true,
-                'child_routes'  => array(
+                'child_routes' => array(
                     'string' => array(
-                        'type'    => 'literal',
+                        'type' => 'literal',
                         'options' => array(
-                            'route'    => 'string/',
+                            'route' => 'string/',
                             'defaults' => array(
-                                'controller' => 'String',
-                                'action'     => 'index'
+                                'controller' => 'TranslationModule\Controller\String',
+                                'action' => 'index'
                             ),
                         ),
                         'may_terminate' => true,
                         'child_routes' => array(
                             'create' => array(
-                                'type'    => 'segment',
+                                'type' => 'segment',
                                 'options' => array(
-                                    'route'    => 'create[/]',
+                                    'route' => 'create[/]',
                                     'defaults' => array(
-                                        'action'     => 'create'
+                                        'action' => 'create'
                                     ),
                                 ),
                             ),
                             'edit' => array(
-                                'type'    => 'segment',
+                                'type' => 'segment',
                                 'options' => array(
-                                    'route'       => 'edit/[:id][/]',
+                                    'route' => 'edit/[:id][/]',
                                     'constraints' => array(
                                         'id' => '[0-9]+'
                                     ),
@@ -166,9 +179,9 @@ return array(
                                 ),
                             ),
                             'delete' => array(
-                                'type'    => 'segment',
+                                'type' => 'segment',
                                 'options' => array(
-                                    'route'       => 'delete/[:id][/]',
+                                    'route' => 'delete/[:id][/]',
                                     'constraints' => array(
                                         'id' => '[0-9]+'
                                     ),
@@ -180,29 +193,29 @@ return array(
                         ),
                     ),
                     'language' => array(
-                        'type'    => 'literal',
+                        'type' => 'literal',
                         'options' => array(
-                            'route'    => 'language/',
+                            'route' => 'language/',
                             'defaults' => array(
-                                'controller' => 'Language',
-                                'action'     => 'index'
+                                'controller' => 'TranslationModule\Controller\Language',
+                                'action' => 'index'
                             ),
                         ),
                         'may_terminate' => true,
                         'child_routes' => array(
                             'create' => array(
-                                'type'    => 'segment',
+                                'type' => 'segment',
                                 'options' => array(
-                                    'route'    => 'create[/]',
+                                    'route' => 'create[/]',
                                     'defaults' => array(
-                                        'action'     => 'create'
+                                        'action' => 'create'
                                     ),
                                 ),
                             ),
                             'edit' => array(
-                                'type'    => 'segment',
+                                'type' => 'segment',
                                 'options' => array(
-                                    'route'       => 'edit/[:id][/]',
+                                    'route' => 'edit/[:id][/]',
                                     'constraints' => array(
                                         'id' => '[0-9]+'
                                     ),
@@ -212,9 +225,9 @@ return array(
                                 ),
                             ),
                             'delete' => array(
-                                'type'    => 'segment',
+                                'type' => 'segment',
                                 'options' => array(
-                                    'route'       => 'delete/[:id][/]',
+                                    'route' => 'delete/[:id][/]',
                                     'constraints' => array(
                                         'id' => '[0-9]+'
                                     ),
@@ -226,29 +239,29 @@ return array(
                         ),
                     ),
                     'module' => array(
-                        'type'    => 'literal',
+                        'type' => 'literal',
                         'options' => array(
-                            'route'    => 'module/',
+                            'route' => 'module/',
                             'defaults' => array(
-                                'controller' => 'Module',
-                                'action'     => 'index'
+                                'controller' => 'TranslationModule\Controller\Module',
+                                'action' => 'index'
                             ),
                         ),
                         'may_terminate' => true,
                         'child_routes' => array(
                             'create' => array(
-                                'type'    => 'segment',
+                                'type' => 'segment',
                                 'options' => array(
-                                    'route'    => 'create[/]',
+                                    'route' => 'create[/]',
                                     'defaults' => array(
-                                        'action'     => 'create'
+                                        'action' => 'create'
                                     ),
                                 ),
                             ),
                             'edit' => array(
-                                'type'    => 'segment',
+                                'type' => 'segment',
                                 'options' => array(
-                                    'route'       => 'edit/[:id][/]',
+                                    'route' => 'edit/[:id][/]',
                                     'constraints' => array(
                                         'id' => '[0-9]+'
                                     ),
@@ -258,9 +271,9 @@ return array(
                                 ),
                             ),
                             'delete' => array(
-                                'type'    => 'segment',
+                                'type' => 'segment',
                                 'options' => array(
-                                    'route'       => 'delete/[:id][/]',
+                                    'route' => 'delete/[:id][/]',
                                     'constraints' => array(
                                         'id' => '[0-9]+'
                                     ),
@@ -272,40 +285,40 @@ return array(
                         ),
                     ),
                     'management' => array(
-                        'type'    => 'literal',
+                        'type' => 'literal',
                         'options' => array(
-                            'route'    => 'management/',
+                            'route' => 'management/',
                             'defaults' => array(
-                                'controller' => 'Management',
-                                'action'     => 'index'
+                                'controller' => 'TranslationModule\Controller\Management',
+                                'action' => 'index'
                             ),
                         ),
                         'may_terminate' => true,
                         'child_routes' => array(
                             'build' => array(
-                                'type'    => 'segment',
+                                'type' => 'segment',
                                 'options' => array(
-                                    'route'    => 'build[/]',
+                                    'route' => 'build[/]',
                                     'defaults' => array(
-                                        'action'     => 'build'
+                                        'action' => 'build'
                                     ),
                                 ),
                             ),
                             'export' => array(
-                                'type'    => 'segment',
+                                'type' => 'segment',
                                 'options' => array(
-                                    'route'    => 'export[/]',
+                                    'route' => 'export[/]',
                                     'defaults' => array(
-                                        'action'     => 'export'
+                                        'action' => 'export'
                                     ),
                                 ),
                             ),
                             'import' => array(
-                                'type'    => 'segment',
+                                'type' => 'segment',
                                 'options' => array(
-                                    'route'    => 'import[/]',
+                                    'route' => 'import[/]',
                                     'defaults' => array(
-                                        'action'     => 'import'
+                                        'action' => 'import'
                                     ),
                                 ),
                             ),
@@ -315,37 +328,31 @@ return array(
             ),
         ),
     ),
-
-    'controllers' => array(
-        'invokables' => array(
-            'TranslationModule\Controller\Index'      => 'TranslationModule\Controller\IndexController',
-            'TranslationModule\Controller\Language'   => 'TranslationModule\Controller\LanguageController',
-            'TranslationModule\Controller\Management' => 'TranslationModule\Controller\ManagementController',
-            'TranslationModule\Controller\Module'     => 'TranslationModule\Controller\ModuleController',
-            'TranslationModule\Controller\String'     => 'TranslationModule\Controller\StringController',
-        ),
-    ),
-
+// </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="service_manager">
     'service_manager' => array(
         'factories' => array(
             'Navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
             'TranslationModule\Service\Translation' => 'TranslationModule\Service\TranslationFactory',
         ),
     ),
-
+// </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="translator">
     'translator' => array(
         'event_manager_enabled' => true,
-        'translation_dir'       => 'data/translations',
+        'translation_dir' => 'data/translations',
     ),
-
+// </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="view_manager">
     'view_manager' => array(
         'template_map' => array(
             // @todo necessary?
             'translation-module/index/index' => __DIR__ . '/../view/translation-module/index/index.phtml',
-            'translation-module/moduleForm'  => __DIR__ . '/../view/translation-module/partials/moduleForm.phtml',
+            'translation-module/moduleForm' => __DIR__ . '/../view/translation-module/partials/moduleForm.phtml',
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',
         ),
     ),
+// </editor-fold>
 );
