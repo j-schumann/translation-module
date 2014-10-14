@@ -35,16 +35,16 @@ return array(
         'default' => array(
             'administration' => array(
                 'label' => 'navigation.administration', // default label or none is rendered
-                'uri' => '#', // we need either a route or an URI to avoid fatal error
+                'uri'   => '#', // we need either a route or an URI to avoid fatal error
                 'order' => 1000,
                 'pages' => array(
                     array(
-                        'label' => 'navigation.translation',
-                        'route' => 'translation',
-                        'resource' => 'controller/TranslationModule\Controller\Index',
+                        'label'     => 'navigation.translation',
+                        'route'     => 'translation',
+                        'resource'  => 'controller/TranslationModule\Controller\Index',
                         'privilege' => 'index',
-                        'order' => 900,
-                        'pages' => array(
+                        'order'     => 900,
+                        'pages'     => array(
                             array(
                                 'label' => 'navigation.translation.string',
                                 'route' => 'translation/string',

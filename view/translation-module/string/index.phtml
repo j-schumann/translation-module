@@ -5,19 +5,21 @@
 <div class="flash-messenger">
     <?php $this->flashMessenger()->renderAll(); ?>
 </div>
-<a href="<?php echo $this->url('translation/string/create'); ?>" title="<?php echo $this->translate('view.translation.string.gotoCreate'); ?>">
-    <?php echo $this->translate('view.translation.string.gotoCreate'); ?>
-</a>
-<br />
+
+<div class="col-md-5">
 <?php
     $this->form->setAttribute('action', $this->url('translation/string'));
     echo $this->formDecorator($this->form);
 ?>
+</div>
+<div class="col-md-5">
+    <a href="<?php echo $this->url('translation/string/create'); ?>" title="<?php echo $this->translate('view.translation.string.gotoCreate'); ?>">
+        <?php echo $this->translate('view.translation.string.gotoCreate'); ?>
+    </a>
+</div>
+
 <?php if (count($this->strings)) : ?>
-<table id="translation-strings-list">
-
-    
-
+<table id="translation-strings-list" class="table">
     <thead>
         <tr>
             <th>
