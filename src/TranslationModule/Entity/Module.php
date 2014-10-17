@@ -75,5 +75,29 @@ class Module extends Entity
     {
         return $this->strings;
     }
+
+    /**
+     * Required for the hydrator.
+     *
+     * @param array|ArrayCollection $strings
+     */
+    public function addStrings($strings)
+    {
+        foreach($strings as $string) {
+            $this->strings->add($string);
+        }
+    }
+
+    /**
+     * Required for the hydrator.
+     *
+     * @param array|ArrayCollection $strings
+     */
+    public function removeStrings($strings)
+    {
+        foreach($strings as $string) {
+            $this->strings->removeElement($string);
+        }
+    }
 // </editor-fold>
 }
