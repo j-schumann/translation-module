@@ -332,7 +332,6 @@ return array(
 // <editor-fold defaultstate="collapsed" desc="service_manager">
     'service_manager' => array(
         'factories' => array(
-            'Navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
             'TranslationModule\Service\Translation' => 'TranslationModule\Service\TranslationFactory',
         ),
     ),
