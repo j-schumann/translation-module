@@ -97,12 +97,18 @@ class Import
      * Imports the given file into the database using the current settings.
      *
      * @param string $filename
-     * @return type
+     * @return array
      */
     public function importFile($filename)
     {
         $json = file_get_contents($filename);
         $data = json_decode($json, true);
+        if (!is_array($data)) {
+            $result = $this->importArray([]);
+            $result['messages'][] = 'JSON in the given file could not be decoded!';
+            return $result;
+        }
+
         return $this->importArray($data);
     }
 
