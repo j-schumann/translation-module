@@ -11,5 +11,8 @@
         "psr-0": {
             "TranslationModule": "src/"
         }
-    }
+    },
+    "bin": [
+        "bin/import-translations.sh"
+    ]
 }
