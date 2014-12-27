@@ -79,24 +79,24 @@ class Module extends Entity
     /**
      * Required for the hydrator.
      *
-     * @param array|ArrayCollection $strings
+     * @param array|ArrayCollection $elements
      */
-    public function addStrings($strings)
+    public function addStrings($elements)
     {
-        foreach($strings as $string) {
-            $this->strings->add($string);
+        foreach($elements as $element) {
+            $this->strings->add($element);
         }
     }
 
     /**
      * Required for the hydrator.
      *
-     * @param array|ArrayCollection $strings
+     * @param array|ArrayCollection $elements
      */
-    public function removeStrings($strings)
+    public function removeStrings($elements)
     {
-        foreach($strings as $string) {
-            $this->strings->removeElement($string);
+        foreach($elements as $element) {
+            $this->strings->removeElement($element);
         }
     }
 // </editor-fold>

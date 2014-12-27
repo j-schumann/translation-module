@@ -33,33 +33,44 @@ class Language extends Entity
         $this->children = new ArrayCollection();
     }
 
-// <editor-fold defaultstate="collapsed" desc="name">
+// <editor-fold defaultstate="collapsed" desc="children">
     /**
-     * @var string
-     * @ORM\Column(type="string", length=50, nullable=false, unique=true)
-     */
-    protected $name;
+     * @ORM\OneToMany(targetEntity="Language", mappedBy="parent")
+     * */
+    protected $children;
 
     /**
-     * Returns the modules name.
+     * Retrieve the languages inheriting from this one.
      *
-     * @return string
+     * @return Language[]
      */
-    public function getName()
+    public function getChildren()
     {
-        return $this->name;
+        return $this->children;
     }
 
     /**
-     * Sets the language name.
+     * Required for the hydrator.
      *
-     * @param string $name
-     * @return self
+     * @param array|ArrayCollection $elements
      */
-    public function setName($name)
+    public function addChildren($elements)
     {
-        $this->name = $name;
-        return $this;
+        foreach($elements as $element) {
+            $this->children->add($element);
+        }
+    }
+
+    /**
+     * Required for the hydrator.
+     *
+     * @param array|ArrayCollection $elements
+     */
+    public function removeChildren($elements)
+    {
+        foreach($elements as $element) {
+            $this->children->removeElement($element);
+        }
     }
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="locale">
@@ -88,6 +99,35 @@ class Language extends Entity
     public function setLocale($locale)
     {
         $this->locale = $locale;
+        return $this;
+    }
+// </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="name">
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=50, nullable=false, unique=true)
+     */
+    protected $name;
+
+    /**
+     * Returns the modules name.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Sets the language name.
+     *
+     * @param string $name
+     * @return self
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
         return $this;
     }
 // </editor-fold>
@@ -120,22 +160,6 @@ class Language extends Entity
         return $this;
     }
 // </editor-fold>
-// <editor-fold defaultstate="collapsed" desc="children">
-    /**
-     * @ORM\OneToMany(targetEntity="Language", mappedBy="parent")
-     * */
-    protected $children;
-
-    /**
-     * Retrieve the languages inheriting from this one.
-     *
-     * @return Language[]
-     */
-    public function getChildren()
-    {
-        return $this->children;
-    }
-// </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="translations">
     /**
      * @ORM\OneToMany(targetEntity="Translation", mappedBy="language", cascade={"remove"}, fetch="EXTRA_LAZY")
@@ -150,6 +174,30 @@ class Language extends Entity
     public function getTranslations()
     {
         return $this->translations;
+    }
+
+    /**
+     * Required for the hydrator.
+     *
+     * @param array|ArrayCollection $elements
+     */
+    public function addTranslations($elements)
+    {
+        foreach($elements as $element) {
+            $this->translations->add($element);
+        }
+    }
+
+    /**
+     * Required for the hydrator.
+     *
+     * @param array|ArrayCollection $elements
+     */
+    public function removeTranslations($elements)
+    {
+        foreach($elements as $element) {
+            $this->translations->removeElement($element);
+        }
     }
 // </editor-fold>
 }
