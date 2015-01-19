@@ -60,6 +60,13 @@ class StringController extends AbstractActionController
                 '%'.$sessionContainer['stringFilter']['translationSearch'].'%');
         }
 
+        if ($sessionContainer['stringFilter']
+            && !empty($sessionContainer['stringFilter']['module'])
+        ) {
+            $qb->andWhere('s.module = :module');
+            $qb->setParameter('module', (int)$sessionContainer['stringFilter']['module']);
+        }
+
         $strings = $qb->getQuery()->getResult();
 
         return $this->createViewModel(array(

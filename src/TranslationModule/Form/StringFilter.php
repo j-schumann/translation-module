@@ -8,17 +8,22 @@
 namespace TranslationModule\Form;
 
 use Vrok\Form\Form;
+use Zend\InputFilter\InputFilterProviderInterface;
 
 /**
  * Form to filter / search translation strings.
  */
-class StringFilter extends Form
+class StringFilter extends Form implements InputFilterProviderInterface
 {
     /**
      * {@inheritdoc}
      */
     public function init()
     {
+        $sr = $this->getEntityManager()->getRepository('TranslationModule\Entity\String');
+        $module = $sr->getFormElementDefinition('module');
+        unset($module['attributes']['required']);
+
         $this->add(array(
             'type'    => 'Fieldset',
             'name'    => 'stringFilter',
@@ -51,6 +56,9 @@ class StringFilter extends Form
                     ),
                 ),
                 array(
+                    'spec' => $module,
+                ),
+                array(
                     'spec' => array(
                         'name'       => 'submit',
                         'attributes' => array(
@@ -62,5 +70,50 @@ class StringFilter extends Form
                 ),
             ),
         ));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getInputFilterSpecification()
+    {
+        $sr = $this->getEntityManager()
+                ->getRepository('TranslationModule\Entity\String');
+        $moduleSpec = $sr->getInputSpecification('module');
+        $moduleSpec['required'] = false;
+        $moduleSpec['allowEmpty'] = true;
+        unset($moduleSpec['validators']['notEmpty']);
+
+        $inputSpec = array(
+            'required' => false,
+            'allowEmpty' => true,
+            'filters'    => array(
+                array('name' => 'Zend\Filter\StringTrim'),
+                array('name' => 'Zend\Filter\StripTags'),
+                array('name' => 'Zend\Filter\StripNewlines'),
+            ),
+            'validators' => array(
+                array(
+                    'name'    => 'Zend\Validator\StringLength',
+                    'options' => array(
+                        'max'      => 255,
+                        'messages' => array(
+                            \Zend\Validator\StringLength::TOO_LONG =>
+                                \Vrok\Doctrine\FormHelper::ERROR_TOOLONG,
+                        ),
+                    ),
+                ),
+            ),
+        );
+
+        return array(
+            'stringFilter' => array(
+                'type'              => 'Zend\InputFilter\InputFilter',
+
+                'module'            => $moduleSpec,
+                'stringSearch'      => $inputSpec,
+                'translationSearch' => $inputSpec,
+            ),
+        );
     }
 }
