@@ -51,6 +51,9 @@ class ManagementController extends AbstractActionController
         $metaService->setValue('translation.useLanguages', $data['languageVariants']);
         $metaService->getEntityManager()->flush();
 
+        $ts = $this->getServiceLocator()->get('TranslationModule\Service\Translation');
+        $ts->clearTranslationCache();
+
         $this->flashMessenger()
                 ->addSuccessMessage('message.translation.management.settingsSaved');
         return $this->redirect()->toRoute('translation');

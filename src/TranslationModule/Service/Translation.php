@@ -236,17 +236,7 @@ class Translation implements ListenerAggregateInterface, ServiceLocatorAwareInte
         // ensure the files are writeable from console and webserver
         chmod($fileName, 0666);
 
-        // @todo we want to flush only the translations but memcache does not
-        // support tags, iterate over all languages and tell the translator
-        // to remove the cache elements:
-        //  $cacheId = 'Zend_I18n_Translator_Messages_' . md5($textDomain . $locale);
-        // but we can not know all used textdomains.
-        // just remove all entries for textDomain = default?
-        // In ein event auslagern?
-        $cache = $this->getServiceLocator()->get('translator')->getCache();
-        if ($cache instanceof \Zend\Cache\Storage\FlushableInterface) {
-            $cache->flush();
-        }
+        $this->clearTranslationCache();
     }
 
     /**
@@ -274,6 +264,25 @@ class Translation implements ListenerAggregateInterface, ServiceLocatorAwareInte
         foreach($locales as $locale) {
             $filename = $this->getFilename($locale, $module);
             unlink($filename);
+        }
+    }
+
+    /**
+     * Clears the Translators cache, e.g. after translation files were generated
+     * or settings changed.
+     */
+    public function clearTranslationCache()
+    {
+        // @todo we want to flush only the translations but memcache does not
+        // support tags, iterate over all languages and tell the translator
+        // to remove the cache elements:
+        //  $cacheId = 'Zend_I18n_Translator_Messages_' . md5($textDomain . $locale);
+        // but we can not know all used textdomains.
+        // just remove all entries for textDomain = default?
+        // In ein event auslagern?
+        $cache = $this->getServiceLocator()->get('translator')->getCache();
+        if ($cache instanceof \Zend\Cache\Storage\FlushableInterface) {
+            $cache->flush();
         }
     }
 
