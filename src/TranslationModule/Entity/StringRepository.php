@@ -77,16 +77,19 @@ class StringRepository extends EntityRepository
      * Updates the given string including its translations with the given form
      * data.
      *
-     * @param String $instance
-     * @param array $data
+     * @param \Vrok\Doctrine\Entity $instance
+     * @param array $formData
+     * @param array $changeset  if given the resulting changeset of the update
+     *     is stored in the referenced array
+     * @return Entity
      */
-    public function updateInstance(\Vrok\Doctrine\Entity $instance, array $data)
+    public function updateInstance(\Vrok\Doctrine\Entity $instance, array $formData, array &$changeset = null)
     {
         $objectManager = $this->getEntityManager();
-        $translations = $data['translations'];
-        unset($data['translations']);
+        $translations = $formData['translations'];
+        unset($formData['translations']);
 
-        parent::updateInstance($instance, $data);
+        parent::updateInstance($instance, $formData, $changeset);
 
         if (!$instance->getId()) {
             // we need the ID or Doctrine won't persist the following

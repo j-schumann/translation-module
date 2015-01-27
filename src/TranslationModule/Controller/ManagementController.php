@@ -15,9 +15,45 @@ use Vrok\Mvc\Controller\AbstractActionController;
  */
 class ManagementController extends AbstractActionController
 {
-    public function indexAction()
+    /**
+     * Allows the translation admin to set the preferred language variant and
+     * the default locale for the system.
+     *
+     * @return ViewModel|Response
+     */
+    public function settingsAction()
     {
+        $form = $this->getServiceLocator()->get('FormElementManager')
+                ->get('TranslationModule\Form\Settings');
 
+        $metaService = $this->getServiceLocator()->get('Vrok\Service\Meta');
+        $defaultLocale = $metaService->getValue('defaultLocale');
+        $useLanguages = $metaService->getValue('translation.useLanguages') ?: array();
+
+        $form->setData([
+            'defaultLocale'    => $defaultLocale,
+            'languageVariants' => $useLanguages,
+        ]);
+
+        $viewModel = $this->createViewModel(array(
+            'form' => $form,
+        ));
+
+        if (!$this->request->isPost()
+            || !$form->setData($this->request->getPost())->isValid()
+        ) {
+            return $viewModel;
+        }
+
+        $data = $form->getData();
+
+        $metaService->setValue('defaultLocale', $data['defaultLocale']);
+        $metaService->setValue('translation.useLanguages', $data['languageVariants']);
+        $metaService->getEntityManager()->flush();
+
+        $this->flashMessenger()
+                ->addSuccessMessage('message.translation.management.settingsSaved');
+        return $this->redirect()->toRoute('translation');
     }
 
     /**

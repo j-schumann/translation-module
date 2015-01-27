@@ -20,14 +20,22 @@ class TranslationFieldset extends Fieldset implements InputFilterProviderInterfa
      */
     protected $language = null;
 
+    /**
+     * When getting the fieldset from the formElementManager we don't know
+     * the language yet, set it now.
+     *
+     * @param \TranslationModule\Entity\Language $language
+     */
     public function setLanguage(\TranslationModule\Entity\Language $language)
     {
         $this->language = $language;
         $this->setName($this->language->getId());
-        //$this->get('language')->setValue($this->language->getId());
         $this->get('translation')->setLabel($this->language->getName());
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function init()
     {
         $translationRepository = $this->getEntityManager()
@@ -41,12 +49,15 @@ class TranslationFieldset extends Fieldset implements InputFilterProviderInterfa
                 'label'           => 'TranslationModule.Entity.Translation.isNull.label',
                 'unchecked_value' => '',
             ),
+            'attributes' => [
+                'value' => '1', // checked by default
+            ],
         ));
-
-//        $this->add($translationRepository->getFormElementDefinition('language'));
-//        $this->add($translationRepository->getFormElementDefinition('string'));
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getInputFilterSpecification()
     {
         $translationRepository = $this->getEntityManager()

@@ -5,9 +5,24 @@
 <div class="flash-messenger">
     <?php $this->flashMessenger()->renderAll(); ?>
 </div>
-<a href="<?php echo $this->url('translation/management/build'); ?>" title="<?php echo $this->translate('view.translation.management.gotoBuild'); ?>">
-    <?php echo $this->translate('view.translation.management.gotoBuild'); ?>
-</a>
+<p>
+    <a class="button btn btn-primary" href="<?php echo $this->url('translation/management/settings'); ?>" title="<?php echo $this->translate('view.translation.management.gotoSettings'); ?>">
+        <?php echo $this->translate('view.translation.management.gotoSettings'); ?>
+    </a>
+
+    <a class="button btn btn-primary" href="<?php echo $this->url('translation/management/import'); ?>" title="<?php echo $this->translate('view.translation.management.gotoImport'); ?>">
+        <?php echo $this->translate('view.translation.management.gotoImport'); ?>
+    </a>
+
+    <a class="button btn btn-primary" href="<?php echo $this->url('translation/management/export'); ?>" title="<?php echo $this->translate('view.translation.management.gotoExport'); ?>">
+        <?php echo $this->translate('view.translation.management.gotoExport'); ?>
+    </a>
+
+    <a class="button btn btn-primary" href="<?php echo $this->url('translation/management/build'); ?>" title="<?php echo $this->translate('view.translation.management.gotoBuild'); ?>">
+        <?php echo $this->translate('view.translation.management.gotoBuild'); ?>
+    </a>
+</p>
+
 <br />
 <table class="table">
     <tr>

@@ -127,7 +127,7 @@ class Translation implements ListenerAggregateInterface, ServiceLocatorAwareInte
      * Retrieves a list of all locales currently available with one or more
      * languages.
      *
-     * @return array
+     * @return array    [localeA => localeA, localeB => localeB, ...]
      */
     public function getLocales()
     {
@@ -136,10 +136,13 @@ class Translation implements ListenerAggregateInterface, ServiceLocatorAwareInte
             ->select('DISTINCT l.locale')
             ->getQuery()
             ->getArrayResult();
-        // @link http://stackoverflow.com/a/13969241/1341762
-        // array_map use doubles memory usage but there should not be many
-        // different locales...
-        return array_map('current', $result);
+
+        $locales = [];
+        foreach($result as $locale) {
+            $locales[$locale['locale']] = $locale['locale'];
+        }
+
+        return $locales;
     }
 
     /**
@@ -512,7 +515,7 @@ class Translation implements ListenerAggregateInterface, ServiceLocatorAwareInte
         $domainObject = null;
 
         foreach($files as $filename) {
-            if (!preg_match('/^[a-z]{2}_[A-Z]{2}-/', $filename)) {
+            if (!preg_match('/^'.$locale.'-/', $filename)) {
                 continue;
             }
 

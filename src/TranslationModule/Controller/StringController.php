@@ -67,6 +67,8 @@ class StringController extends AbstractActionController
             $qb->setParameter('module', (int)$sessionContainer['stringFilter']['module']);
         }
 
+        $qb->orderBy('s.string');
+
         $strings = $qb->getQuery()->getResult();
 
         return $this->createViewModel(array(

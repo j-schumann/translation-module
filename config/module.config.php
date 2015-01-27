@@ -3,6 +3,17 @@
  * TranslationModule config
  */
 return array(
+// <editor-fold defaultstate="collapsed" desc="asset_manager">
+    'asset_manager' => array(
+        'resolver_configs' => array(
+            'paths' => array(
+                __DIR__ . '/../public',
+            ),
+            'map' => array(
+                        ),
+        ),
+    ),
+// </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="controllers">
     'controllers' => array(
         'invokables' => array(
@@ -46,82 +57,94 @@ return array(
                         'order'     => 900,
                         'pages'     => array(
                             array(
-                                'label' => 'navigation.translation.string',
-                                'route' => 'translation/string',
-                                'resource' => 'controller/TranslationModule\Controller\String',
+                                'label'     => 'navigation.translation.management.settings',
+                                'route'     => 'translation/management/settings',
+                                'resource'  => 'controller/TranslationModule\Controller\Management',
+                                'privilege' => 'settings',
+                                'visible'   => false,
+                            ),
+                            array(
+                                'label'     => 'navigation.translation.management.build',
+                                'route'     => 'translation/management/build',
+                                'resource'  => 'controller/TranslationModule\Controller\Management',
+                                'privilege' => 'build',
+                                'visible'   => false,
+                            ),
+                            array(
+                                'label'     => 'navigation.translation.management.export',
+                                'route'     => 'translation/management/export',
+                                'resource'  => 'controller/TranslationModule\Controller\Management',
+                                'privilege' => 'export',
+                                'visible'   => false,
+                            ),
+                            array(
+                                'label'     => 'navigation.translation.management.import',
+                                'route'     => 'translation/management/import',
+                                'resource'  => 'controller/TranslationModule\Controller\Management',
+                                'privilege' => 'import',
+                                'visible'   => false,
+                            ),
+                            array(
+                                'label'     => 'navigation.translation.string',
+                                'route'     => 'translation/string',
+                                'resource'  => 'controller/TranslationModule\Controller\String',
                                 'privilege' => 'index',
-                                'pages' => array(
+                                'pages'     => array(
                                     array(
                                         'label' => 'navigation.translation.string.create',
                                         'route' => 'translation/string/create',
                                     ),
                                     array(
-                                        'label' => 'navigation.translation.string.edit',
-                                        'route' => 'translation/string/edit',
+                                        'label'   => 'navigation.translation.string.edit',
+                                        'route'   => 'translation/string/edit',
                                         'visible' => false,
                                     ),
                                     array(
-                                        'label' => 'navigation.translation.string.delete',
-                                        'route' => 'translation/string/delete',
+                                        'label'   => 'navigation.translation.string.delete',
+                                        'route'   => 'translation/string/delete',
                                         'visible' => false,
                                     ),
                                 ),
                             ),
                             array(
-                                'label' => 'navigation.translation.language',
-                                'route' => 'translation/language',
-                                'pages' => array(
+                                'label'   => 'navigation.translation.language',
+                                'route'   => 'translation/language',
+                                'visible' => false,
+                                'pages'   => array(
                                     array(
                                         'label' => 'navigation.translation.language.create',
                                         'route' => 'translation/language/create',
                                     ),
                                     array(
-                                        'label' => 'navigation.translation.language.edit',
-                                        'route' => 'translation/language/edit',
+                                        'label'   => 'navigation.translation.language.edit',
+                                        'route'   => 'translation/language/edit',
                                         'visible' => false,
                                     ),
                                     array(
-                                        'label' => 'navigation.translation.language.delete',
-                                        'route' => 'translation/language/delete',
+                                        'label'   => 'navigation.translation.language.delete',
+                                        'route'   => 'translation/language/delete',
                                         'visible' => false,
                                     ),
                                 ),
                             ),
                             array(
-                                'label' => 'navigation.translation.module',
-                                'route' => 'translation/module',
-                                'pages' => array(
+                                'label'   => 'navigation.translation.module',
+                                'route'   => 'translation/module',
+                                'visible' => false,
+                                'pages'   => array(
                                     array(
                                         'label' => 'navigation.translation.module.create',
                                         'route' => 'translation/module/create',
                                     ),
                                     array(
-                                        'label' => 'navigation.translation.module.edit',
-                                        'route' => 'translation/module/edit',
+                                        'label'   => 'navigation.translation.module.edit',
+                                        'route'   => 'translation/module/edit',
                                         'visible' => false,
                                     ),
                                     array(
-                                        'label' => 'navigation.translation.module.delete',
-                                        'route' => 'translation/module/delete',
+                                        'label'   => 'navigation.translation.module.delete',
+                                        'route'   => 'translation/module/delete',
                                         'visible' => false,
-                                    ),
-                                ),
-                            ),
-                            array(
-                                'label' => 'navigation.translation.management',
-                                'route' => 'translation/management',
-                                'pages' => array(
-                                    array(
-                                        'label' => 'navigation.translation.management.build',
-                                        'route' => 'translation/management/build',
-                                    ),
-                                    array(
-                                        'label' => 'navigation.translation.management.export',
-                                        'route' => 'translation/management/export',
-                                    ),
-                                    array(
-                                        'label' => 'navigation.translation.management.import',
-                                        'route' => 'translation/management/import',
                                     ),
                                 ),
                             ),
@@ -295,10 +318,19 @@ return array(
                         ),
                         'may_terminate' => true,
                         'child_routes' => array(
-                            'build' => array(
-                                'type' => 'segment',
+                            'settings' => array(
+                                'type'    => 'segment',
                                 'options' => array(
-                                    'route' => 'build[/]',
+                                    'route'    => 'settings[/]',
+                                    'defaults' => array(
+                                        'action' => 'settings'
+                                    ),
+                                ),
+                            ),
+                            'build' => array(
+                                'type'    => 'segment',
+                                'options' => array(
+                                    'route'    => 'build[/]',
                                     'defaults' => array(
                                         'action' => 'build'
                                     ),

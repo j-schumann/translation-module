@@ -19,6 +19,8 @@ class String extends Form
      */
     public function init()
     {
+        $this->setName('translation-string');
+        
         $this->add(array(
             'type'    => 'TranslationModule\Form\StringFieldset',
             'options' => array(

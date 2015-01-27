@@ -12,8 +12,9 @@
     echo $this->formDecorator($this->form);
 ?>
 </div>
+
 <div class="col-md-5">
-    <a href="<?php echo $this->url('translation/string/create'); ?>" title="<?php echo $this->translate('view.translation.string.gotoCreate'); ?>">
+    <a class="button btn btn-primary" href="<?php echo $this->url('translation/string/create'); ?>" title="<?php echo $this->translate('view.translation.string.gotoCreate'); ?>">
         <?php echo $this->translate('view.translation.string.gotoCreate'); ?>
     </a>
 </div>
@@ -42,18 +43,19 @@
             <td class="word-break"><?php echo $string->getString(); ?></td>
             <td><?php echo $string->getModule()->getName(); ?></td>
             <td class="word-break small-img" style="max-width: 500px; overflow: hidden;">
-                <?php foreach($string->getTranslations() as $translation) : ?>
-                    <span class="translation-language">
+                <?php foreach($string->getTranslations() as $translation) :
+                        $value = $translation->getTranslation();
+                        if ($value === null) {
+                            continue;
+                        }
+                ?>
+                    <span class="translation-language text-primary">
                         <?php echo $translation->getLanguage()->getName(); ?>:
                     </span>
                     <br />
                     <span class="translation-translation">
                         <?php
-                            $value = $translation->getTranslation();
-                            if ($value === null) {
-                                echo '--';
-                            }
-                            elseif ($value === '') {
+                            if ($value === '') {
                                 echo '&lt;leer&gt;';
                             }
                             else {

@@ -11,6 +11,10 @@ use Vrok\Mvc\Controller\AbstractActionController;
 
 class IndexController extends AbstractActionController
 {
+    /**
+     * Shows the number of languages, modules and translations in the database
+     * and links to the important actions.
+     */
     public function indexAction()
     {
         $em = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
