@@ -16,6 +16,7 @@ use Zend\I18n\Translator\TextDomain;
 use Zend\EventManager\EventInterface;
 use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\ListenerAggregateInterface;
+use Zend\EventManager\ListenerAggregateTrait;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 
@@ -25,14 +26,8 @@ use Zend\ServiceManager\ServiceLocatorAwareTrait;
  */
 class Translation implements ListenerAggregateInterface, ServiceLocatorAwareInterface
 {
+    use ListenerAggregateTrait;
     use ServiceLocatorAwareTrait;
-
-    /**
-     * Stores the listeners attached to the eventmanager.
-     *
-     * @var \Zend\Stdlib\CallbackHandler[]
-     */
-    protected $listeners = array();
 
     /**
      * Directory where the translation files build from the database are stored.
@@ -552,18 +547,6 @@ class Translation implements ListenerAggregateInterface, ServiceLocatorAwareInte
             \Vrok\I18n\Translator\Translator::EVENT_LOAD_MESSAGES,
             array($this, 'onLoadMessages')
         );
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function detach(EventManagerInterface $events)
-    {
-        foreach ($this->listeners as $index => $listener) {
-            if ($events->detach($listener)) {
-                unset($this->listeners[$index]);
-            }
-        }
     }
 
     /**
