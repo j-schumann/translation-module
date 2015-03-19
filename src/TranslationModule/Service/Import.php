@@ -48,28 +48,28 @@ class Import
     protected $result = array();
 
     /**
-     * Wether or not imported languages are automatically created if they don't exist.
+     * Whether or not imported languages are automatically created if they don't exist.
      *
      * @var bool
      */
     protected $createLanguages = false;
 
     /**
-     * Wether or not imported modules are automatically created if they don't exist.
+     * Whether or not imported modules are automatically created if they don't exist.
      *
      * @var bool
      */
     protected $createModules = false;
 
     /**
-     * Wether or not entries from the "live" module should be skipped.
+     * Whether or not entries from the "live" module should be skipped.
      *
      * @var bool
      */
     protected $skipLiveModule = true;
 
     /**
-     * Wether or not all strings/details are overwritten, even if the local timestamp is
+     * Whether or not all strings/details are overwritten, even if the local timestamp is
      * newer, e.g. for restoring backups.
      *
      * @var bool
@@ -77,7 +77,7 @@ class Import
     protected $overwriteAll = false;
 
     /**
-     * Wether or not entries that weren't imported are deleted.
+     * Whether or not entries that weren't imported are deleted.
      *
      * @var bool
      */
@@ -525,7 +525,7 @@ class Import
     }
 
     /**
-     * (Re-)Sets wether or not entries from the live module are imported.
+     * (Re-)Sets whether or not entries from the live module are imported.
      *
      * @param bool $value
      */
@@ -535,7 +535,7 @@ class Import
     }
 
     /**
-     * (Re-)Sets wether or not entries that weren't imported are deleted.
+     * (Re-)Sets whether or not entries that weren't imported are deleted.
      *
      * @param bool $value
      */
@@ -545,7 +545,7 @@ class Import
     }
 
     /**
-     * (Re-)Sets wether or not imported languages are automatically created if they don't
+     * (Re-)Sets whether or not imported languages are automatically created if they don't
      * exist.
      *
      * @param bool $value
@@ -556,7 +556,7 @@ class Import
     }
 
     /**
-     * (Re-)Sets wether or not imported modules are automatically created if they don't
+     * (Re-)Sets whether or not imported modules are automatically created if they don't
      * exist.
      *
      * @param bool $value
@@ -567,7 +567,7 @@ class Import
     }
 
     /**
-     * (Re-)Sets wether or not all strings/translations are overwritten, even if the
+     * (Re-)Sets whether or not all strings/translations are overwritten, even if the
      * local timestamp is newer, e.g. for restoring backups.
      *
      * @param bool $value
