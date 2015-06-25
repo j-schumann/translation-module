@@ -8,8 +8,8 @@
         "vrok/vrok-lib": "dev-master"
     },
     "autoload": {
-        "psr-0": {
-            "TranslationModule": "src/"
+        "psr-4": {
+            "TranslationModule\\": "src/"
         }
     },
     "bin": [
