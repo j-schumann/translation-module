@@ -2,17 +2,14 @@
 /**
  * TranslationModule config
  */
-return array(
+return [
 // <editor-fold defaultstate="collapsed" desc="asset_manager">
-    'asset_manager' => array(
-        'resolver_configs' => array(
-            'paths' => array(
-                __DIR__ . '/../public',
-            ),
-            'map' => array(
-                        ),
-        ),
-    ),
+    'asset_manager' => [
+        'resolver_configs' => [
+            'paths' => [__DIR__ . '/../public',],
+            'map' => [],
+        ],
+    ],
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="controllers">
     'controllers' => array(
@@ -26,20 +23,20 @@ return array(
     ),
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="doctrine">
-    'doctrine' => array(
-        'driver' => array(
-            'translation_entities' => array(
+    'doctrine' => [
+        'driver' => [
+            'translation_entities' => [
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
-                'paths' => array(__DIR__ . '/../src/TranslationModule/Entity')
-            ),
-                        'orm_default' => array(
-                'drivers' => array(
+                'paths' => [__DIR__ . '/../src/Entity']
+            ],
+            'orm_default' => [
+                'drivers' => [
                     'TranslationModule\Entity' => 'translation_entities'
-                ),
-            ),
-        ),
-    ),
+                ],
+            ],
+        ],
+    ],
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="navigation">
     'navigation' => array(
@@ -386,4 +383,4 @@ return array(
         ),
     ),
 // </editor-fold>
-);
+];
