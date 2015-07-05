@@ -27,11 +27,11 @@
         <tr>
             <td><?php echo $module->getName(); ?></td>
             <td>
-                <a href="<?php echo $this->url('translation/module/edit', array('id' => $module->getId())); ?>" title="<?php echo $this->translate('view.translation.module.gotoEdit'); ?>">
+                <a href="<?php echo $this->url('translation/module/edit', ['id' => $module->getId()]); ?>" title="<?php echo $this->translate('view.translation.module.gotoEdit'); ?>">
                     <?php echo $this->translate('view.translation.module.gotoEdit'); ?>
                 </a>
                 <br />
-                <a href="<?php echo $this->url('translation/module/delete', array('id' => $module->getId())); ?>" title="<?php echo $this->translate('view.translation.module.gotoDelete'); ?>">
+                <a href="<?php echo $this->url('translation/module/delete', ['id' => $module->getId()]); ?>" title="<?php echo $this->translate('view.translation.module.gotoDelete'); ?>">
                     <?php echo $this->translate('view.translation.module.gotoDelete'); ?>
                 </a>
             </td>

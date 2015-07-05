@@ -26,7 +26,7 @@ class TranslationFactory implements FactoryInterface
         $configuration = $serviceLocator->get('Config');
         $translation->setOptions(isset($configuration['translator'])
             ? $configuration['translator']
-            : array()
+            : []
         );
 
         return $translation;

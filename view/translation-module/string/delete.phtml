@@ -8,9 +8,9 @@
 
 <div class="col-md-5">
     <?php
-    $this->form->setAttribute('action', $this->url('translation/string/delete', array(
+    $this->form->setAttribute('action', $this->url('translation/string/delete', [
         'id' => $this->string->getId(),
-    )));
+    ]));
     echo $this->formDecorator($this->form);
     ?>
 </div>

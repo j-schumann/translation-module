@@ -27,7 +27,7 @@
 <table class="table">
     <tr>
         <th>
-            <?php echo $this->translate(array('view.translation.string.count', $this->stringCount)); ?>
+            <?php echo $this->translate(['view.translation.string.count', $this->stringCount]); ?>
         </th>
         <td>
             <a href="<?php echo $this->url('translation/string'); ?>" title="<?php echo $this->translate('view.translation.string.showAll'); ?>">
@@ -41,7 +41,7 @@
     </tr>
     <tr>
         <th>
-            <?php echo $this->translatePlural(array(array('view.translation.language.countSingular', 'view.translation.language.countPlural'), $this->languageCount), $this->languageCount); ?>
+            <?php echo $this->translatePlural([['view.translation.language.countSingular', 'view.translation.language.countPlural'], $this->languageCount], $this->languageCount); ?>
         </th>
         <td>
             <a href="<?php echo $this->url('translation/language'); ?>" title="<?php echo $this->translate('view.translation.language.showAll'); ?>">
@@ -55,7 +55,7 @@
     </tr>
     <tr>
         <th>
-            <?php echo $this->translate(array('view.translation.module.count', $this->moduleCount)); ?>
+            <?php echo $this->translate(['view.translation.module.count', $this->moduleCount]); ?>
         </th>
         <td>
             <a href="<?php echo $this->url('translation/module'); ?>" title="<?php echo $this->translate('view.translation.module.showAll'); ?>">

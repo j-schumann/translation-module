@@ -7,6 +7,7 @@
 
 namespace TranslationModule\Form;
 
+use TranslationModule\Entity\Language;
 use Vrok\Form\Fieldset;
 use Zend\InputFilter\InputFilterProviderInterface;
 
@@ -26,7 +27,7 @@ class TranslationFieldset extends Fieldset implements InputFilterProviderInterfa
      *
      * @param \TranslationModule\Entity\Language $language
      */
-    public function setLanguage(\TranslationModule\Entity\Language $language)
+    public function setLanguage(Language $language)
     {
         $this->language = $language;
         $this->setName($this->language->getId());
@@ -42,17 +43,17 @@ class TranslationFieldset extends Fieldset implements InputFilterProviderInterfa
                 ->getRepository('TranslationModule\Entity\Translation');
 
         $this->add($translationRepository->getFormElementDefinition('translation'));
-        $this->add(array(
+        $this->add([
             'type'    => 'Zend\Form\Element\Checkbox',
             'name'    => 'isNull',
-            'options' => array(
+            'options' => [
                 'label'           => 'TranslationModule.Entity.Translation.isNull.label',
                 'unchecked_value' => '',
-            ),
+            ],
             'attributes' => [
                 'value' => '1', // checked by default
             ],
-        ));
+        ]);
     }
 
     /**
@@ -62,8 +63,8 @@ class TranslationFieldset extends Fieldset implements InputFilterProviderInterfa
     {
         $translationRepository = $this->getEntityManager()
                 ->getRepository('TranslationModule\Entity\Translation');
-        return array(
+        return [
             $translationRepository->getInputSpecification('translation'),
-        );
+        ];
     }
 }

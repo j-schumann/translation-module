@@ -7,6 +7,7 @@
 
 namespace TranslationModule\Form;
 
+use TranslationModule\Entity\Language;
 use Vrok\Form\Fieldset;
 use Zend\InputFilter\InputFilterProviderInterface;
 
@@ -30,28 +31,32 @@ class LanguageFieldset extends Fieldset implements InputFilterProviderInterface
             $findMethod = $parent->getOption('find_method');
             $findMethod['params']['languageId'] = $data['id'];
             // use setOptions instead of setOption to trigger the proxy update
-            $parent->setOptions(array('find_method' => $findMethod));
+            $parent->setOptions(['find_method' => $findMethod]);
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function init()
     {
         $this->setName('language');
 
-        $languageRepository = $this->getEntityManager()
-                ->getRepository('TranslationModule\Entity\Language');
+        $repository = $this->getEntityManager()->getRepository(Language::class);
 
         // the ID field is hidden, we need it for the UniqueObject validator
-        $this->add($languageRepository->getFormElementDefinition('id'));
-        $this->add($languageRepository->getFormElementDefinition('name'));
-        $this->add($languageRepository->getFormElementDefinition('locale'));
-        $this->add($languageRepository->getFormElementDefinition('parent'));
+        $this->add($repository->getFormElementDefinition('id'));
+        $this->add($repository->getFormElementDefinition('name'));
+        $this->add($repository->getFormElementDefinition('locale'));
+        $this->add($repository->getFormElementDefinition('parent'));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getInputFilterSpecification()
     {
-        $repository = $this->getEntityManager()
-                ->getRepository('TranslationModule\Entity\Language');
+        $repository = $this->getEntityManager()->getRepository(Language::class);
         return $repository->getInputFilterSpecification();
     }
 }

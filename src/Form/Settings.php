@@ -27,17 +27,17 @@ class Settings extends Form implements InputFilterProviderInterface
         /* @var $service \TranslationModule\Service\Translation */
 
         $locales = $service->getLocales();
-        $this->add(array(
+        $this->add([
             'type'    => 'Zend\Form\Element\Select',
             'name'    => 'defaultLocale',
-            'options' => array(
+            'options' => [
                 'label'         => 'form.translation.defaultLocale.label',
                 'value_options' => $locales,
-            ),
+            ],
             'attributes' => [
                 'required' => 'required',
             ],
-        ));
+        ]);
 
         $elements = [];
         foreach($locales as $locale) {
@@ -58,23 +58,23 @@ class Settings extends Form implements InputFilterProviderInterface
             ];
         }
 
-        $this->add(array(
+        $this->add([
             'type'     => 'Fieldset',
             'name'     => 'languageVariants',
             'options'  => [
                 'label' => 'form.translation.languageVariants.label',
             ],
             'elements' => $elements,
-        ));
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name'       => 'submit',
-            'attributes' => array(
+            'attributes' => [
                 'type'  => 'submit',
                 'value' => 'form.submit',
                 'id'    => 'submit',
-            ),
-        ));
+            ],
+        ]);
     }
 
     /**

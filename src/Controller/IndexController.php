@@ -22,10 +22,10 @@ class IndexController extends AbstractActionController
         $lr = $em->getRepository('TranslationModule\Entity\Language');
         $mr = $em->getRepository('TranslationModule\Entity\Module');
 
-        return $this->createViewModel(array(
+        return $this->createViewModel([
             'stringCount'   => $sr->count(),
             'languageCount' => $lr->count(),
             'moduleCount'   => $mr->count(),
-        ));
+        ]);
     }
 }

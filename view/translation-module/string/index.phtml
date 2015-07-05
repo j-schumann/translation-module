@@ -65,11 +65,11 @@
                 <?php endforeach; ?>
             </td>
             <td>
-                <a href="<?php echo $this->url('translation/string/edit', array('id' => $string->getId())); ?>" title="<?php echo $this->translate('view.translation.string.gotoEdit'); ?>">
+                <a href="<?php echo $this->url('translation/string/edit', ['id' => $string->getId()]); ?>" title="<?php echo $this->translate('view.translation.string.gotoEdit'); ?>">
                     <?php echo $this->translate('view.translation.string.gotoEdit'); ?>
                 </a>
                 <br />
-                <a href="<?php echo $this->url('translation/string/delete', array('id' => $string->getId())); ?>" title="<?php echo $this->translate('view.translation.string.gotoDelete'); ?>">
+                <a href="<?php echo $this->url('translation/string/delete', ['id' => $string->getId()]); ?>" title="<?php echo $this->translate('view.translation.string.gotoDelete'); ?>">
                     <?php echo $this->translate('view.translation.string.gotoDelete'); ?>
                 </a>
             </td>

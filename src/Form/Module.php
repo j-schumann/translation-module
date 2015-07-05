@@ -24,14 +24,14 @@ class Module extends Form implements InputFilterProviderInterface
         $this->add($moduleRepository->getFormElementDefinition('id'));
         $this->add($moduleRepository->getFormElementDefinition('name'));
 
-        $this->add(array(
+        $this->add([
             'name'       => 'submit',
-            'attributes' => array(
+            'attributes' => [
                 'type'  => 'submit',
                 'value' => 'form.submit',
                 'id'    => 'submit',
-            ),
-        ));
+            ],
+        ]);
     }
 
     public function getInputFilterSpecification()

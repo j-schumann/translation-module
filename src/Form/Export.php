@@ -37,14 +37,14 @@ class Export extends Form implements InputFilterProviderInterface
         $language['options']['empty_option'] = 'view.all';
         $this->add($language);
 
-        $this->add(array(
+        $this->add([
             'name'       => 'submit',
-            'attributes' => array(
+            'attributes' => [
                 'type'  => 'submit',
                 'value' => 'form.submit',
                 'id'    => 'submit',
-            ),
-        ));
+            ],
+        ]);
     }
 
     /**
@@ -64,9 +64,9 @@ class Export extends Form implements InputFilterProviderInterface
         $languageSpec['required'] = false;
         $languageSpec['allowEmpty'] = true;
 
-        return array(
+        return [
             $moduleSpec,
             $languageSpec,
-        );
+        ];
     }
 }

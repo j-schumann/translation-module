@@ -20,21 +20,21 @@ class String extends Form
     public function init()
     {
         $this->setName('translation-string');
-        
-        $this->add(array(
-            'type'    => 'TranslationModule\Form\StringFieldset',
-            'options' => array(
-                'use_as_base_fieldset' => true
-            )
-        ));
 
-        $this->add(array(
+        $this->add([
+            'type'    => 'TranslationModule\Form\StringFieldset',
+            'options' => [
+                'use_as_base_fieldset' => true
+            ],
+        ]);
+
+        $this->add([
             'name'       => 'submit',
-            'attributes' => array(
+            'attributes' => [
                 'type'  => 'submit',
                 'value' => 'form.submit',
                 'id'    => 'submit',
-            ),
-        ));
+            ],
+        ]);
     }
 }

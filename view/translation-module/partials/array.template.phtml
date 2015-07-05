@@ -1,5 +1,5 @@
 <?php
-echo "<?php\nreturn array(\n";
+echo "<?php\nreturn [\n";
 foreach($this->translations as $key => $value)
 {
     if (!is_integer($key)) {
@@ -9,4 +9,4 @@ foreach($this->translations as $key => $value)
     // we use single quotes so vsprintf() params like %1$s do not get interpreted.
     echo "'".addcslashes($value, "'")."',\n";
 }
-echo ");\n";
+echo "];\n";

@@ -7,6 +7,7 @@
 
 namespace TranslationModule\Form;
 
+use TranslationModule\Entity\String;
 use Vrok\Form\Fieldset;
 use Zend\InputFilter\InputFilterProviderInterface;
 
@@ -25,7 +26,7 @@ class StringFieldset extends Fieldset implements InputFilterProviderInterface
         $languageRepository = $this->getEntityManager()
                 ->getRepository('TranslationModule\Entity\Language');
         $stringRepository = $this->getEntityManager()
-                ->getRepository('TranslationModule\Entity\String');
+                ->getRepository(String::class);
 
         // id for ObjectExists
         $this->add($stringRepository->getFormElementDefinition('id'));
@@ -37,10 +38,10 @@ class StringFieldset extends Fieldset implements InputFilterProviderInterface
         $this->add($stringRepository->getFormElementDefinition('module'));
 
         $languages = $languageRepository->findAll();
-        $this->add(array(
-            'type'     => 'Fieldset',
-            'name'     => 'translations',
-        ));
+        $this->add([
+            'type' => 'Fieldset',
+            'name' => 'translations',
+        ]);
 
         foreach($languages as $language) {
             $translation = $this->getServiceLocator()
@@ -55,8 +56,7 @@ class StringFieldset extends Fieldset implements InputFilterProviderInterface
      */
     public function getInputFilterSpecification()
     {
-        $repository = $this->getEntityManager()
-                ->getRepository('TranslationModule\Entity\String');
+        $repository = $this->getEntityManager()->getRepository(String::class);
         $spec = $repository->getInputFilterSpecification();
 
         // remove or will be set to 0000-00-00 because the InputFilter will return null

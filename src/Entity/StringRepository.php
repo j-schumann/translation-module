@@ -47,19 +47,19 @@ class StringRepository extends EntityRepository
 
         switch ($fieldName) {
             case 'string':
-                $spec['validators']['uniqueObject'] = array(
+                $spec['validators']['uniqueObject'] = [
                     'name'    => 'DoctrineModule\Validator\UniqueObject',
-                    'options' => array(
+                    'options' => [
                         'use_context'       => true,
                         'object_repository' => $this,
                         'fields'            => 'string',
                         'object_manager'    => $this->getEntityManager(),
-                        'messages' => array(
+                        'messages' => [
                             \DoctrineModule\Validator\UniqueObject::ERROR_OBJECT_NOT_UNIQUE =>
                                 $this->getTranslationString('string').'.notUnique',
-                        )
-                    ),
-                );
+                        ],
+                    ],
+                ];
                 break;
 
             // this field is automatically filled if empty and thus not required
@@ -134,12 +134,12 @@ class StringRepository extends EntityRepository
         $data = parent::getInstanceData($instance);
         $translations = $data['translations'];
 
-        $data['translations'] = array();
+        $data['translations'] = [];
         foreach($translations as $translation) {
-            $data['translations'][$translation->getLanguage()->getId()] = array(
+            $data['translations'][$translation->getLanguage()->getId()] = [
                 'translation' => $translation->getTranslation(),
-                'isNull' => $translation->getTranslation() === null,
-            );
+                'isNull'      => $translation->getTranslation() === null,
+            ];
         }
 
         return $data;
