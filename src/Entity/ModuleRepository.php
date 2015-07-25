@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright   (c) 2014, Vrok
  * @license     http://customlicense CustomLicense
@@ -14,11 +15,11 @@ use Vrok\Doctrine\EntityRepository;
  */
 class ModuleRepository extends EntityRepository
 {
-
     /**
      * Returns a form element specification to use with the form factory.
      *
      * @param string $fieldName
+     *
      * @return array
      */
     public function getFormElementDefinition($fieldName)
@@ -26,7 +27,7 @@ class ModuleRepository extends EntityRepository
         $definition = parent::getFormElementDefinition($fieldName);
         switch ($fieldName) {
             case 'id':
-                $definition['type'] = 'hidden';
+                $definition['type']                  = 'hidden';
                 $definition['options']['allowEmpty'] = true;
                 break;
 
@@ -43,6 +44,7 @@ class ModuleRepository extends EntityRepository
      * Returns the validators&filters for the given field to use in an input filter.
      *
      * @param string $fieldName
+     *
      * @return array
      */
     public function getInputSpecification($fieldName)
@@ -52,8 +54,7 @@ class ModuleRepository extends EntityRepository
         switch ($fieldName) {
             case 'name':
                 $spec['validators']['stringLength']['options']['messages'] = [
-                    \Zend\Validator\StringLength::TOO_LONG =>
-                        $this->getTranslationString('name').'.tooLong',
+                    \Zend\Validator\StringLength::TOO_LONG => $this->getTranslationString('name').'.tooLong',
                 ];
 
                 $spec['validators']['alNum'] = [
@@ -61,8 +62,7 @@ class ModuleRepository extends EntityRepository
                     'options' => [
                         'pattern'  => '/^[0-9a-zA-Z]+$/',
                         'messages' => [
-                            \Zend\Validator\Regex::NOT_MATCH =>
-                                $this->getTranslationString('name').'.notAlNum',
+                            \Zend\Validator\Regex::NOT_MATCH => $this->getTranslationString('name').'.notAlNum',
                         ],
                     ],
                 ];
@@ -74,9 +74,8 @@ class ModuleRepository extends EntityRepository
                         'object_repository' => $this,
                         'fields'            => 'name',
                         'object_manager'    => $this->getEntityManager(),
-                        'messages' => [
-                            \DoctrineModule\Validator\UniqueObject::ERROR_OBJECT_NOT_UNIQUE =>
-                                $this->getTranslationString('name').'.notUnique',
+                        'messages'          => [
+                            \DoctrineModule\Validator\UniqueObject::ERROR_OBJECT_NOT_UNIQUE => $this->getTranslationString('name').'.notUnique',
                         ],
                     ],
                 ];

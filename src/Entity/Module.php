@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright   (c) 2014, Vrok
  * @license     http://customlicense CustomLicense
@@ -52,11 +53,13 @@ class Module extends Entity
      * Sets the modules name.
      *
      * @param string $name
+     *
      * @return self
      */
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 // </editor-fold>
@@ -83,7 +86,7 @@ class Module extends Entity
      */
     public function addStrings($elements)
     {
-        foreach($elements as $element) {
+        foreach ($elements as $element) {
             $this->strings->add($element);
         }
     }
@@ -95,7 +98,7 @@ class Module extends Entity
      */
     public function removeStrings($elements)
     {
-        foreach($elements as $element) {
+        foreach ($elements as $element) {
             $this->strings->removeElement($element);
         }
     }

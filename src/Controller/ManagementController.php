@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright   (c) 2014, Vrok
  * @license     http://customlicense CustomLicense
@@ -26,9 +27,9 @@ class ManagementController extends AbstractActionController
         $form = $this->getServiceLocator()->get('FormElementManager')
                 ->get('TranslationModule\Form\Settings');
 
-        $metaService = $this->getServiceLocator()->get('Vrok\Service\Meta');
+        $metaService   = $this->getServiceLocator()->get('Vrok\Service\Meta');
         $defaultLocale = $metaService->getValue('defaultLocale');
-        $useLanguages = $metaService->getValue('translation.useLanguages') ?: [];
+        $useLanguages  = $metaService->getValue('translation.useLanguages') ?: [];
 
         $form->setData([
             'defaultLocale'    => $defaultLocale,
@@ -56,6 +57,7 @@ class ManagementController extends AbstractActionController
 
         $this->flashMessenger()
                 ->addSuccessMessage('message.translation.management.settingsSaved');
+
         return $this->redirect()->toRoute('translation');
     }
 
@@ -71,7 +73,7 @@ class ManagementController extends AbstractActionController
         $form->setConfirmationMessage('message.translation.management.confirmBuild');
 
         $viewModel = $this->createViewModel([
-            'form'   => $form,
+            'form' => $form,
         ]);
 
         if (!$this->request->isPost()) {
@@ -88,6 +90,7 @@ class ManagementController extends AbstractActionController
 
         $this->flashMessenger()
                 ->addSuccessMessage('message.translation.management.filesBuilt');
+
         return $this->redirect()->toRoute('translation');
     }
 
@@ -115,8 +118,8 @@ class ManagementController extends AbstractActionController
             return $viewModel;
         }
 
-        $data = $form->getData();
-        $ts = $this->getServiceLocator()->get('TranslationModule\Service\Translation');
+        $data     = $form->getData();
+        $ts       = $this->getServiceLocator()->get('TranslationModule\Service\Translation');
         $language = empty($data['language'])
             ? null
             : $ts->getLanguageRepository()->find($data['language']);
@@ -158,11 +161,11 @@ class ManagementController extends AbstractActionController
 
         $data = $form->getData();
 
-        $ts = $this->getServiceLocator()->get('TranslationModule\Service\Translation');
+        $ts     = $this->getServiceLocator()->get('TranslationModule\Service\Translation');
         $import = $ts->createImport($data);
         $result = $import->importFile($data['jsonfile']['tmp_name']);
 
-        foreach($result['messages'] as $message) {
+        foreach ($result['messages'] as $message) {
             $this->flashMessenger()->addInfoMessage($this->translate($message));
         }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright   (c) 2014, Vrok
  * @license     http://customlicense CustomLicense
@@ -43,7 +44,7 @@ class StringFieldset extends Fieldset implements InputFilterProviderInterface
             'name' => 'translations',
         ]);
 
-        foreach($languages as $language) {
+        foreach ($languages as $language) {
             $translation = $this->getServiceLocator()
                     ->get('TranslationModule\Form\TranslationFieldset');
             $translation->setLanguage($language);
@@ -57,7 +58,7 @@ class StringFieldset extends Fieldset implements InputFilterProviderInterface
     public function getInputFilterSpecification()
     {
         $repository = $this->getEntityManager()->getRepository(String::class);
-        $spec = $repository->getInputFilterSpecification();
+        $spec       = $repository->getInputFilterSpecification();
 
         // remove or will be set to 0000-00-00 because the InputFilter will return null
         unset($spec['updatedAt']);

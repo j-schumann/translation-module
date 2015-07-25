@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright   (c) 2014, Vrok
  * @license     http://customlicense CustomLicense
@@ -38,6 +39,7 @@ class Module extends Form implements InputFilterProviderInterface
     {
         $repository = $this->getEntityManager()
                 ->getRepository('TranslationModule\Entity\Module');
+
         return $repository->getInputFilterSpecification();
     }
 }

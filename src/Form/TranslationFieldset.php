@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright   (c) 2014, Vrok
  * @license     http://customlicense CustomLicense
@@ -63,6 +64,7 @@ class TranslationFieldset extends Fieldset implements InputFilterProviderInterfa
     {
         $translationRepository = $this->getEntityManager()
                 ->getRepository('TranslationModule\Entity\Translation');
+
         return [
             $translationRepository->getInputSpecification('translation'),
         ];

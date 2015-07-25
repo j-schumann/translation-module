@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright   (c) 2014, Vrok
  * @license     http://customlicense CustomLicense
@@ -18,6 +19,7 @@ class StringRepository extends EntityRepository
      * Returns a form element specification to use with the form factory.
      *
      * @param string $fieldName
+     *
      * @return array
      */
     public function getFormElementDefinition($fieldName)
@@ -27,7 +29,7 @@ class StringRepository extends EntityRepository
             case 'id':
                 // no break
             case 'updatedAt':
-                $definition['type'] = 'hidden';
+                $definition['type']                  = 'hidden';
                 $definition['options']['allowEmpty'] = true;
                 break;
         }
@@ -39,6 +41,7 @@ class StringRepository extends EntityRepository
      * Returns the validators&filters for the given field to use in an input filter.
      *
      * @param string $fieldName
+     *
      * @return array
      */
     public function getInputSpecification($fieldName)
@@ -54,9 +57,8 @@ class StringRepository extends EntityRepository
                         'object_repository' => $this,
                         'fields'            => 'string',
                         'object_manager'    => $this->getEntityManager(),
-                        'messages' => [
-                            \DoctrineModule\Validator\UniqueObject::ERROR_OBJECT_NOT_UNIQUE =>
-                                $this->getTranslationString('string').'.notUnique',
+                        'messages'          => [
+                            \DoctrineModule\Validator\UniqueObject::ERROR_OBJECT_NOT_UNIQUE => $this->getTranslationString('string').'.notUnique',
                         ],
                     ],
                 ];
@@ -64,7 +66,7 @@ class StringRepository extends EntityRepository
 
             // this field is automatically filled if empty and thus not required
             case 'updatedAt':
-                $spec['required'] = false;
+                $spec['required']   = false;
                 $spec['allowEmpty'] = true;
                 unset($spec['validators']['notEmpty']);
                 break;
@@ -78,15 +80,16 @@ class StringRepository extends EntityRepository
      * data.
      *
      * @param \Vrok\Doctrine\Entity $instance
-     * @param array $formData
-     * @param array $changeset  if given the resulting changeset of the update
-     *     is stored in the referenced array
+     * @param array                 $formData
+     * @param array                 $changeset if given the resulting changeset of the update
+     *                                         is stored in the referenced array
+     *
      * @return Entity
      */
     public function updateInstance(\Vrok\Doctrine\Entity $instance, array $formData, array &$changeset = null)
     {
         $objectManager = $this->getEntityManager();
-        $translations = $formData['translations'];
+        $translations  = $formData['translations'];
         unset($formData['translations']);
 
         parent::updateInstance($instance, $formData, $changeset);
@@ -98,9 +101,9 @@ class StringRepository extends EntityRepository
         }
 
         // update all existing translations
-        foreach($instance->getTranslations() as $translation) {
+        foreach ($instance->getTranslations() as $translation) {
             $element = $translations[$translation->getLanguage()->getId()];
-            $value = $element['isNull'] ? null : $element['translation'];
+            $value   = $element['isNull'] ? null : $element['translation'];
             $translation->setTranslation($value);
             $objectManager->persist($translation);
             unset($translations[$translation->getLanguage()->getId()]);
@@ -110,13 +113,13 @@ class StringRepository extends EntityRepository
                 ->getRepository('TranslationModule\Entity\Language');
 
         // create translations for any new languages
-        foreach($translations as $languageId => $element) {
-            $language = $languageRepository->find($languageId);
+        foreach ($translations as $languageId => $element) {
+            $language    = $languageRepository->find($languageId);
             $translation = new Translation();
             $translation->setString($instance);
             $translation->setLanguage($language);
             $translation->setTranslation(
-                $element['isNull'] ? NULL: $element['translation']);
+                $element['isNull'] ? null : $element['translation']);
             $objectManager->persist($translation);
         }
 
@@ -127,15 +130,16 @@ class StringRepository extends EntityRepository
      * Extracts the entity data to fill form elements.
      *
      * @param String $instance
+     *
      * @return array
      */
     public function getInstanceData(\Vrok\Doctrine\Entity $instance)
     {
-        $data = parent::getInstanceData($instance);
+        $data         = parent::getInstanceData($instance);
         $translations = $data['translations'];
 
         $data['translations'] = [];
-        foreach($translations as $translation) {
+        foreach ($translations as $translation) {
             $data['translations'][$translation->getLanguage()->getId()] = [
                 'translation' => $translation->getTranslation(),
                 'isNull'      => $translation->getTranslation() === null,

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright   (c) 2014, Vrok
  * @license     http://customlicense CustomLicense
@@ -21,9 +22,9 @@ class LanguageController extends AbstractActionController
      */
     public function indexAction()
     {
-        $em = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+        $em         = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
         $repository = $em->getRepository('TranslationModule\Entity\Language');
-        $languages = $repository->findAll();
+        $languages  = $repository->findAll();
 
         return $this->createViewModel(['languages' => $languages]);
     }
@@ -51,13 +52,14 @@ class LanguageController extends AbstractActionController
             return $viewModel;
         }
 
-        $data = $form->getData();
+        $data               = $form->getData();
         $translationService = $this->getServiceLocator()
                 ->get('TranslationModule\Service\Translation');
         $language = $translationService->createLanguage($data['language']);
 
         $this->flashMessenger()
                 ->addSuccessMessage('message.translation.language.created');
+
         return $this->redirect()->toRoute('translation/language');
     }
 
@@ -71,10 +73,11 @@ class LanguageController extends AbstractActionController
         $language = $this->getEntityFromParam('TranslationModule\Entity\Language');
         if (!$language instanceof \TranslationModule\Entity\Language) {
             $this->getResponse()->setStatusCode(404);
+
             return $this->createViewModel(['message' => $language]);
         }
 
-        $em = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+        $em         = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
         $repository = $em->getRepository('TranslationModule\Entity\Language');
 
         $form = $this->getServiceLocator()->get('FormElementManager')
@@ -100,6 +103,7 @@ class LanguageController extends AbstractActionController
 
         $this->flashMessenger()
                 ->addSuccessMessage('message.translation.language.edited');
+
         return $this->redirect()->toRoute('translation/language');
     }
 
@@ -113,13 +117,14 @@ class LanguageController extends AbstractActionController
         $language = $this->getEntityFromParam('TranslationModule\Entity\Language');
         if (!$language instanceof \TranslationModule\Entity\Language) {
             $this->getResponse()->setStatusCode(404);
+
             return $this->createViewModel(['message' => $language]);
         }
 
         $form = $this->getServiceLocator()->get('FormElementManager')
                 ->get('Vrok\Form\ConfirmationForm');
         $form->setConfirmationMessage(['message.translation.language.confirmDelete',
-                $language->getName()]);
+                $language->getName(), ]);
 
         $viewModel = $this->createViewModel([
             'form'     => $form,
@@ -141,6 +146,7 @@ class LanguageController extends AbstractActionController
 
         $this->flashMessenger()
                 ->addSuccessMessage('message.translation.language.deleted');
+
         return $this->redirect()->toRoute('translation/language');
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright   (c) 2014, Vrok
  * @license     http://customlicense CustomLicense
@@ -23,7 +24,7 @@ class Module implements BootstrapListenerInterface, ConfigProviderInterface
      */
     public function getConfig()
     {
-        return include __DIR__ . '/../config/module.config.php';
+        return include __DIR__.'/../config/module.config.php';
     }
 
     /**
@@ -33,7 +34,7 @@ class Module implements BootstrapListenerInterface, ConfigProviderInterface
      */
     public function onBootstrap(EventInterface $e)
     {
-        $eventManager = $e->getApplication()->getEventManager();
+        $eventManager   = $e->getApplication()->getEventManager();
         $serviceManager = $e->getApplication()->getServiceManager();
 
         $translationService = $serviceManager->get('TranslationModule\Service\Translation');

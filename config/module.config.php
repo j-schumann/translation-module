@@ -1,24 +1,25 @@
 <?php
+
 /**
- * TranslationModule config
+ * TranslationModule config.
  */
 return [
 // <editor-fold defaultstate="collapsed" desc="asset_manager">
     'asset_manager' => [
         'resolver_configs' => [
-            'paths' => [__DIR__ . '/../public',],
-            'map' => [],
+            'paths' => [__DIR__.'/../public'],
+            'map'   => [],
         ],
     ],
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="controllers">
     'controllers' => [
         'invokables' => [
-            'TranslationModule\Controller\Index' => 'TranslationModule\Controller\IndexController',
-            'TranslationModule\Controller\Language' => 'TranslationModule\Controller\LanguageController',
+            'TranslationModule\Controller\Index'      => 'TranslationModule\Controller\IndexController',
+            'TranslationModule\Controller\Language'   => 'TranslationModule\Controller\LanguageController',
             'TranslationModule\Controller\Management' => 'TranslationModule\Controller\ManagementController',
-            'TranslationModule\Controller\Module' => 'TranslationModule\Controller\ModuleController',
-            'TranslationModule\Controller\String' => 'TranslationModule\Controller\StringController',
+            'TranslationModule\Controller\Module'     => 'TranslationModule\Controller\ModuleController',
+            'TranslationModule\Controller\String'     => 'TranslationModule\Controller\StringController',
         ],
     ],
 // </editor-fold>
@@ -28,11 +29,11 @@ return [
             'translation_entities' => [
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
-                'paths' => [__DIR__ . '/../src/Entity']
+                'paths' => [__DIR__.'/../src/Entity'],
             ],
             'orm_default' => [
                 'drivers' => [
-                    'TranslationModule\Entity' => 'translation_entities'
+                    'TranslationModule\Entity' => 'translation_entities',
                 ],
             ],
         ],
@@ -172,17 +173,17 @@ return [
                             'route'    => 'string/',
                             'defaults' => [
                                 'controller' => 'TranslationModule\Controller\String',
-                                'action'     => 'index'
+                                'action'     => 'index',
                             ],
                         ],
                         'may_terminate' => true,
-                        'child_routes' => [
+                        'child_routes'  => [
                             'create' => [
                                 'type'    => 'segment',
                                 'options' => [
                                     'route'    => 'create[/]',
                                     'defaults' => [
-                                        'action' => 'create'
+                                        'action' => 'create',
                                     ],
                                 ],
                             ],
@@ -191,10 +192,10 @@ return [
                                 'options' => [
                                     'route'       => 'edit/[:id][/]',
                                     'constraints' => [
-                                        'id' => '[0-9]+'
+                                        'id' => '[0-9]+',
                                     ],
                                     'defaults' => [
-                                        'action' => 'edit'
+                                        'action' => 'edit',
                                     ],
                                 ],
                             ],
@@ -203,10 +204,10 @@ return [
                                 'options' => [
                                     'route'       => 'delete/[:id][/]',
                                     'constraints' => [
-                                        'id' => '[0-9]+'
+                                        'id' => '[0-9]+',
                                     ],
                                     'defaults' => [
-                                        'action' => 'delete'
+                                        'action' => 'delete',
                                     ],
                                 ],
                             ],
@@ -218,7 +219,7 @@ return [
                             'route'    => 'language/',
                             'defaults' => [
                                 'controller' => 'TranslationModule\Controller\Language',
-                                'action'     => 'index'
+                                'action'     => 'index',
                             ],
                         ],
                         'may_terminate' => true,
@@ -228,7 +229,7 @@ return [
                                 'options' => [
                                     'route'    => 'create[/]',
                                     'defaults' => [
-                                        'action' => 'create'
+                                        'action' => 'create',
                                     ],
                                 ],
                             ],
@@ -237,10 +238,10 @@ return [
                                 'options' => [
                                     'route'       => 'edit/[:id][/]',
                                     'constraints' => [
-                                        'id' => '[0-9]+'
+                                        'id' => '[0-9]+',
                                     ],
                                     'defaults' => [
-                                        'action' => 'edit'
+                                        'action' => 'edit',
                                     ],
                                 ],
                             ],
@@ -249,22 +250,22 @@ return [
                                 'options' => [
                                     'route'       => 'delete/[:id][/]',
                                     'constraints' => [
-                                        'id' => '[0-9]+'
+                                        'id' => '[0-9]+',
                                     ],
                                     'defaults' => [
-                                        'action' => 'delete'
+                                        'action' => 'delete',
                                     ],
                                 ],
                             ],
                         ],
                     ],
                     'module' => [
-                        'type' => 'literal',
+                        'type'    => 'literal',
                         'options' => [
                             'route'    => 'module/',
                             'defaults' => [
                                 'controller' => 'TranslationModule\Controller\Module',
-                                'action'     => 'index'
+                                'action'     => 'index',
                             ],
                         ],
                         'may_terminate' => true,
@@ -274,7 +275,7 @@ return [
                                 'options' => [
                                     'route'    => 'create[/]',
                                     'defaults' => [
-                                        'action' => 'create'
+                                        'action' => 'create',
                                     ],
                                 ],
                             ],
@@ -283,10 +284,10 @@ return [
                                 'options' => [
                                     'route'       => 'edit/[:id][/]',
                                     'constraints' => [
-                                        'id' => '[0-9]+'
+                                        'id' => '[0-9]+',
                                     ],
                                     'defaults' => [
-                                        'action' => 'edit'
+                                        'action' => 'edit',
                                     ],
                                 ],
                             ],
@@ -295,10 +296,10 @@ return [
                                 'options' => [
                                     'route'       => 'delete/[:id][/]',
                                     'constraints' => [
-                                        'id' => '[0-9]+'
+                                        'id' => '[0-9]+',
                                     ],
                                     'defaults' => [
-                                        'action' => 'delete'
+                                        'action' => 'delete',
                                     ],
                                 ],
                             ],
@@ -310,7 +311,7 @@ return [
                             'route'    => 'management/',
                             'defaults' => [
                                 'controller' => 'TranslationModule\Controller\Management',
-                                'action'     => 'index'
+                                'action'     => 'index',
                             ],
                         ],
                         'may_terminate' => true,
@@ -320,7 +321,7 @@ return [
                                 'options' => [
                                     'route'    => 'settings[/]',
                                     'defaults' => [
-                                        'action' => 'settings'
+                                        'action' => 'settings',
                                     ],
                                 ],
                             ],
@@ -329,7 +330,7 @@ return [
                                 'options' => [
                                     'route'    => 'build[/]',
                                     'defaults' => [
-                                        'action' => 'build'
+                                        'action' => 'build',
                                     ],
                                 ],
                             ],
@@ -338,7 +339,7 @@ return [
                                 'options' => [
                                     'route'    => 'export[/]',
                                     'defaults' => [
-                                        'action' => 'export'
+                                        'action' => 'export',
                                     ],
                                 ],
                             ],
@@ -347,7 +348,7 @@ return [
                                 'options' => [
                                     'route'    => 'import[/]',
                                     'defaults' => [
-                                        'action' => 'import'
+                                        'action' => 'import',
                                     ],
                                 ],
                             ],
@@ -368,17 +369,17 @@ return [
 // <editor-fold defaultstate="collapsed" desc="translator">
     'translator' => [
         'event_manager_enabled' => true,
-        'translation_dir'      => 'data/translations',
+        'translation_dir'       => 'data/translations',
     ],
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="view_manager">
     'view_manager' => [
         'template_map' => [
-            'translation-module/index/index' => __DIR__ . '/../view/translation-module/index/index.phtml',
-            'translation-module/moduleForm' => __DIR__ . '/../view/translation-module/partials/moduleForm.phtml',
+            'translation-module/index/index' => __DIR__.'/../view/translation-module/index/index.phtml',
+            'translation-module/moduleForm'  => __DIR__.'/../view/translation-module/partials/moduleForm.phtml',
         ],
         'template_path_stack' => [
-            __DIR__ . '/../view',
+            __DIR__.'/../view',
         ],
     ],
 // </editor-fold>

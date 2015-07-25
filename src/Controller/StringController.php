@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright   (c) 2014, Vrok
  * @license     http://customlicense CustomLicense
@@ -23,22 +24,22 @@ class StringController extends AbstractActionController
     public function indexAction()
     {
         $sessionContainer = new SessionContainer(__CLASS__);
-        $form = $this->getServiceLocator()->get('FormElementManager')
+        $form             = $this->getServiceLocator()->get('FormElementManager')
                 ->get('TranslationModule\Form\StringFilter');
         if ($sessionContainer['stringFilter']) {
             $form->setData([
-                'stringFilter' => $sessionContainer['stringFilter']
+                'stringFilter' => $sessionContainer['stringFilter'],
             ]);
         }
         if ($this->request->isPost()) {
             $isValid = $form->setData($this->request->getPost())->isValid();
             if ($isValid) {
-                $data = $form->getData();
+                $data                             = $form->getData();
                 $sessionContainer['stringFilter'] = $data['stringFilter'];
             }
         }
 
-        $em = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+        $em         = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
         $repository = $em->getRepository('TranslationModule\Entity\String');
 
         $qb = $repository->createQueryBuilder('s');
@@ -64,7 +65,7 @@ class StringController extends AbstractActionController
             && !empty($sessionContainer['stringFilter']['module'])
         ) {
             $qb->andWhere('s.module = :module');
-            $qb->setParameter('module', (int)$sessionContainer['stringFilter']['module']);
+            $qb->setParameter('module', (int) $sessionContainer['stringFilter']['module']);
         }
 
         $qb->orderBy('s.string');
@@ -102,14 +103,15 @@ class StringController extends AbstractActionController
 
         $data = $form->getData();
 
-        $em = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+        $em         = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
         $repository = $em->getRepository('TranslationModule\Entity\String');
-        $string = new \TranslationModule\Entity\String;
+        $string     = new \TranslationModule\Entity\String();
         $repository->updateInstance($string, $data['string']);
         $em->flush();
 
         $this->flashMessenger()
                 ->addSuccessMessage('message.translation.string.created');
+
         return $this->redirect()->toRoute('translation/string/create');
     }
 
@@ -123,10 +125,11 @@ class StringController extends AbstractActionController
         $string = $this->getEntityFromParam('TranslationModule\Entity\String');
         if (!$string instanceof \TranslationModule\Entity\String) {
             $this->getResponse()->setStatusCode(404);
+
             return $this->createViewModel(['message' => $string]);
         }
 
-        $em = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+        $em         = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
         $repository = $em->getRepository('TranslationModule\Entity\String');
 
         $form = $this->getServiceLocator()->get('FormElementManager')
@@ -152,6 +155,7 @@ class StringController extends AbstractActionController
 
         $this->flashMessenger()
                 ->addSuccessMessage('message.translation.string.edited');
+
         return $this->redirect()->toRoute('translation/string');
     }
 
@@ -165,13 +169,14 @@ class StringController extends AbstractActionController
         $string = $this->getEntityFromParam('TranslationModule\Entity\String');
         if (!$string instanceof \TranslationModule\Entity\String) {
             $this->getResponse()->setStatusCode(404);
+
             return $this->createViewModel(['message' => $string]);
         }
 
         $form = $this->getServiceLocator()->get('FormElementManager')
                 ->get('Vrok\Form\ConfirmationForm');
         $form->setConfirmationMessage(['message.string.language.confirmDelete',
-            $string->getString()]);
+            $string->getString(), ]);
 
         $viewModel = $this->createViewModel([
             'form'   => $form,
@@ -193,6 +198,7 @@ class StringController extends AbstractActionController
 
         $this->flashMessenger()
                 ->addSuccessMessage('message.translation.string.deleted');
+
         return $this->redirect()->toRoute('translation/string');
     }
 }

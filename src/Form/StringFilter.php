@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright   (c) 2014, Vrok
  * @license     http://customlicense CustomLicense
@@ -20,56 +21,56 @@ class StringFilter extends Form implements InputFilterProviderInterface
      */
     public function init()
     {
-        $sr = $this->getEntityManager()->getRepository('TranslationModule\Entity\String');
+        $sr     = $this->getEntityManager()->getRepository('TranslationModule\Entity\String');
         $module = $sr->getFormElementDefinition('module');
         unset($module['attributes']['required']);
 
-        $this->add(array(
+        $this->add([
             'type'    => 'Fieldset',
             'name'    => 'stringFilter',
-            'options' => array(
+            'options' => [
                 'label' => 'form.translation.stringFilter.label',
-            ),
-            'elements' => array(
-                 array(
-                    'spec' => array(
+            ],
+            'elements' => [
+                 [
+                    'spec' => [
                         'type'    => 'Zend\Form\Element\Text',
                         'name'    => 'stringSearch',
-                        'options' => array(
-                            'label' => 'form.translation.stringSearch.label'
-                        ),
-                        'attributes' => array(
+                        'options' => [
+                            'label' => 'form.translation.stringSearch.label',
+                        ],
+                        'attributes' => [
                             'maxlength' => 255,
-                        ),
-                    ),
-                ),
-                array(
-                    'spec' => array(
+                        ],
+                    ],
+                ],
+                [
+                    'spec' => [
                         'type'    => 'Zend\Form\Element\Text',
                         'name'    => 'translationSearch',
-                        'options' => array(
-                            'label' => 'form.translation.translationSearch.label'
-                        ),
-                        'attributes' => array(
+                        'options' => [
+                            'label' => 'form.translation.translationSearch.label',
+                        ],
+                        'attributes' => [
                             'maxlength' => 255,
-                        ),
-                    ),
-                ),
-                array(
+                        ],
+                    ],
+                ],
+                [
                     'spec' => $module,
-                ),
-                array(
-                    'spec' => array(
+                ],
+                [
+                    'spec' => [
                         'name'       => 'submit',
-                        'attributes' => array(
+                        'attributes' => [
                             'type'  => 'submit',
                             'value' => 'form.submit',
                             'id'    => 'submit',
-                        ),
-                    )
-                ),
-            ),
-        ));
+                        ],
+                    ],
+                ],
+            ],
+        ]);
     }
 
     /**
@@ -79,41 +80,40 @@ class StringFilter extends Form implements InputFilterProviderInterface
     {
         $sr = $this->getEntityManager()
                 ->getRepository('TranslationModule\Entity\String');
-        $moduleSpec = $sr->getInputSpecification('module');
-        $moduleSpec['required'] = false;
+        $moduleSpec               = $sr->getInputSpecification('module');
+        $moduleSpec['required']   = false;
         $moduleSpec['allowEmpty'] = true;
         unset($moduleSpec['validators']['notEmpty']);
 
-        $inputSpec = array(
-            'required' => false,
+        $inputSpec = [
+            'required'   => false,
             'allowEmpty' => true,
-            'filters'    => array(
-                array('name' => 'Zend\Filter\StringTrim'),
-                array('name' => 'Zend\Filter\StripTags'),
-                array('name' => 'Zend\Filter\StripNewlines'),
-            ),
-            'validators' => array(
-                array(
+            'filters'    => [
+                ['name' => 'Zend\Filter\StringTrim'],
+                ['name' => 'Zend\Filter\StripTags'],
+                ['name' => 'Zend\Filter\StripNewlines'],
+            ],
+            'validators' => [
+                [
                     'name'    => 'Zend\Validator\StringLength',
-                    'options' => array(
+                    'options' => [
                         'max'      => 255,
-                        'messages' => array(
-                            \Zend\Validator\StringLength::TOO_LONG =>
-                                \Vrok\Doctrine\FormHelper::ERROR_TOOLONG,
-                        ),
-                    ),
-                ),
-            ),
-        );
+                        'messages' => [
+                            \Zend\Validator\StringLength::TOO_LONG => \Vrok\Doctrine\FormHelper::ERROR_TOOLONG,
+                        ],
+                    ],
+                ],
+            ],
+        ];
 
-        return array(
-            'stringFilter' => array(
-                'type'              => 'Zend\InputFilter\InputFilter',
+        return [
+            'stringFilter' => [
+                'type' => 'Zend\InputFilter\InputFilter',
 
                 'module'            => $moduleSpec,
                 'stringSearch'      => $inputSpec,
                 'translationSearch' => $inputSpec,
-            ),
-        );
+            ],
+        ];
     }
 }

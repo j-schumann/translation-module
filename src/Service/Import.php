@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright   (c) 2014, Vrok
  * @license     http://customlicense CustomLicense
@@ -31,21 +32,21 @@ class Import
      *
      * @var array
      */
-    protected $modules = array();
+    protected $modules = [];
 
     /**
      * List of all (used) languages in the system.
      *
      * @var array
      */
-    protected $languages = array();
+    protected $languages = [];
 
     /**
      * List of all messages and counts produced by the last import.
      *
      * @var array
      */
-    protected $result = array();
+    protected $result = [];
 
     /**
      * Whether or not imported languages are automatically created if they don't exist.
@@ -97,6 +98,7 @@ class Import
      * Imports the given file into the database using the current settings.
      *
      * @param string $filename
+     *
      * @return array
      */
     public function importFile($filename)
@@ -104,8 +106,9 @@ class Import
         $json = file_get_contents($filename);
         $data = json_decode($json, true);
         if (!is_array($data)) {
-            $result = $this->importArray([]);
+            $result               = $this->importArray([]);
             $result['messages'][] = 'JSON in the given file could not be decoded!';
+
             return $result;
         }
 
@@ -116,23 +119,24 @@ class Import
      * Imports the decoded data into the database.
      *
      * @param array $data
+     *
      * @return array
      */
     public function importArray(array $data)
     {
-        $this->result = array(
+        $this->result = [
             'importedStrings'      => 0,
             'importedTranslations' => 0,
             'deletedStrings'       => 0,
             'deletedTranslations'  => 0,
             'createdStrings'       => 0,
             'createdTranslations'  => 0,
-            'createdModules'       => array(),
-            'createdLanguages'     => array(),
-            'skippedModules'       => array(),
-            'skippedLanguages'     => array(),
-            'messages'             => array(),
-        );
+            'createdModules'       => [],
+            'createdLanguages'     => [],
+            'skippedModules'       => [],
+            'skippedLanguages'     => [],
+            'messages'             => [],
+        ];
 
         foreach ($data as $entry) {
             $this->importString($entry);
@@ -147,38 +151,39 @@ class Import
         }
 
         if ($this->result['createdStrings']) {
-            $this->result['messages'][] = array('message.translation.stringsCreated', $this->result['createdStrings']);
+            $this->result['messages'][] = ['message.translation.stringsCreated', $this->result['createdStrings']];
         }
         if ($this->result['createdTranslations']) {
-            $this->result['messages'][] = array('message.translation.translationsCreated', $this->result['createdTranslations']);
+            $this->result['messages'][] = ['message.translation.translationsCreated', $this->result['createdTranslations']];
         }
-        if ($this->result['importedStrings']-$this->result['createdStrings']) {
-            $this->result['messages'][] = array('message.translation.stringsUpdated', $this->result['importedStrings']-$this->result['createdStrings']);
+        if ($this->result['importedStrings'] - $this->result['createdStrings']) {
+            $this->result['messages'][] = ['message.translation.stringsUpdated', $this->result['importedStrings'] - $this->result['createdStrings']];
         }
-        if ($this->result['importedTranslations']-$this->result['createdTranslations']) {
-            $this->result['messages'][] = array('message.translation.translationsUpdated', $this->result['importedTranslations']-$this->result['createdTranslations']);
+        if ($this->result['importedTranslations'] - $this->result['createdTranslations']) {
+            $this->result['messages'][] = ['message.translation.translationsUpdated', $this->result['importedTranslations'] - $this->result['createdTranslations']];
         }
         if ($this->result['deletedStrings']) {
-            $this->result['messages'][] = array('message.translation.stringsDeleted', $this->result['deletedStrings']);
+            $this->result['messages'][] = ['message.translation.stringsDeleted', $this->result['deletedStrings']];
         }
         if ($this->result['deletedTranslations']) {
-            $this->result['messages'][] = array('message.translation.translationsDeleted', $this->result['deletedTranslations']);
+            $this->result['messages'][] = ['message.translation.translationsDeleted', $this->result['deletedTranslations']];
         }
         if (count($this->result['createdModules'])) {
-            $this->result['messages'][] = array('message.translation.modulesCreated', implode(', ', $this->result['createdModules']));
+            $this->result['messages'][] = ['message.translation.modulesCreated', implode(', ', $this->result['createdModules'])];
         }
         if (count($this->result['createdLanguages'])) {
-            $this->result['messages'][] = array('message.translation.languagesCreated', implode(', ', $this->result['createdLanguages']));
+            $this->result['messages'][] = ['message.translation.languagesCreated', implode(', ', $this->result['createdLanguages'])];
         }
         if (count($this->result['skippedModules'])) {
-            $this->result['messages'][] = array('message.translation.modulesSkipped', implode(', ', $this->result['skippedModules']));
+            $this->result['messages'][] = ['message.translation.modulesSkipped', implode(', ', $this->result['skippedModules'])];
         }
         if (count($this->result['skippedLanguages'])) {
-            $this->result['messages'][] = array('message.translation.languagesSkipped', implode(', ', $this->result['skippedLanguages']));
+            $this->result['messages'][] = ['message.translation.languagesSkipped', implode(', ', $this->result['skippedLanguages'])];
         }
         if (!count($this->result['messages'])) {
-            $this->result['messages'][] = array('message.translation.noImportUpdates');
+            $this->result['messages'][] = ['message.translation.noImportUpdates'];
         }
+
         return $this->result;
     }
 
@@ -187,7 +192,8 @@ class Import
      * version and updating the translations belonging to this entry.
      *
      * @param array $entry
-     * @return boolean  true if the string was imported, else false
+     *
+     * @return bool true if the string was imported, else false
      */
     protected function importString(array $entry)
     {
@@ -195,19 +201,21 @@ class Import
         if (empty($entry['string']) || empty($entry['module'])
             || empty($entry['updatedAt']) || empty($entry['translations'])
         ) {
-            $this->messages[] = array('message.translation.import.jsonInvalid',
-                json_encode($entry));
+            $this->messages[] = ['message.translation.import.jsonInvalid',
+                json_encode($entry), ];
+
             return false;
         }
 
         $string = $this->service->getStringRepository()
-                ->findOneBy(array('string' => $entry['string']));
+                ->findOneBy(['string' => $entry['string']]);
 
         // do not create new "live" entries if not allowed.
         // allow updates to entries that are moved from another module into "live" or
         // from "live" into another module.
         if (!$string && $entry['module'] === 'live' && $this->skipLiveModule) {
             $this->result['skippedModules']['live'] = 'live';
+
             return false;
         }
 
@@ -218,7 +226,7 @@ class Import
             return false;
         }
 
-        foreach($entry['translations'] as $translation) {
+        foreach ($entry['translations'] as $translation) {
             $this->updateTranslation($translation, $string);
         }
 
@@ -229,8 +237,9 @@ class Import
      * Updates a single translation string from the given import entry.
      *
      * @param array $entry
-     * @return StringEntity|bool    the imported string or false if the translations
-     *     should not be updated
+     *
+     * @return StringEntity|bool the imported string or false if the translations
+     *                           should not be updated
      */
     protected function updateString(array $entry, StringEntity $string = null)
     {
@@ -258,8 +267,7 @@ class Import
                 // the string will not be updated but the translations may be
                 return $string;
             }
-        }
-        else {
+        } else {
             $string = new StringEntity();
             // string + module are required
             $string->setString($entry['string']);
@@ -268,7 +276,7 @@ class Import
             $this->service->getEntityManager()->persist($string);
             // flush here, we need the string->id for the translation references
             $this->service->getEntityManager()->flush();
-            $this->result['createdStrings']++;
+            ++$this->result['createdStrings'];
         }
 
         $string->setModule($module);
@@ -279,24 +287,27 @@ class Import
         $string->setUpdatedAt(
                 new \DateTime($entry['updatedAt'], new \DateTimeZone('UTC')));
 
-        $this->result['importedStrings']++;
+        ++$this->result['importedStrings'];
+
         return $string;
     }
 
     /**
      * Updates or creates the given translation.
      *
-     * @param array $entry
+     * @param array  $entry
      * @param String $string
-     * @return boolean
+     *
+     * @return bool
      */
     protected function updateTranslation(array $entry, StringEntity $string)
     {
         if (empty($entry['language']) || empty($entry['locale'])
             || empty($entry['updatedAt']) || empty($entry['translation'])
         ) {
-            $this->messages[] = array('message.translation.import.jsonInvalid',
-                json_encode($entry));
+            $this->messages[] = ['message.translation.import.jsonInvalid',
+                json_encode($entry), ];
+
             return false;
         }
 
@@ -307,7 +318,7 @@ class Import
         }
 
         $translation = null;
-        foreach($string->getTranslations() as $localTranslation) {
+        foreach ($string->getTranslations() as $localTranslation) {
             // there is a translation for the current language -> update it
             if ($localTranslation->getLanguage()->getName() == $entry['language']) {
                 $translation = $localTranslation;
@@ -322,13 +333,12 @@ class Import
             ) {
                 return false;
             }
-        }
-        else {
+        } else {
             $translation = new TranslationEntity();
             $translation->setString($string);
             $translation->setLanguage($language);
             $this->service->getEntityManager()->persist($translation);
-            $this->result['createdTranslations']++;
+            ++$this->result['createdTranslations'];
         }
 
         $translation->setTranslation($entry['translation']);
@@ -336,7 +346,8 @@ class Import
         $translation->setUpdatedAt(
                 new \DateTime($entry['updatedAt'], new \DateTimeZone('UTC')));
 
-        $this->result['importedTranslations']++;
+        ++$this->result['importedTranslations'];
+
         return true;
     }
 
@@ -344,8 +355,9 @@ class Import
      * Loads or creates the language defined in the given import entry.
      *
      * @param array $translationEntry
-     * @return LanguageEntity|false   the existing or created language or false if it
-     *     does not exist and should not be created
+     *
+     * @return LanguageEntity|false the existing or created language or false if it
+     *                              does not exist and should not be created
      */
     protected function importLanguage(array $translationEntry)
     {
@@ -356,12 +368,13 @@ class Import
 
         // we query for the name, there may be multiple languages with the same locale
         $language = $this->service->getLanguageRepository()
-                    ->findOneBy(array('name' => $translationEntry['language']));
+                    ->findOneBy(['name' => $translationEntry['language']]);
 
         if (!$language) {
             if (!$this->createLanguages) {
                 $this->result['skippedLanguages'][$translationEntry['locale']]
                         = $translationEntry['language'];
+
                 return $this->languages[$translationEntry['language']] = false;
             }
 
@@ -387,8 +400,9 @@ class Import
      * Loads the module for the import entry or creates it if allowed.
      *
      * @param string $moduleName
-     * @return ModuleEntity|false   the existing or created Module or false if it
-     *     does not exist and should not be created
+     *
+     * @return ModuleEntity|false the existing or created Module or false if it
+     *                            does not exist and should not be created
      */
     protected function importModule($moduleName)
     {
@@ -398,11 +412,12 @@ class Import
         }
 
         $module = $this->service->getModuleRepository()
-                    ->findOneBy(array('name' => $moduleName));
+                    ->findOneBy(['name' => $moduleName]);
 
         if (!$module) {
             if (!$this->createModules) {
                 $this->result['skippedModules'][$moduleName] = $moduleName;
+
                 return $this->modules[$moduleName] = false;
             }
 
@@ -459,7 +474,7 @@ class Import
             if (!$match) {
                 // also deletes all their translations
                 $this->service->getEntityManager()->remove($string);
-                $this->result['deletedStrings']++;
+                ++$this->result['deletedStrings'];
             }
         }
     }
@@ -470,12 +485,12 @@ class Import
      * Called by deleteOldStrings for each imported entry, all not imported entries
      * are deleted completely and their translations with them.
      *
-     * @param array $entry
+     * @param array        $entry
      * @param StringEntity $string
      */
     protected function deleteOldTranslations(array $entry, StringEntity $string)
     {
-        foreach($string->getTranslations() as $translation) {
+        foreach ($string->getTranslations() as $translation) {
             $languageName = $translation->getLanguage()->getName();
 
             // the translations language was not imported -> don't delete this entry,
@@ -495,7 +510,7 @@ class Import
 
             if (!$match) {
                 $this->service->getEntityManager()->remove($translation);
-                $this->result['deletedTranslations']++;
+                ++$this->result['deletedTranslations'];
             }
         }
     }
@@ -531,7 +546,7 @@ class Import
      */
     public function setSkipLiveModule($value = true)
     {
-        $this->skipLiveModule = (bool)$value;
+        $this->skipLiveModule = (bool) $value;
     }
 
     /**
@@ -541,7 +556,7 @@ class Import
      */
     public function setDeleteNotImported($value = false)
     {
-        $this->deleteNotImported = (bool)$value;
+        $this->deleteNotImported = (bool) $value;
     }
 
     /**
@@ -552,7 +567,7 @@ class Import
      */
     public function setCreateLanguages($value = false)
     {
-        $this->createLanguages = (bool)$value;
+        $this->createLanguages = (bool) $value;
     }
 
     /**
@@ -563,7 +578,7 @@ class Import
      */
     public function setCreateModules($value = false)
     {
-        $this->createModules = (bool)$value;
+        $this->createModules = (bool) $value;
     }
 
     /**
@@ -574,6 +589,6 @@ class Import
      */
     public function setOverwriteAll($value = false)
     {
-        $this->overwriteAll = (bool)$value;
+        $this->overwriteAll = (bool) $value;
     }
 }

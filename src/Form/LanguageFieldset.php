@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright   (c) 2014, Vrok
  * @license     http://customlicense CustomLicense
@@ -27,8 +28,8 @@ class LanguageFieldset extends Fieldset implements InputFilterProviderInterface
         parent::populateValues($data);
 
         if (isset($data['id'])) {
-            $parent = $this->get('parent');
-            $findMethod = $parent->getOption('find_method');
+            $parent                             = $this->get('parent');
+            $findMethod                         = $parent->getOption('find_method');
             $findMethod['params']['languageId'] = $data['id'];
             // use setOptions instead of setOption to trigger the proxy update
             $parent->setOptions(['find_method' => $findMethod]);
@@ -57,6 +58,7 @@ class LanguageFieldset extends Fieldset implements InputFilterProviderInterface
     public function getInputFilterSpecification()
     {
         $repository = $this->getEntityManager()->getRepository(Language::class);
+
         return $repository->getInputFilterSpecification();
     }
 }

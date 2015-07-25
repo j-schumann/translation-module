@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright   (c) 2014, Vrok
  * @license     http://customlicense CustomLicense
@@ -8,7 +9,7 @@
 namespace TranslationModule\Form;
 
 use Vrok\Form\Form;
-use \Zend\InputFilter\InputFilterProviderInterface;
+use Zend\InputFilter\InputFilterProviderInterface;
 
 /**
  * Form to set the export options.
@@ -54,14 +55,14 @@ class Export extends Form implements InputFilterProviderInterface
     {
         $stringRepository = $this->getEntityManager()
                 ->getRepository('TranslationModule\Entity\String');
-        $moduleSpec = $stringRepository->getInputSpecification('module');
-        $moduleSpec['required'] = false;
+        $moduleSpec               = $stringRepository->getInputSpecification('module');
+        $moduleSpec['required']   = false;
         $moduleSpec['allowEmpty'] = true;
 
         $translationRepository = $this->getEntityManager()
                 ->getRepository('TranslationModule\Entity\Translation');
-        $languageSpec = $translationRepository->getInputSpecification('language');
-        $languageSpec['required'] = false;
+        $languageSpec               = $translationRepository->getInputSpecification('language');
+        $languageSpec['required']   = false;
         $languageSpec['allowEmpty'] = true;
 
         return [

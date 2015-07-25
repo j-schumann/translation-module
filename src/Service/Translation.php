@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright   (c) 2014, Vrok
  * @license     http://customlicense CustomLicense
@@ -40,13 +41,14 @@ class Translation implements ListenerAggregateInterface, ServiceLocatorAwareInte
      * Creates a new Language from the given form data.
      *
      * @param array $formData
+     *
      * @return LanguageEntity
      */
     public function createLanguage(array $formData)
     {
         $objectManager = $this->getEntityManager();
 
-        $language = new LanguageEntity();
+        $language           = new LanguageEntity();
         $languageRepository = $objectManager
                 ->getRepository('TranslationModule\Entity\Language');
         $languageRepository->updateInstance($language, $formData);
@@ -59,13 +61,14 @@ class Translation implements ListenerAggregateInterface, ServiceLocatorAwareInte
      * Creates a new Module from the given form data.
      *
      * @param array $formData
+     *
      * @return ModuleEntity
      */
     public function createModule(array $formData)
     {
         $objectManager = $this->getEntityManager();
 
-        $module = new ModuleEntity();
+        $module           = new ModuleEntity();
         $moduleRepository = $objectManager
                 ->getRepository('TranslationModule\Entity\Module');
         $moduleRepository->updateInstance($module, $formData);
@@ -82,6 +85,7 @@ class Translation implements ListenerAggregateInterface, ServiceLocatorAwareInte
     public function getLanguageRepository()
     {
         $em = $this->getEntityManager();
+
         return $em->getRepository('TranslationModule\Entity\Language');
     }
 
@@ -93,6 +97,7 @@ class Translation implements ListenerAggregateInterface, ServiceLocatorAwareInte
     public function getModuleRepository()
     {
         $em = $this->getEntityManager();
+
         return $em->getRepository('TranslationModule\Entity\Module');
     }
 
@@ -104,6 +109,7 @@ class Translation implements ListenerAggregateInterface, ServiceLocatorAwareInte
     public function getStringRepository()
     {
         $em = $this->getEntityManager();
+
         return $em->getRepository('TranslationModule\Entity\String');
     }
 
@@ -115,6 +121,7 @@ class Translation implements ListenerAggregateInterface, ServiceLocatorAwareInte
     public function getTranslationRepository()
     {
         $em = $this->getEntityManager();
+
         return $em->getRepository('TranslationModule\Entity\Translation');
     }
 
@@ -122,7 +129,7 @@ class Translation implements ListenerAggregateInterface, ServiceLocatorAwareInte
      * Retrieves a list of all locales currently available with one or more
      * languages.
      *
-     * @return array    [localeA => localeA, localeB => localeB, ...]
+     * @return array [localeA => localeA, localeB => localeB, ...]
      */
     public function getLocales()
     {
@@ -133,7 +140,7 @@ class Translation implements ListenerAggregateInterface, ServiceLocatorAwareInte
             ->getArrayResult();
 
         $locales = [];
-        foreach($result as $locale) {
+        foreach ($result as $locale) {
             $locales[$locale['locale']] = $locale['locale'];
         }
 
@@ -141,24 +148,27 @@ class Translation implements ListenerAggregateInterface, ServiceLocatorAwareInte
     }
 
     /**
-     * Returns a list of all configured locales indexed by the language id
+     * Returns a list of all configured locales indexed by the language id.
      *
      * @todo order and select only the necessary columns in DQL
+     *
      * @param string $locale (optional) if set only languages with that locale are returned
-     * @return array    array(languageId => locale)
+     *
+     * @return array array(languageId => locale)
      */
     public function getLocalesById($locale = null)
     {
         $languages = $locale
-            ? $this->getLanguageRepository()->findBy(array('locale' => $locale))
+            ? $this->getLanguageRepository()->findBy(['locale' => $locale])
             : $this->getLanguageRepository()->findAll();
 
-        $list = array();
-        foreach($languages as $language) {
+        $list = [];
+        foreach ($languages as $language) {
             $list[$language->getId()] = $language->getLocale();
         }
 
         asort($list);
+
         return $list;
     }
 
@@ -166,8 +176,9 @@ class Translation implements ListenerAggregateInterface, ServiceLocatorAwareInte
      * Returns the filename of the translation file specified by the locale/
      * module combination.
      *
-     * @param string $locale
+     * @param string       $locale
      * @param ModuleEntity $module
+     *
      * @return string
      */
     public function getFilename($locale, ModuleEntity $module)
@@ -181,21 +192,21 @@ class Translation implements ListenerAggregateInterface, ServiceLocatorAwareInte
      * Allows to generates multiple translation files at once.
      *
      * @param string $locale
-     * @param int $moduleId
+     * @param int    $moduleId
      */
     public function generateTranslationFiles($locale = null, $moduleId = null)
     {
         $locales = $locale
-            ? array($locale)
+            ? [$locale]
             : $this->getLocales();
 
         $repository = $this->getModuleRepository();
-        $modules = $moduleId
-            ? array($repository->find($moduleId))
+        $modules    = $moduleId
+            ? [$repository->find($moduleId)]
             : $repository->findAll();
 
-        foreach($modules as $module) {
-            foreach($locales as $locale) {
+        foreach ($modules as $module) {
+            foreach ($locales as $locale) {
                 $this->generateTranslationFile($locale, $module);
             }
         }
@@ -205,25 +216,26 @@ class Translation implements ListenerAggregateInterface, ServiceLocatorAwareInte
      * Generates the single translation file holding all entries for the given
      * locale and module combination.
      *
-     * @param string $locale
+     * @param string       $locale
      * @param ModuleEntity $module
+     *
      * @throws Exception\RuntimeException
      */
     public function generateTranslationFile($locale, ModuleEntity $module)
     {
         $fileName = $this->getFilename($locale, $module);
-        $handle = fopen($fileName, 'w', false);
+        $handle   = fopen($fileName, 'w', false);
         if (!$handle) {
             throw new Exception\RuntimeException('Translation: file "'.$fileName
                 .'" could not be created or overwritten!');
         }
 
-        $translations = $this->getTranslationsByLocale($locale, $module);
+        $translations  = $this->getTranslationsByLocale($locale, $module);
         $partialHelper = $this->getServiceLocator()->get('viewhelpermanager')
                 ->get('partial');
-        $partial = $partialHelper('translation-module/partials/array.template.phtml', array(
+        $partial = $partialHelper('translation-module/partials/array.template.phtml', [
             'translations' => $translations,
-        ));
+        ]);
 
         fwrite($handle, $partial);
         fclose($handle);
@@ -235,7 +247,7 @@ class Translation implements ListenerAggregateInterface, ServiceLocatorAwareInte
     }
 
     /**
-     * Removes all translation files for the given locale
+     * Removes all translation files for the given locale.
      *
      * @param string $locale
      */
@@ -256,7 +268,7 @@ class Translation implements ListenerAggregateInterface, ServiceLocatorAwareInte
     public function clearModuleFiles(ModuleEntity $module)
     {
         $locales = $this->getLocales();
-        foreach($locales as $locale) {
+        foreach ($locales as $locale) {
             $filename = $this->getFilename($locale, $module);
             unlink($filename);
         }
@@ -286,8 +298,9 @@ class Translation implements ListenerAggregateInterface, ServiceLocatorAwareInte
      * and module combination.
      *
      * @param LanguageEntity $language
-     * @param ModuleEntity $module      If null, all modules are fetched.
-     * @return array    array(string => translation)
+     * @param ModuleEntity   $module   If null, all modules are fetched.
+     *
+     * @return array array(string => translation)
      */
     public function getTranslations(LanguageEntity $language,
             ModuleEntity $module = null)
@@ -308,8 +321,8 @@ class Translation implements ListenerAggregateInterface, ServiceLocatorAwareInte
 
         $result = $qb->getQuery()->getArrayResult();
 
-        $entries = array();
-        foreach($result as $row) {
+        $entries = [];
+        foreach ($result as $row) {
             $entries[$row['string']] = $row['translation'];
         }
 
@@ -321,13 +334,15 @@ class Translation implements ListenerAggregateInterface, ServiceLocatorAwareInte
      * module combination.
      * Includes inheritance, used for translation file generation.
      *
-     * @param string $locale
-     * @param ModuleEntity $module  If null, all modules are fetched.
+     * @param string       $locale
+     * @param ModuleEntity $module If null, all modules are fetched.
+     *
      * @return array
      */
     public function getTranslationsByLocale($locale, $module = null)
     {
         $language = $this->getLanguageForLocale($locale);
+
         return $this->getTranslationsByLanguage($language, $module);
     }
 
@@ -335,13 +350,14 @@ class Translation implements ListenerAggregateInterface, ServiceLocatorAwareInte
      * Similar to getTranslations() but includes inheritance.
      *
      * @param LanguageEntity $language
-     * @param ModuleEntity $module     If null, all modules are fetched.
+     * @param ModuleEntity   $module   If null, all modules are fetched.
+     *
      * @return array
      */
     public function getTranslationsByLanguage(LanguageEntity $language,
             ModuleEntity $module = null)
     {
-        $strings = array();
+        $strings = [];
 
         $parent = $language->getParent();
         if ($parent && $parent->getLocale() == $language->getLocale()) {
@@ -357,23 +373,24 @@ class Translation implements ListenerAggregateInterface, ServiceLocatorAwareInte
      * Return the language to use (as base) for the given locale.
      *
      * @param string $locale
-     * @return LanguageEntity  language or null if none found
+     *
+     * @return LanguageEntity language or null if none found
      */
     public function getLanguageForLocale($locale)
     {
-        $metaService = $this->getServiceLocator()->get('Vrok\Service\Meta');
-        $useLanguages = $metaService->getValue('translation.useLanguages') ?: array();
+        $metaService  = $this->getServiceLocator()->get('Vrok\Service\Meta');
+        $useLanguages = $metaService->getValue('translation.useLanguages') ?: [];
 
         // check if there is a default language for the given code and if this language
         // still exists!
         if (isset($useLanguages[$locale])
             && $language = $this->getLanguageRepository()->find($useLanguages[$locale])
         ) {
-           return $language;
+            return $language;
         }
 
         $repository = $this->getLanguageRepository();
-        $language = $repository->findOneBy(array('locale' => $locale));
+        $language   = $repository->findOneBy(['locale' => $locale]);
 
         if ($language) {
             $useLanguages[$locale] = $language->getId();
@@ -384,25 +401,28 @@ class Translation implements ListenerAggregateInterface, ServiceLocatorAwareInte
     }
 
     /**
-     * Returns a list of all configured language names indexed by their Id
+     * Returns a list of all configured language names indexed by their Id.
      *
      * @todo filter in DQL
-     * @param string $locale  (optional) if set only languages with that locale are returned
-     * @return array    array(languageId => languageName)
+     *
+     * @param string $locale (optional) if set only languages with that locale are returned
+     *
+     * @return array array(languageId => languageName)
      */
     public function getLanguageNames($locale = null)
     {
         $languages = $locale
-            ? $this->getLanguageRepository()->findBy(array('locale' => $locale))
+            ? $this->getLanguageRepository()->findBy(['locale' => $locale])
             : $this->getLanguageRepository()->findAll();
 
-        $list = array();
-        foreach($languages as $language) {
+        $list = [];
+        foreach ($languages as $language) {
             /* @var $language LanguageEntity */
             $list[$language->getId()] = $language->getName();
         }
 
         asort($list);
+
         return $list;
     }
 
@@ -410,17 +430,19 @@ class Translation implements ListenerAggregateInterface, ServiceLocatorAwareInte
      * Returns a list of all available translation modules.
      *
      * @todo filter in DQL
-     * @return array    array(moduleId => moduleName)
+     *
+     * @return array array(moduleId => moduleName)
      */
     public function getModuleNames()
     {
         $modules = $this->getModuleRepository()->findAll();
-        $list = array();
-        foreach($modules as $module) {
+        $list    = [];
+        foreach ($modules as $module) {
             $list[$module->getId()] = $module->getName;
         }
 
         asort($list);
+
         return $list;
     }
 
@@ -429,14 +451,14 @@ class Translation implements ListenerAggregateInterface, ServiceLocatorAwareInte
      * in other instances or for backup.
      *
      * @param LanguageEntity $language (optional) if given only entries for that language
-     *     are exported
-     * @param ModuleEntity $module (optional) if given only entries for that module are
-     *     exported
+     *                                 are exported
+     * @param ModuleEntity   $module   (optional) if given only entries for that module are
+     *                                 exported
      */
     public function export($language = null, $module = null)
     {
         $filename = 'translation';
-        $data = array();
+        $data     = [];
 
         $qb = $this->getStringRepository()->createQueryBuilder('s');
         $qb->leftJoin('s.translations', 't')
@@ -460,28 +482,28 @@ class Translation implements ListenerAggregateInterface, ServiceLocatorAwareInte
         $result = $qb->getQuery()->getResult();
         foreach ($result as $string) {
             /* @var $string StringEntity */
-            $entry = array(
+            $entry = [
                 'string'       => $string->getString(),
                 'context'      => $string->getContext(),
                 'params'       => $string->getParams(),
                 'occurrences'  => $string->getOccurrences(),
                 'module'       => $string->getModule()->getName(),
                 'updatedAt'    => $string->getUpdatedAt()->format('Y-m-d H:i:s'),
-                'translations' => array(),
-            );
+                'translations' => [],
+            ];
 
-            foreach($string->getTranslations() as $translation) {
+            foreach ($string->getTranslations() as $translation) {
                 /* @var $translation TranslationEntity */
                 if ($language && $language->getId() != $translation->getLanguage()->getId()) {
                     continue;
                 }
 
-                $entry['translations'][] = array(
+                $entry['translations'][] = [
                     'locale'      => $translation->getLanguage()->getLocale(),
                     'language'    => $translation->getLanguage()->getName(),
                     'translation' => $translation->getTranslation(),
                     'updatedAt'   => $translation->getUpdatedAt()->format('Y-m-d H:i:s'),
-                );
+                ];
             }
 
             $data[] = $entry;
@@ -491,8 +513,8 @@ class Translation implements ListenerAggregateInterface, ServiceLocatorAwareInte
         $filename .= date('-Ymd').'.json';
 
         ob_end_clean();
-        header("Content-Type: text/json");
-        header("Content-Length: ".  strlen($json));
+        header('Content-Type: text/json');
+        header('Content-Length: '.strlen($json));
         header('Content-Disposition: attachment;filename='.$filename);
 
         echo $json;
@@ -505,6 +527,7 @@ class Translation implements ListenerAggregateInterface, ServiceLocatorAwareInte
      * If no files are found null is returned.
      *
      * @param string $locale
+     *
      * @return TextDomain
      */
     public function loadMessages($locale)
@@ -512,13 +535,13 @@ class Translation implements ListenerAggregateInterface, ServiceLocatorAwareInte
         $files = scandir(getcwd().DIRECTORY_SEPARATOR.$this->getTranslationDir());
         if (!$files) {
             // @todo warning? error log?
-            return null;
+            return;
         }
 
-        $loader = new \Zend\I18n\Translator\Loader\PhpArray();
+        $loader       = new \Zend\I18n\Translator\Loader\PhpArray();
         $domainObject = null;
 
-        foreach($files as $filename) {
+        foreach ($files as $filename) {
             if (!preg_match('/^'.$locale.'-/', $filename)) {
                 continue;
             }
@@ -527,8 +550,7 @@ class Translation implements ListenerAggregateInterface, ServiceLocatorAwareInte
                 $this->getTranslationDir().DIRECTORY_SEPARATOR.$filename);
             if (!$domainObject) {
                 $domainObject = $new;
-            }
-            else {
+            } else {
                 $domainObject->merge($new);
             }
         }
@@ -541,11 +563,11 @@ class Translation implements ListenerAggregateInterface, ServiceLocatorAwareInte
      */
     public function attach(EventManagerInterface $events)
     {
-        $sharedEvents = $events->getSharedManager();
+        $sharedEvents      = $events->getSharedManager();
         $this->listeners[] = $sharedEvents->attach(
             'translator',
             \Vrok\I18n\Translator\Translator::EVENT_LOAD_MESSAGES,
-            array($this, 'onLoadMessages')
+            [$this, 'onLoadMessages']
         );
     }
 
@@ -559,6 +581,7 @@ class Translation implements ListenerAggregateInterface, ServiceLocatorAwareInte
     public function onLoadMessages(EventInterface $e)
     {
         $locale = $e->getParam('locale');
+
         return $this->loadMessages($locale);
     }
 
@@ -576,12 +599,14 @@ class Translation implements ListenerAggregateInterface, ServiceLocatorAwareInte
      * Creates a new Import instance.
      *
      * @param array $options
+     *
      * @return Import
      */
-    public function createImport(array $options = array())
+    public function createImport(array $options = [])
     {
         $import = new Import($this);
         $import->setOptions($options);
+
         return $import;
     }
 
@@ -589,6 +614,7 @@ class Translation implements ListenerAggregateInterface, ServiceLocatorAwareInte
      * Allows to set multiple options at once.
      *
      * @todo support ArrayObject etc
+     *
      * @param array $options
      */
     public function setOptions(array $options)

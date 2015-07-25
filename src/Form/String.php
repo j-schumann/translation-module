@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright   (c) 2014, Vrok
  * @license     http://customlicense CustomLicense
@@ -24,7 +25,7 @@ class String extends Form
         $this->add([
             'type'    => 'TranslationModule\Form\StringFieldset',
             'options' => [
-                'use_as_base_fieldset' => true
+                'use_as_base_fieldset' => true,
             ],
         ]);
 

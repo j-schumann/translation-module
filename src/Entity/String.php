@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright   (c) 2014, Vrok
  * @license     http://customlicense CustomLicense
@@ -53,11 +54,13 @@ class String extends Entity
      * Sets the string.
      *
      * @param string $string
+     *
      * @return self
      */
     public function setString($string)
     {
         $this->string = $string;
+
         return $this;
     }
 // </editor-fold>
@@ -82,11 +85,13 @@ class String extends Entity
      * Sets the context.
      *
      * @param string $context
+     *
      * @return self
      */
     public function setContext($context)
     {
         $this->context = $context;
+
         return $this;
     }
 // </editor-fold>
@@ -111,11 +116,13 @@ class String extends Entity
      * Sets the parameters.
      *
      * @param string $params
+     *
      * @return self
      */
     public function setParams($params)
     {
         $this->params = $params;
+
         return $this;
     }
 // </editor-fold>
@@ -140,11 +147,13 @@ class String extends Entity
      * Sets the occurrences.
      *
      * @param string $occurrences
+     *
      * @return self
      */
     public function setOccurrences($occurrences)
     {
         $this->occurrences = $occurrences;
+
         return $this;
     }
 // </editor-fold>
@@ -170,11 +179,13 @@ class String extends Entity
      * Sets the module.
      *
      * @param Module $module
+     *
      * @return self
      */
     public function setModule(Module $module)
     {
         $this->module = $module;
+
         return $this;
     }
 // </editor-fold>

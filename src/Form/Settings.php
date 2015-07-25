@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright   (c) 2015, Vrok
  * @license     http://customlicense CustomLicense
@@ -8,7 +9,7 @@
 namespace TranslationModule\Form;
 
 use Vrok\Form\Form;
-use \Zend\InputFilter\InputFilterProviderInterface;
+use Zend\InputFilter\InputFilterProviderInterface;
 
 /**
  * Form to set the system options like default locale and language variants.
@@ -40,7 +41,7 @@ class Settings extends Form implements InputFilterProviderInterface
         ]);
 
         $elements = [];
-        foreach($locales as $locale) {
+        foreach ($locales as $locale) {
             $languages = $service->getLanguageNames($locale);
 
             $elements[] = [
@@ -59,9 +60,9 @@ class Settings extends Form implements InputFilterProviderInterface
         }
 
         $this->add([
-            'type'     => 'Fieldset',
-            'name'     => 'languageVariants',
-            'options'  => [
+            'type'    => 'Fieldset',
+            'name'    => 'languageVariants',
+            'options' => [
                 'label' => 'form.translation.languageVariants.label',
             ],
             'elements' => $elements,
@@ -89,8 +90,8 @@ class Settings extends Form implements InputFilterProviderInterface
         $locales = $service->getLocales();
 
         $variants = ['type' => 'Zend\InputFilter\InputFilter'];
-        foreach($locales as $locale) {
-            $languages = $service->getLanguageNames($locale);
+        foreach ($locales as $locale) {
+            $languages         = $service->getLanguageNames($locale);
             $variants[$locale] = [
                 'required'   => true,
                 'allowEmpty' => false,

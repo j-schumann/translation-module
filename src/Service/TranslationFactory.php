@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright   (c) 2014, Vrok
  * @license     http://customlicense CustomLicense
@@ -16,6 +17,7 @@ class TranslationFactory implements FactoryInterface
      * Creates an instance of the translation service, injects the dependencies.
      *
      * @param ServiceLocatorInterface $serviceLocator
+     *
      * @return Translation
      */
     public function createService(ServiceLocatorInterface $serviceLocator)

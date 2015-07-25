@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright   (c) 2014, Vrok
  * @license     http://customlicense CustomLicense
@@ -18,6 +19,7 @@ class LanguageRepository extends EntityRepository
      * Returns a form element specification to use with the form factory.
      *
      * @param string $fieldName
+     *
      * @return array
      */
     public function getFormElementDefinition($fieldName)
@@ -25,7 +27,7 @@ class LanguageRepository extends EntityRepository
         $definition = parent::getFormElementDefinition($fieldName);
         switch ($fieldName) {
             case 'id':
-                $definition['type'] = 'hidden';
+                $definition['type']                  = 'hidden';
                 $definition['options']['allowEmpty'] = true;
                 break;
 
@@ -56,18 +58,20 @@ class LanguageRepository extends EntityRepository
      * Does no deep-check for circular references!
      *
      * @param int $languageId
+     *
      * @return Collection
      */
     public function getPotentialParents($languageId)
     {
-        $em = $this->getEntityManager();
+        $em    = $this->getEntityManager();
         $query = $em->createQuery('SELECT l FROM TranslationModule\Entity\Language l'
-            . ' WHERE l.id <> :id AND (l.parent <> :parent OR l.parent IS NULL)'
-            . ' ORDER BY l.name ASC');
+            .' WHERE l.id <> :id AND (l.parent <> :parent OR l.parent IS NULL)'
+            .' ORDER BY l.name ASC');
         $query->setParameters([
-            'id'     => (int)$languageId,
-            'parent' => (int)$languageId
+            'id'     => (int) $languageId,
+            'parent' => (int) $languageId,
         ]);
+
         return $query->getResult();
     }
 
@@ -75,6 +79,7 @@ class LanguageRepository extends EntityRepository
      * Returns the validators&filters for the given field to use in an input filter.
      *
      * @param string $fieldName
+     *
      * @return array
      */
     public function getInputSpecification($fieldName)
@@ -84,8 +89,7 @@ class LanguageRepository extends EntityRepository
         switch ($fieldName) {
             case 'name':
                 $spec['validators']['stringLength']['options']['messages'] = [
-                    \Zend\Validator\StringLength::TOO_LONG =>
-                        $this->getTranslationString('name').'.tooLong',
+                    \Zend\Validator\StringLength::TOO_LONG => $this->getTranslationString('name').'.tooLong',
                 ];
 
                 $spec['validators']['uniqueObject'] = [
@@ -95,10 +99,9 @@ class LanguageRepository extends EntityRepository
                         'object_repository' => $this,
                         'fields'            => 'name',
                         'object_manager'    => $this->getEntityManager(),
-                        'messages' => [
-                            \DoctrineModule\Validator\UniqueObject::ERROR_OBJECT_NOT_UNIQUE =>
-                                $this->getTranslationString('name').'.notUnique',
-                        ]
+                        'messages'          => [
+                            \DoctrineModule\Validator\UniqueObject::ERROR_OBJECT_NOT_UNIQUE => $this->getTranslationString('name').'.notUnique',
+                        ],
                     ],
                 ];
                 break;

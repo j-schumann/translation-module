@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright   (c) 2014, Vrok
  * @license     http://customlicense CustomLicense
@@ -30,7 +31,7 @@ class Language extends Entity
     public function __construct()
     {
         $this->translations = new ArrayCollection();
-        $this->children = new ArrayCollection();
+        $this->children     = new ArrayCollection();
     }
 
 // <editor-fold defaultstate="collapsed" desc="children">
@@ -56,7 +57,7 @@ class Language extends Entity
      */
     public function addChildren($elements)
     {
-        foreach($elements as $element) {
+        foreach ($elements as $element) {
             $this->children->add($element);
         }
     }
@@ -68,7 +69,7 @@ class Language extends Entity
      */
     public function removeChildren($elements)
     {
-        foreach($elements as $element) {
+        foreach ($elements as $element) {
             $this->children->removeElement($element);
         }
     }
@@ -94,11 +95,13 @@ class Language extends Entity
      * Sets the locale.
      *
      * @param string $locale
+     *
      * @return self
      */
     public function setLocale($locale)
     {
         $this->locale = $locale;
+
         return $this;
     }
 // </editor-fold>
@@ -123,11 +126,13 @@ class Language extends Entity
      * Sets the language name.
      *
      * @param string $name
+     *
      * @return self
      */
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 // </editor-fold>
@@ -152,11 +157,13 @@ class Language extends Entity
      * Sets the parent language.
      *
      * @param Language $parent
+     *
      * @return self
      */
     public function setParent(Language $parent = null)
     {
         $this->parent = $parent;
+
         return $this;
     }
 // </editor-fold>
@@ -183,7 +190,7 @@ class Language extends Entity
      */
     public function addTranslations($elements)
     {
-        foreach($elements as $element) {
+        foreach ($elements as $element) {
             $this->translations->add($element);
         }
     }
@@ -195,7 +202,7 @@ class Language extends Entity
      */
     public function removeTranslations($elements)
     {
-        foreach($elements as $element) {
+        foreach ($elements as $element) {
             $this->translations->removeElement($element);
         }
     }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright   (c) 2014, Vrok
  * @license     http://customlicense CustomLicense
@@ -42,11 +43,13 @@ class Translation extends Entity
      * Sets the translation.
      *
      * @param string $translation
+     *
      * @return self
      */
     public function setTranslation($translation)
     {
         $this->translation = $translation;
+
         return $this;
     }
 // </editor-fold>
@@ -73,11 +76,13 @@ class Translation extends Entity
      * Sets the string.
      *
      * @param String $string
+     *
      * @return self
      */
     public function setString(String $string)
     {
         $this->string = $string;
+
         return $this;
     }
 // </editor-fold>
@@ -104,11 +109,13 @@ class Translation extends Entity
      * Sets the translated language.
      *
      * @param Language $language
+     *
      * @return self
      */
     public function setLanguage(Language $language)
     {
         $this->language = $language;
+
         return $this;
     }
 // </editor-fold>

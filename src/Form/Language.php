@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright   (c) 2014, Vrok
  * @license     http://customlicense CustomLicense
@@ -19,7 +20,7 @@ class Language extends Form
         $this->add([
             'type'    => 'TranslationModule\Form\LanguageFieldset',
             'options' => [
-                'use_as_base_fieldset' => true
+                'use_as_base_fieldset' => true,
             ],
         ]);
 

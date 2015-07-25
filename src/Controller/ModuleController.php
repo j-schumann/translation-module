@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright   (c) 2014, Vrok
  * @license     http://customlicense CustomLicense
@@ -21,9 +22,10 @@ class ModuleController extends AbstractActionController
      */
     public function indexAction()
     {
-        $em = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+        $em         = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
         $repository = $em->getRepository('TranslationModule\Entity\Module');
-        $modules = $repository->findAll();
+        $modules    = $repository->findAll();
+
         return $this->createViewModel(['modules' => $modules]);
     }
 
@@ -56,6 +58,7 @@ class ModuleController extends AbstractActionController
 
         $this->flashMessenger()
                 ->addSuccessMessage('message.translation.module.created');
+
         return $this->redirect()->toRoute('translation/module');
     }
 
@@ -69,10 +72,11 @@ class ModuleController extends AbstractActionController
         $module = $this->getEntityFromParam('TranslationModule\Entity\Module');
         if (!$module instanceof \TranslationModule\Entity\Module) {
             $this->getResponse()->setStatusCode(404);
+
             return $this->createViewModel(['message' => $module]);
         }
 
-        $em = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+        $em         = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
         $repository = $em->getRepository('TranslationModule\Entity\Module');
 
         $form = $this->getServiceLocator()->get('FormElementManager')
@@ -98,6 +102,7 @@ class ModuleController extends AbstractActionController
 
         $this->flashMessenger()
                 ->addSuccessMessage('message.translation.module.edited');
+
         return $this->redirect()->toRoute('translation/module');
     }
 
@@ -111,13 +116,14 @@ class ModuleController extends AbstractActionController
         $module = $this->getEntityFromParam('TranslationModule\Entity\Module');
         if (!$module instanceof \TranslationModule\Entity\Module) {
             $this->getResponse()->setStatusCode(404);
+
             return $this->createViewModel(['message' => $module]);
         }
 
         $form = $this->getServiceLocator()->get('FormElementManager')
                 ->get('Vrok\Form\ConfirmationForm');
         $form->setConfirmationMessage(['message.translation.module.confirmDelete',
-            $module->getName()]);
+            $module->getName(), ]);
 
         $viewModel = $this->createViewModel([
             'form'   => $form,
@@ -139,6 +145,7 @@ class ModuleController extends AbstractActionController
 
         $this->flashMessenger()
                 ->addSuccessMessage('message.translation.module.deleted');
+
         return $this->redirect()->toRoute('translation/module');
     }
 }
