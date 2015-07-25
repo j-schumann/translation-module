@@ -25,7 +25,7 @@ class LanguageController extends AbstractActionController
         $repository = $em->getRepository('TranslationModule\Entity\Language');
         $languages = $repository->findAll();
 
-        return $this->createViewModel(array('languages' => $languages));
+        return $this->createViewModel(['languages' => $languages]);
     }
 
     /**
@@ -38,9 +38,9 @@ class LanguageController extends AbstractActionController
         $form = $this->getServiceLocator()->get('FormElementManager')
                 ->get('TranslationModule\Form\Language');
 
-        $viewModel = $this->createViewModel(array(
+        $viewModel = $this->createViewModel([
             'form' => $form,
-        ));
+        ]);
 
         if (!$this->request->isPost()) {
             return $viewModel;
@@ -71,7 +71,7 @@ class LanguageController extends AbstractActionController
         $language = $this->getEntityFromParam('TranslationModule\Entity\Language');
         if (!$language instanceof \TranslationModule\Entity\Language) {
             $this->getResponse()->setStatusCode(404);
-            return $this->createViewModel(array('message' => $language));
+            return $this->createViewModel(['message' => $language]);
         }
 
         $em = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
@@ -79,12 +79,12 @@ class LanguageController extends AbstractActionController
 
         $form = $this->getServiceLocator()->get('FormElementManager')
                 ->get('TranslationModule\Form\Language');
-        $form->setData(array('language' => $repository->getInstanceData($language)));
+        $form->setData(['language' => $repository->getInstanceData($language)]);
 
-        $viewModel = $this->createViewModel(array(
+        $viewModel = $this->createViewModel([
             'form'     => $form,
             'language' => $language,
-        ));
+        ]);
 
         if (!$this->request->isPost()) {
             return $viewModel;
@@ -113,18 +113,18 @@ class LanguageController extends AbstractActionController
         $language = $this->getEntityFromParam('TranslationModule\Entity\Language');
         if (!$language instanceof \TranslationModule\Entity\Language) {
             $this->getResponse()->setStatusCode(404);
-            return $this->createViewModel(array('message' => $language));
+            return $this->createViewModel(['message' => $language]);
         }
 
         $form = $this->getServiceLocator()->get('FormElementManager')
                 ->get('Vrok\Form\ConfirmationForm');
-        $form->setConfirmationMessage(array('message.translation.language.confirmDelete',
-            $language->getName()));
+        $form->setConfirmationMessage(['message.translation.language.confirmDelete',
+                $language->getName()]);
 
-        $viewModel = $this->createViewModel(array(
+        $viewModel = $this->createViewModel([
             'form'     => $form,
             'language' => $language,
-        ));
+        ]);
 
         if (!$this->request->isPost()) {
             return $viewModel;

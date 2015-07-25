@@ -26,9 +26,9 @@ class StringController extends AbstractActionController
         $form = $this->getServiceLocator()->get('FormElementManager')
                 ->get('TranslationModule\Form\StringFilter');
         if ($sessionContainer['stringFilter']) {
-            $form->setData(array(
+            $form->setData([
                 'stringFilter' => $sessionContainer['stringFilter']
-            ));
+            ]);
         }
         if ($this->request->isPost()) {
             $isValid = $form->setData($this->request->getPost())->isValid();
@@ -71,10 +71,10 @@ class StringController extends AbstractActionController
 
         $strings = $qb->getQuery()->getResult();
 
-        return $this->createViewModel(array(
+        return $this->createViewModel([
             'form'    => $form,
             'strings' => $strings,
-        ));
+        ]);
     }
 
     /**
@@ -87,9 +87,9 @@ class StringController extends AbstractActionController
         $form = $this->getServiceLocator()->get('FormElementManager')
                 ->get('TranslationModule\Form\String');
 
-        $viewModel = $this->createViewModel(array(
+        $viewModel = $this->createViewModel([
             'form' => $form,
-        ));
+        ]);
 
         if (!$this->request->isPost()) {
             return $viewModel;
@@ -123,7 +123,7 @@ class StringController extends AbstractActionController
         $string = $this->getEntityFromParam('TranslationModule\Entity\String');
         if (!$string instanceof \TranslationModule\Entity\String) {
             $this->getResponse()->setStatusCode(404);
-            return $this->createViewModel(array('message' => $string));
+            return $this->createViewModel(['message' => $string]);
         }
 
         $em = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
@@ -131,12 +131,12 @@ class StringController extends AbstractActionController
 
         $form = $this->getServiceLocator()->get('FormElementManager')
                 ->get('TranslationModule\Form\String');
-        $form->setData(array('string' => $repository->getInstanceData($string)));
+        $form->setData(['string' => $repository->getInstanceData($string)]);
 
-        $viewModel = $this->createViewModel(array(
+        $viewModel = $this->createViewModel([
             'form'   => $form,
             'string' => $string,
-        ));
+        ]);
 
         if (!$this->request->isPost()) {
             return $viewModel;
@@ -165,18 +165,18 @@ class StringController extends AbstractActionController
         $string = $this->getEntityFromParam('TranslationModule\Entity\String');
         if (!$string instanceof \TranslationModule\Entity\String) {
             $this->getResponse()->setStatusCode(404);
-            return $this->createViewModel(array('message' => $string));
+            return $this->createViewModel(['message' => $string]);
         }
 
         $form = $this->getServiceLocator()->get('FormElementManager')
                 ->get('Vrok\Form\ConfirmationForm');
-        $form->setConfirmationMessage(array('message.string.language.confirmDelete',
-            $string->getString()));
+        $form->setConfirmationMessage(['message.string.language.confirmDelete',
+            $string->getString()]);
 
-        $viewModel = $this->createViewModel(array(
+        $viewModel = $this->createViewModel([
             'form'   => $form,
             'string' => $string,
-        ));
+        ]);
 
         if (!$this->request->isPost()) {
             return $viewModel;

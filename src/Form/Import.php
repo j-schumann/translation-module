@@ -21,68 +21,67 @@ class Import extends Form
     {
         $this->setName('translation-import');
 
-        $file = array(
+        $file = [
             'type'    => 'Zend\Form\Element\File',
             'name'    => 'jsonfile',
-            'options' => array(
+            'options' => [
                 'label' => 'form.translation.jsonfile.label',
-            ),
-            'attributes' => array(
+            ],
+            'attributes' => [
                 'required' => 'required',
                 'accept'   => 'text/json',
-            ),
-        );
+            ],
+        ];
         $this->add($file);
 
-        $overwrite = array(
+        $overwrite = [
             'type'    => 'Zend\Form\Element\Checkbox',
             'name'    => 'overwriteAll',
-            'options' => array(
+            'options' => [
                 'label'       => 'form.translation.overwriteAll.label',
                 'description' => 'form.translation.overwriteAll.description',
-            ),
-            'attributes' => array(
-            ),
-        );
+            ],
+            'attributes' => [],
+        ];
         $this->add($overwrite);
 
-        $createLanguages = array(
+        $createLanguages = [
             'type'    => 'Zend\Form\Element\Checkbox',
             'name'    => 'createLanguages',
-            'options' => array(
+            'options' => [
                 'label'       => 'form.translation.createLanguages.label',
                 'description' => 'form.translation.createLanguages.description',
-            ),
-        );
+            ],
+        ];
         $this->add($createLanguages);
 
-        $createModules = array(
+        $createModules = [
             'type'    => 'Zend\Form\Element\Checkbox',
             'name'    => 'createModules',
-            'options' => array(
+            'options' => [
                 'label'       => 'form.translation.createModules.label',
                 'description' => 'form.translation.createModules.description',
-            ),
-        );
+            ],
+        ];
         $this->add($createModules);
 
-        $deleteNotImported = array(
+        $deleteNotImported = [
             'type'    => 'Zend\Form\Element\Checkbox',
             'name'    => 'deleteNotImported',
-            'options' => array(
+            'options' => [
                 'label'       => 'form.translation.deleteNotImported.label',
                 'description' => 'form.translation.deleteNotImported.description',
-            ),
-        );
+            ],
+        ];
         $this->add($deleteNotImported);
 
-        $this->add(array(
+        $this->add([
             'name'       => 'submit',
-            'attributes' => array(
+            'attributes' => [
                 'type'  => 'submit',
                 'value' => 'form.submit',
                 'id'    => 'submit',
-            ),
-        ));
+            ],
+        ]);
     }
 }

@@ -28,16 +28,16 @@ class ManagementController extends AbstractActionController
 
         $metaService = $this->getServiceLocator()->get('Vrok\Service\Meta');
         $defaultLocale = $metaService->getValue('defaultLocale');
-        $useLanguages = $metaService->getValue('translation.useLanguages') ?: array();
+        $useLanguages = $metaService->getValue('translation.useLanguages') ?: [];
 
         $form->setData([
             'defaultLocale'    => $defaultLocale,
             'languageVariants' => $useLanguages,
         ]);
 
-        $viewModel = $this->createViewModel(array(
+        $viewModel = $this->createViewModel([
             'form' => $form,
-        ));
+        ]);
 
         if (!$this->request->isPost()
             || !$form->setData($this->request->getPost())->isValid()
@@ -70,9 +70,9 @@ class ManagementController extends AbstractActionController
                 ->get('Vrok\Form\ConfirmationForm');
         $form->setConfirmationMessage('message.translation.management.confirmBuild');
 
-        $viewModel = $this->createViewModel(array(
+        $viewModel = $this->createViewModel([
             'form'   => $form,
-        ));
+        ]);
 
         if (!$this->request->isPost()) {
             return $viewModel;
@@ -102,9 +102,9 @@ class ManagementController extends AbstractActionController
         $form = $this->getServiceLocator()->get('FormElementManager')
                 ->get('TranslationModule\Form\Export');
 
-        $viewModel = $this->createViewModel(array(
+        $viewModel = $this->createViewModel([
             'form' => $form,
-        ));
+        ]);
 
         if (!$this->request->isPost()) {
             return $viewModel;
@@ -138,10 +138,10 @@ class ManagementController extends AbstractActionController
         $form = $this->getServiceLocator()->get('FormElementManager')
                 ->get('TranslationModule\Form\Import');
 
-        $viewModel = $this->createViewModel(array(
+        $viewModel = $this->createViewModel([
             'form'   => $form,
             'result' => null,
-        ));
+        ]);
 
         if (!$this->request->isPost()) {
             return $viewModel;

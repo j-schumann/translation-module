@@ -24,7 +24,7 @@ class ModuleController extends AbstractActionController
         $em = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
         $repository = $em->getRepository('TranslationModule\Entity\Module');
         $modules = $repository->findAll();
-        return $this->createViewModel(array('modules' => $modules));
+        return $this->createViewModel(['modules' => $modules]);
     }
 
     /**
@@ -37,9 +37,9 @@ class ModuleController extends AbstractActionController
         $form = $this->getServiceLocator()->get('FormElementManager')
                 ->get('TranslationModule\Form\Module');
 
-        $viewModel = $this->createViewModel(array(
+        $viewModel = $this->createViewModel([
             'form' => $form,
-        ));
+        ]);
 
         if (!$this->request->isPost()) {
             return $viewModel;
@@ -69,7 +69,7 @@ class ModuleController extends AbstractActionController
         $module = $this->getEntityFromParam('TranslationModule\Entity\Module');
         if (!$module instanceof \TranslationModule\Entity\Module) {
             $this->getResponse()->setStatusCode(404);
-            return $this->createViewModel(array('message' => $module));
+            return $this->createViewModel(['message' => $module]);
         }
 
         $em = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
@@ -79,10 +79,10 @@ class ModuleController extends AbstractActionController
                 ->get('TranslationModule\Form\Module');
         $form->setData($repository->getInstanceData($module));
 
-        $viewModel = $this->createViewModel(array(
+        $viewModel = $this->createViewModel([
             'form'   => $form,
             'module' => $module,
-        ));
+        ]);
 
         if (!$this->request->isPost()) {
             return $viewModel;
@@ -111,18 +111,18 @@ class ModuleController extends AbstractActionController
         $module = $this->getEntityFromParam('TranslationModule\Entity\Module');
         if (!$module instanceof \TranslationModule\Entity\Module) {
             $this->getResponse()->setStatusCode(404);
-            return $this->createViewModel(array('message' => $module));
+            return $this->createViewModel(['message' => $module]);
         }
 
         $form = $this->getServiceLocator()->get('FormElementManager')
                 ->get('Vrok\Form\ConfirmationForm');
-        $form->setConfirmationMessage(array('message.translation.module.confirmDelete',
-            $module->getName()));
+        $form->setConfirmationMessage(['message.translation.module.confirmDelete',
+            $module->getName()]);
 
-        $viewModel = $this->createViewModel(array(
+        $viewModel = $this->createViewModel([
             'form'   => $form,
             'module' => $module,
-        ));
+        ]);
 
         if (!$this->request->isPost()) {
             return $viewModel;

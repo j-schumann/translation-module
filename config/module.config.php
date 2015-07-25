@@ -12,15 +12,15 @@ return [
     ],
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="controllers">
-    'controllers' => array(
-        'invokables' => array(
+    'controllers' => [
+        'invokables' => [
             'TranslationModule\Controller\Index' => 'TranslationModule\Controller\IndexController',
             'TranslationModule\Controller\Language' => 'TranslationModule\Controller\LanguageController',
             'TranslationModule\Controller\Management' => 'TranslationModule\Controller\ManagementController',
             'TranslationModule\Controller\Module' => 'TranslationModule\Controller\ModuleController',
             'TranslationModule\Controller\String' => 'TranslationModule\Controller\StringController',
-        ),
-    ),
+        ],
+    ],
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="doctrine">
     'doctrine' => [
@@ -39,348 +39,347 @@ return [
     ],
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="navigation">
-    'navigation' => array(
-        'default' => array(
-            'administration' => array(
+    'navigation' => [
+        'default' => [
+            'administration' => [
                 'label' => 'navigation.administration', // default label or none is rendered
                 'uri'   => '#', // we need either a route or an URI to avoid fatal error
                 'order' => 1000,
-                'pages' => array(
-                    array(
+                'pages' => [
+                    [
                         'label'     => 'navigation.translation',
                         'route'     => 'translation',
                         'resource'  => 'controller/TranslationModule\Controller\Index',
                         'privilege' => 'index',
                         'order'     => 900,
-                        'pages'     => array(
-                            array(
+                        'pages'     => [
+                            [
                                 'label'     => 'navigation.translation.management.settings',
                                 'route'     => 'translation/management/settings',
                                 'resource'  => 'controller/TranslationModule\Controller\Management',
                                 'privilege' => 'settings',
                                 'visible'   => false,
-                            ),
-                            array(
+                            ],
+                            [
                                 'label'     => 'navigation.translation.management.build',
                                 'route'     => 'translation/management/build',
                                 'resource'  => 'controller/TranslationModule\Controller\Management',
                                 'privilege' => 'build',
                                 'visible'   => false,
-                            ),
-                            array(
+                            ],
+                            [
                                 'label'     => 'navigation.translation.management.export',
                                 'route'     => 'translation/management/export',
                                 'resource'  => 'controller/TranslationModule\Controller\Management',
                                 'privilege' => 'export',
                                 'visible'   => false,
-                            ),
-                            array(
+                            ],
+                            [
                                 'label'     => 'navigation.translation.management.import',
                                 'route'     => 'translation/management/import',
                                 'resource'  => 'controller/TranslationModule\Controller\Management',
                                 'privilege' => 'import',
                                 'visible'   => false,
-                            ),
-                            array(
+                            ],
+                            [
                                 'label'     => 'navigation.translation.string',
                                 'route'     => 'translation/string',
                                 'resource'  => 'controller/TranslationModule\Controller\String',
                                 'privilege' => 'index',
-                                'pages'     => array(
-                                    array(
+                                'pages'     => [
+                                    [
                                         'label' => 'navigation.translation.string.create',
                                         'route' => 'translation/string/create',
-                                    ),
-                                    array(
+                                    ],
+                                    [
                                         'label'   => 'navigation.translation.string.edit',
                                         'route'   => 'translation/string/edit',
                                         'visible' => false,
-                                    ),
-                                    array(
+                                    ],
+                                    [
                                         'label'   => 'navigation.translation.string.delete',
                                         'route'   => 'translation/string/delete',
                                         'visible' => false,
-                                    ),
-                                ),
-                            ),
-                            array(
+                                    ],
+                                ],
+                            ],
+                            [
                                 'label'   => 'navigation.translation.language',
                                 'route'   => 'translation/language',
                                 'visible' => false,
-                                'pages'   => array(
-                                    array(
+                                'pages'   => [
+                                    [
                                         'label' => 'navigation.translation.language.create',
                                         'route' => 'translation/language/create',
-                                    ),
-                                    array(
+                                    ],
+                                    [
                                         'label'   => 'navigation.translation.language.edit',
                                         'route'   => 'translation/language/edit',
                                         'visible' => false,
-                                    ),
-                                    array(
+                                    ],
+                                    [
                                         'label'   => 'navigation.translation.language.delete',
                                         'route'   => 'translation/language/delete',
                                         'visible' => false,
-                                    ),
-                                ),
-                            ),
-                            array(
+                                    ],
+                                ],
+                            ],
+                            [
                                 'label'   => 'navigation.translation.module',
                                 'route'   => 'translation/module',
                                 'visible' => false,
-                                'pages'   => array(
-                                    array(
+                                'pages'   => [
+                                    [
                                         'label' => 'navigation.translation.module.create',
                                         'route' => 'translation/module/create',
-                                    ),
-                                    array(
+                                    ],
+                                    [
                                         'label'   => 'navigation.translation.module.edit',
                                         'route'   => 'translation/module/edit',
                                         'visible' => false,
-                                    ),
-                                    array(
+                                    ],
+                                    [
                                         'label'   => 'navigation.translation.module.delete',
                                         'route'   => 'translation/module/delete',
                                         'visible' => false,
-                                    ),
-                                ),
-                            ),
-                        ),
-                    ),
-                ),
-            ),
-        ),
-    ),
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ],
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="router">
-    'router' => array(
-        'routes' => array(
-            'translation' => array(
-                'type' => 'Literal',
-                'options' => array(
-                    'route' => '/translation/',
-                    'defaults' => array(
+    'router' => [
+        'routes' => [
+            'translation' => [
+                'type'    => 'Literal',
+                'options' => [
+                    'route'    => '/translation/',
+                    'defaults' => [
                         'controller' => 'TranslationModule\Controller\Index',
-                        'action' => 'index',
-                    ),
-                ),
+                        'action'     => 'index',
+                    ],
+                ],
                 'may_terminate' => true,
-                'child_routes' => array(
-                    'string' => array(
-                        'type' => 'literal',
-                        'options' => array(
-                            'route' => 'string/',
-                            'defaults' => array(
+                'child_routes'  => [
+                    'string' => [
+                        'type'    => 'literal',
+                        'options' => [
+                            'route'    => 'string/',
+                            'defaults' => [
                                 'controller' => 'TranslationModule\Controller\String',
-                                'action' => 'index'
-                            ),
-                        ),
+                                'action'     => 'index'
+                            ],
+                        ],
                         'may_terminate' => true,
-                        'child_routes' => array(
-                            'create' => array(
-                                'type' => 'segment',
-                                'options' => array(
-                                    'route' => 'create[/]',
-                                    'defaults' => array(
+                        'child_routes' => [
+                            'create' => [
+                                'type'    => 'segment',
+                                'options' => [
+                                    'route'    => 'create[/]',
+                                    'defaults' => [
                                         'action' => 'create'
-                                    ),
-                                ),
-                            ),
-                            'edit' => array(
-                                'type' => 'segment',
-                                'options' => array(
-                                    'route' => 'edit/[:id][/]',
-                                    'constraints' => array(
+                                    ],
+                                ],
+                            ],
+                            'edit' => [
+                                'type'    => 'segment',
+                                'options' => [
+                                    'route'       => 'edit/[:id][/]',
+                                    'constraints' => [
                                         'id' => '[0-9]+'
-                                    ),
-                                    'defaults' => array(
+                                    ],
+                                    'defaults' => [
                                         'action' => 'edit'
-                                    ),
-                                ),
-                            ),
-                            'delete' => array(
-                                'type' => 'segment',
-                                'options' => array(
-                                    'route' => 'delete/[:id][/]',
-                                    'constraints' => array(
+                                    ],
+                                ],
+                            ],
+                            'delete' => [
+                                'type'    => 'segment',
+                                'options' => [
+                                    'route'       => 'delete/[:id][/]',
+                                    'constraints' => [
                                         'id' => '[0-9]+'
-                                    ),
-                                    'defaults' => array(
+                                    ],
+                                    'defaults' => [
                                         'action' => 'delete'
-                                    ),
-                                ),
-                            ),
-                        ),
-                    ),
-                    'language' => array(
-                        'type' => 'literal',
-                        'options' => array(
-                            'route' => 'language/',
-                            'defaults' => array(
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                    'language' => [
+                        'type'    => 'literal',
+                        'options' => [
+                            'route'    => 'language/',
+                            'defaults' => [
                                 'controller' => 'TranslationModule\Controller\Language',
-                                'action' => 'index'
-                            ),
-                        ),
+                                'action'     => 'index'
+                            ],
+                        ],
                         'may_terminate' => true,
-                        'child_routes' => array(
-                            'create' => array(
-                                'type' => 'segment',
-                                'options' => array(
-                                    'route' => 'create[/]',
-                                    'defaults' => array(
+                        'child_routes'  => [
+                            'create' => [
+                                'type'    => 'segment',
+                                'options' => [
+                                    'route'    => 'create[/]',
+                                    'defaults' => [
                                         'action' => 'create'
-                                    ),
-                                ),
-                            ),
-                            'edit' => array(
-                                'type' => 'segment',
-                                'options' => array(
-                                    'route' => 'edit/[:id][/]',
-                                    'constraints' => array(
+                                    ],
+                                ],
+                            ],
+                            'edit' => [
+                                'type'    => 'segment',
+                                'options' => [
+                                    'route'       => 'edit/[:id][/]',
+                                    'constraints' => [
                                         'id' => '[0-9]+'
-                                    ),
-                                    'defaults' => array(
+                                    ],
+                                    'defaults' => [
                                         'action' => 'edit'
-                                    ),
-                                ),
-                            ),
-                            'delete' => array(
-                                'type' => 'segment',
-                                'options' => array(
-                                    'route' => 'delete/[:id][/]',
-                                    'constraints' => array(
+                                    ],
+                                ],
+                            ],
+                            'delete' => [
+                                'type'    => 'segment',
+                                'options' => [
+                                    'route'       => 'delete/[:id][/]',
+                                    'constraints' => [
                                         'id' => '[0-9]+'
-                                    ),
-                                    'defaults' => array(
+                                    ],
+                                    'defaults' => [
                                         'action' => 'delete'
-                                    ),
-                                ),
-                            ),
-                        ),
-                    ),
-                    'module' => array(
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                    'module' => [
                         'type' => 'literal',
-                        'options' => array(
-                            'route' => 'module/',
-                            'defaults' => array(
+                        'options' => [
+                            'route'    => 'module/',
+                            'defaults' => [
                                 'controller' => 'TranslationModule\Controller\Module',
-                                'action' => 'index'
-                            ),
-                        ),
+                                'action'     => 'index'
+                            ],
+                        ],
                         'may_terminate' => true,
-                        'child_routes' => array(
-                            'create' => array(
-                                'type' => 'segment',
-                                'options' => array(
-                                    'route' => 'create[/]',
-                                    'defaults' => array(
+                        'child_routes'  => [
+                            'create' => [
+                                'type'    => 'segment',
+                                'options' => [
+                                    'route'    => 'create[/]',
+                                    'defaults' => [
                                         'action' => 'create'
-                                    ),
-                                ),
-                            ),
-                            'edit' => array(
-                                'type' => 'segment',
-                                'options' => array(
-                                    'route' => 'edit/[:id][/]',
-                                    'constraints' => array(
+                                    ],
+                                ],
+                            ],
+                            'edit' => [
+                                'type'    => 'segment',
+                                'options' => [
+                                    'route'       => 'edit/[:id][/]',
+                                    'constraints' => [
                                         'id' => '[0-9]+'
-                                    ),
-                                    'defaults' => array(
+                                    ],
+                                    'defaults' => [
                                         'action' => 'edit'
-                                    ),
-                                ),
-                            ),
-                            'delete' => array(
-                                'type' => 'segment',
-                                'options' => array(
-                                    'route' => 'delete/[:id][/]',
-                                    'constraints' => array(
+                                    ],
+                                ],
+                            ],
+                            'delete' => [
+                                'type'    => 'segment',
+                                'options' => [
+                                    'route'       => 'delete/[:id][/]',
+                                    'constraints' => [
                                         'id' => '[0-9]+'
-                                    ),
-                                    'defaults' => array(
+                                    ],
+                                    'defaults' => [
                                         'action' => 'delete'
-                                    ),
-                                ),
-                            ),
-                        ),
-                    ),
-                    'management' => array(
-                        'type' => 'literal',
-                        'options' => array(
-                            'route' => 'management/',
-                            'defaults' => array(
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                    'management' => [
+                        'type'    => 'literal',
+                        'options' => [
+                            'route'    => 'management/',
+                            'defaults' => [
                                 'controller' => 'TranslationModule\Controller\Management',
-                                'action' => 'index'
-                            ),
-                        ),
+                                'action'     => 'index'
+                            ],
+                        ],
                         'may_terminate' => true,
-                        'child_routes' => array(
-                            'settings' => array(
+                        'child_routes'  => [
+                            'settings' => [
                                 'type'    => 'segment',
-                                'options' => array(
+                                'options' => [
                                     'route'    => 'settings[/]',
-                                    'defaults' => array(
+                                    'defaults' => [
                                         'action' => 'settings'
-                                    ),
-                                ),
-                            ),
-                            'build' => array(
+                                    ],
+                                ],
+                            ],
+                            'build' => [
                                 'type'    => 'segment',
-                                'options' => array(
+                                'options' => [
                                     'route'    => 'build[/]',
-                                    'defaults' => array(
+                                    'defaults' => [
                                         'action' => 'build'
-                                    ),
-                                ),
-                            ),
-                            'export' => array(
-                                'type' => 'segment',
-                                'options' => array(
-                                    'route' => 'export[/]',
-                                    'defaults' => array(
+                                    ],
+                                ],
+                            ],
+                            'export' => [
+                                'type'    => 'segment',
+                                'options' => [
+                                    'route'    => 'export[/]',
+                                    'defaults' => [
                                         'action' => 'export'
-                                    ),
-                                ),
-                            ),
-                            'import' => array(
-                                'type' => 'segment',
-                                'options' => array(
-                                    'route' => 'import[/]',
-                                    'defaults' => array(
+                                    ],
+                                ],
+                            ],
+                            'import' => [
+                                'type'    => 'segment',
+                                'options' => [
+                                    'route'    => 'import[/]',
+                                    'defaults' => [
                                         'action' => 'import'
-                                    ),
-                                ),
-                            ),
-                        ),
-                    ),
-                ),
-            ),
-        ),
-    ),
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ],
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="service_manager">
-    'service_manager' => array(
-        'factories' => array(
+    'service_manager' => [
+        'factories' => [
             'TranslationModule\Service\Translation' => 'TranslationModule\Service\TranslationFactory',
-        ),
-    ),
+        ],
+    ],
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="translator">
-    'translator' => array(
+    'translator' => [
         'event_manager_enabled' => true,
-        'translation_dir' => 'data/translations',
-    ),
+        'translation_dir'      => 'data/translations',
+    ],
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="view_manager">
-    'view_manager' => array(
-        'template_map' => array(
-            // @todo necessary?
+    'view_manager' => [
+        'template_map' => [
             'translation-module/index/index' => __DIR__ . '/../view/translation-module/index/index.phtml',
             'translation-module/moduleForm' => __DIR__ . '/../view/translation-module/partials/moduleForm.phtml',
-        ),
-        'template_path_stack' => array(
+        ],
+        'template_path_stack' => [
             __DIR__ . '/../view',
-        ),
-    ),
+        ],
+    ],
 // </editor-fold>
 ];

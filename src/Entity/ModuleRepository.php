@@ -51,32 +51,35 @@ class ModuleRepository extends EntityRepository
 
         switch ($fieldName) {
             case 'name':
-                $spec['validators']['stringLength']['options']['messages'] =
-                    array(\Zend\Validator\StringLength::TOO_LONG =>
-                        $this->getTranslationString('name').'.tooLong',);
+                $spec['validators']['stringLength']['options']['messages'] = [
+                    \Zend\Validator\StringLength::TOO_LONG =>
+                        $this->getTranslationString('name').'.tooLong',
+                ];
 
-                $spec['validators']['alNum'] = array(
+                $spec['validators']['alNum'] = [
                     'name'    => 'Zend\Validator\Regex',
-                    'options' => array(
+                    'options' => [
                         'pattern'  => '/^[0-9a-zA-Z]+$/',
-                        'messages' => array(\Zend\Validator\Regex::NOT_MATCH =>
-                            $this->getTranslationString('name').'.notAlNum',)
-                    ),
-                );
+                        'messages' => [
+                            \Zend\Validator\Regex::NOT_MATCH =>
+                                $this->getTranslationString('name').'.notAlNum',
+                        ],
+                    ],
+                ];
 
-                $spec['validators']['uniqueObject'] = array(
+                $spec['validators']['uniqueObject'] = [
                     'name'    => 'DoctrineModule\Validator\UniqueObject',
-                    'options' => array(
+                    'options' => [
                         'use_context'       => true,
                         'object_repository' => $this,
                         'fields'            => 'name',
                         'object_manager'    => $this->getEntityManager(),
-                        'messages' => array(
+                        'messages' => [
                             \DoctrineModule\Validator\UniqueObject::ERROR_OBJECT_NOT_UNIQUE =>
                                 $this->getTranslationString('name').'.notUnique',
-                        )
-                    ),
-                );
+                        ],
+                    ],
+                ];
                 break;
         }
 

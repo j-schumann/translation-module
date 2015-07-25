@@ -35,12 +35,12 @@ class LanguageRepository extends EntityRepository
                 break;
 
             case 'parent':
-                $definition['options']['find_method'] = array(
+                $definition['options']['find_method'] = [
                     'name'   => 'getPotentialParents',
-                    'params' => array(
+                    'params' => [
                         'languageId' => 0,
-                    ),
-                );
+                    ],
+                ];
 
                 // @todo - validator to prevent setting a parent which in turn
                 // has the current element as parent/grandparent/etc
@@ -64,10 +64,10 @@ class LanguageRepository extends EntityRepository
         $query = $em->createQuery('SELECT l FROM TranslationModule\Entity\Language l'
             . ' WHERE l.id <> :id AND (l.parent <> :parent OR l.parent IS NULL)'
             . ' ORDER BY l.name ASC');
-        $query->setParameters(array(
+        $query->setParameters([
             'id'     => (int)$languageId,
             'parent' => (int)$languageId
-        ));
+        ]);
         return $query->getResult();
     }
 
@@ -83,23 +83,24 @@ class LanguageRepository extends EntityRepository
 
         switch ($fieldName) {
             case 'name':
-                $spec['validators']['stringLength']['options']['messages'] =
-                    array(\Zend\Validator\StringLength::TOO_LONG =>
-                        $this->getTranslationString('name').'.tooLong',);
+                $spec['validators']['stringLength']['options']['messages'] = [
+                    \Zend\Validator\StringLength::TOO_LONG =>
+                        $this->getTranslationString('name').'.tooLong',
+                ];
 
-                $spec['validators']['uniqueObject'] = array(
+                $spec['validators']['uniqueObject'] = [
                     'name'    => 'DoctrineModule\Validator\UniqueObject',
-                    'options' => array(
+                    'options' => [
                         'use_context'       => true,
                         'object_repository' => $this,
                         'fields'            => 'name',
                         'object_manager'    => $this->getEntityManager(),
-                        'messages' => array(
+                        'messages' => [
                             \DoctrineModule\Validator\UniqueObject::ERROR_OBJECT_NOT_UNIQUE =>
                                 $this->getTranslationString('name').'.notUnique',
-                        )
-                    ),
-                );
+                        ]
+                    ],
+                ];
                 break;
         }
 
