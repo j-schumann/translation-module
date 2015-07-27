@@ -512,7 +512,6 @@ class Translation implements ListenerAggregateInterface, ServiceLocatorAwareInte
         $json = json_encode($data, JSON_UNESCAPED_UNICODE);
         $filename .= date('-Ymd').'.json';
 
-        ob_end_clean();
         header('Content-Type: text/json');
         header('Content-Length: '.strlen($json));
         header('Content-Disposition: attachment;filename='.$filename);
