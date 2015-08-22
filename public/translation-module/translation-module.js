@@ -4,7 +4,7 @@
     };
 
 
-    // initialize ajax-forms on page load
+    // initialize forms on page load
     $(document).ready(function() {
 
         $("#translation-string").on('keyup change', 'textarea[id^=string-translations]', function(e) {
