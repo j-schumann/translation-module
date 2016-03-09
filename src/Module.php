@@ -15,7 +15,9 @@ use Zend\ModuleManager\Feature\ConfigProviderInterface;
 /**
  * Module bootstrapping.
  */
-class Module implements BootstrapListenerInterface, ConfigProviderInterface
+class Module implements
+    BootstrapListenerInterface,
+    ConfigProviderInterface
 {
     /**
      * Returns the modules default configuration.

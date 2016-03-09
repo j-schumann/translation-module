@@ -18,17 +18,15 @@ use Zend\EventManager\EventInterface;
 use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\ListenerAggregateInterface;
 use Zend\EventManager\ListenerAggregateTrait;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorAwareTrait;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Contains processes for creating and managing Translation objects and their
  * associated actions.
  */
-class Translation implements ListenerAggregateInterface, ServiceLocatorAwareInterface
+class Translation implements ListenerAggregateInterface
 {
     use ListenerAggregateTrait;
-    use ServiceLocatorAwareTrait;
 
     /**
      * Directory where the translation files build from the database are stored.
@@ -36,6 +34,34 @@ class Translation implements ListenerAggregateInterface, ServiceLocatorAwareInte
      * @var string
      */
     protected $translationDir = 'data/translations';
+
+    /**
+     * @var ServiceLocatorInterface
+     */
+    protected $serviceLocator = null;
+
+    /**
+     * Class constructor - stores the ServiceLocator instance.
+     * We inject the locator directly as not all services are lazy loaded
+     * but some are only used in rare cases.
+     * @todo lazyload all required services and include them in the factory
+     *
+     * @param ServiceLocatorInterface $serviceLocator
+     */
+    public function __construct(ServiceLocatorInterface $serviceLocator)
+    {
+        $this->serviceLocator = $serviceLocator;;
+    }
+
+    /**
+     * Retrieve the stored service manager instance.
+     *
+     * @return ServiceLocatorInterface
+     */
+    private function getServiceLocator()
+    {
+        return $this->serviceLocator;
+    }
 
     /**
      * Creates a new Language from the given form data.

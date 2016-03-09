@@ -22,8 +22,7 @@ class TranslationFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $translation = new Translation();
-        $translation->setServiceLocator($serviceLocator);
+        $translation = new Translation($serviceLocator);
 
         $configuration = $serviceLocator->get('Config');
         $translation->setOptions(isset($configuration['translator'])
