@@ -11,13 +11,17 @@ namespace TranslationModule;
 use Zend\EventManager\EventInterface;
 use Zend\ModuleManager\Feature\BootstrapListenerInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
+use Zend\ModuleManager\Feature\ControllerProviderInterface;
+use Zend\ModuleManager\Feature\FormElementProviderInterface;
 
 /**
  * Module bootstrapping.
  */
 class Module implements
     BootstrapListenerInterface,
-    ConfigProviderInterface
+    ConfigProviderInterface,
+    ControllerProviderInterface,
+    FormElementProviderInterface
 {
     /**
      * Returns the modules default configuration.
@@ -27,6 +31,100 @@ class Module implements
     public function getConfig()
     {
         return include __DIR__.'/../config/module.config.php';
+    }
+
+    /**
+     * Return additional serviceManager config with closures that should not be
+     * in the config files to allow caching of the complete configuration.
+     *
+     * @return array
+     * @todo alle controller auf ihre dependencies prüfen und ggf direct injecten
+     */
+    public function getControllerConfig()
+    {
+        return [
+            'factories' => [
+                'TranslationModule\Controller\Index' => function ($sm) {
+                    return new Controller\IndexController($sm);
+                },
+                'TranslationModule\Controller\Language' => function ($sm) {
+                    return new Controller\LanguageController($sm);
+                },
+                'TranslationModule\Controller\Management' => function ($sm) {
+                    return new Controller\ManagementController($sm);
+                },
+                'TranslationModule\Controller\Module' => function ($sm) {
+                    return new Controller\ModuleController($sm);
+                },
+                'TranslationModule\Controller\String' => function ($sm) {
+                    return new Controller\StringController($sm);
+                },
+            ],
+        ];
+    }
+
+    /**
+     * Return additional serviceManager config with closures that should not be in the
+     * config files to allow caching of the complete configuration.
+     *
+     * @return array
+     */
+    public function getFormElementConfig()
+    {
+        return [
+            'factories' => [
+                'TranslationModule\Form\Export' => function ($sm) {
+                    $form = new Form\Export();
+                    $form->setServiceLocator($sm);
+                    return $form;
+                },
+                'TranslationModule\Form\Import' => function ($sm) {
+                    $form = new Form\Import();
+                    $form->setServiceLocator($sm);
+                    return $form;
+                },
+                'TranslationModule\Form\Language' => function ($sm) {
+                    $form = new Form\Language();
+                    $form->setServiceLocator($sm);
+                    return $form;
+                },
+                'TranslationModule\Form\LanguageFieldset' => function ($sm) {
+                    $form = new Form\LanguageFieldset();
+                    $form->setServiceLocator($sm);
+                    return $form;
+                },
+                'TranslationModule\Form\Module' => function ($sm) {
+                    $form = new Form\Module();
+                    $form->setServiceLocator($sm);
+                    return $form;
+                },
+                'TranslationModule\Form\Settings' => function ($sm) {
+                    $form = new Form\Settings();
+                    $form->setServiceLocator($sm);
+                    return $form;
+                },
+                'TranslationModule\Form\String' => function ($sm) {
+                    $form = new Form\String();
+                    $form->setServiceLocator($sm);
+                    return $form;
+                },
+                'TranslationModule\Form\StringFieldset' => function ($sm) {
+                    $form = new Form\StringFieldset();
+                    $form->setServiceLocator($sm);
+                    return $form;
+                },
+                'TranslationModule\Form\StringFilter' => function ($sm) {
+                    $form = new Form\StringFilter();
+                    $form->setServiceLocator($sm);
+                    return $form;
+                },
+                'TranslationModule\Form\TranslationFieldset' => function ($sm) {
+                    $form = new Form\TranslationFieldset();
+                    $form->setServiceLocator($sm);
+                    return $form;
+                },
+            ],
+        ];
     }
 
     /**

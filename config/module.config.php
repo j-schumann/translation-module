@@ -12,17 +12,6 @@ return [
         ],
     ],
 // </editor-fold>
-// <editor-fold defaultstate="collapsed" desc="controllers">
-    'controllers' => [
-        'invokables' => [
-            'TranslationModule\Controller\Index'      => 'TranslationModule\Controller\IndexController',
-            'TranslationModule\Controller\Language'   => 'TranslationModule\Controller\LanguageController',
-            'TranslationModule\Controller\Management' => 'TranslationModule\Controller\ManagementController',
-            'TranslationModule\Controller\Module'     => 'TranslationModule\Controller\ModuleController',
-            'TranslationModule\Controller\String'     => 'TranslationModule\Controller\StringController',
-        ],
-    ],
-// </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="doctrine">
     'doctrine' => [
         'driver' => [
