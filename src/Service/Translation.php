@@ -313,7 +313,7 @@ class Translation implements ListenerAggregateInterface
         // but we can not know all used textdomains.
         // just remove all entries for textDomain = default?
         // In ein event auslagern?
-        $cache = $this->getServiceLocator()->get('translator')->getCache();
+        $cache = $this->getServiceLocator()->get('MvcTranslator')->getCache();
         if ($cache instanceof \Zend\Cache\Storage\FlushableInterface) {
             $cache->flush();
         }
