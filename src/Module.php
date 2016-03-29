@@ -107,6 +107,7 @@ class Module implements
                     $form = new Form\Settings();
                     $form->setEntityManager($sm->getServiceLocator()->get('Doctrine\ORM\EntityManager'));
                     $form->setTranslator($sm->getServiceLocator()->get('MvcTranslator'));
+                    $form->setTranslationService($sm->getServiceLocator()->get('TranslationModule\Service\Translation'));
                     return $form;
                 },
                 'TranslationModule\Form\String' => function ($sm) {
@@ -119,6 +120,7 @@ class Module implements
                     $form = new Form\StringFieldset();
                     $form->setEntityManager($sm->getServiceLocator()->get('Doctrine\ORM\EntityManager'));
                     $form->setTranslator($sm->getServiceLocator()->get('MvcTranslator'));
+                    $form->setServiceLocator($sm);
                     return $form;
                 },
                 'TranslationModule\Form\StringFilter' => function ($sm) {

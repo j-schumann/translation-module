@@ -11,12 +11,27 @@ namespace TranslationModule\Form;
 use TranslationModule\Entity\String;
 use Vrok\Form\Fieldset;
 use Zend\InputFilter\InputFilterProviderInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Form to create or edit a translation string.
  */
 class StringFieldset extends Fieldset implements InputFilterProviderInterface
 {
+
+    /**
+     * @var ServiceLocatorInterface
+     */
+    protected $serviceLocator = null;
+
+    /**
+     * @param ServiceLocatorInterface $sl
+     */
+    public function setServiceLocator(ServiceLocatorInterface $sl)
+    {
+        $this->serviceLocator = $sl;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -45,7 +60,7 @@ class StringFieldset extends Fieldset implements InputFilterProviderInterface
         ]);
 
         foreach ($languages as $language) {
-            $translation = $this->getServiceLocator()
+            $translation = $this->serviceLocator
                     ->get('TranslationModule\Form\TranslationFieldset');
             $translation->setLanguage($language);
             $this->get('translations')->add($translation);

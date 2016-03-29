@@ -8,6 +8,7 @@
 
 namespace TranslationModule\Form;
 
+use TranslationModule\Service\Translation as TranslationService;
 use Vrok\Form\Form;
 use Zend\InputFilter\InputFilterProviderInterface;
 
@@ -17,17 +18,26 @@ use Zend\InputFilter\InputFilterProviderInterface;
 class Settings extends Form implements InputFilterProviderInterface
 {
     /**
+     * @var TranslationService
+     */
+    protected $translationService = null;
+
+    /**
+     * @param TranslationService $ts
+     */
+    public function setTranslationService(TranslationService $ts)
+    {
+        $this->translationService = $ts;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function init()
     {
         $this->setName('translation-settings');
 
-        $service = $this->getServiceLocator()->getServiceLocator()
-                ->get('TranslationModule\Service\Translation');
-        /* @var $service \TranslationModule\Service\Translation */
-
-        $locales = $service->getLocales();
+        $locales = $this->translationService->getLocales();
         $this->add([
             'type'    => 'Zend\Form\Element\Select',
             'name'    => 'defaultLocale',
@@ -42,7 +52,7 @@ class Settings extends Form implements InputFilterProviderInterface
 
         $elements = [];
         foreach ($locales as $locale) {
-            $languages = $service->getLanguageNames($locale);
+            $languages = $this->translationService->getLanguageNames($locale);
 
             $elements[] = [
                 'spec' => [
@@ -83,15 +93,11 @@ class Settings extends Form implements InputFilterProviderInterface
      */
     public function getInputFilterSpecification()
     {
-        $service = $this->getServiceLocator()->getServiceLocator()
-                ->get('TranslationModule\Service\Translation');
-        /* @var $service \TranslationModule\Service\Translation */
-
-        $locales = $service->getLocales();
+        $locales = $this->translationService->getLocales();
 
         $variants = ['type' => 'Zend\InputFilter\InputFilter'];
         foreach ($locales as $locale) {
-            $languages         = $service->getLanguageNames($locale);
+            $languages         = $this->translationService->getLanguageNames($locale);
             $variants[$locale] = [
                 'required'   => true,
                 'allowEmpty' => false,
