@@ -50,7 +50,7 @@ class Translation implements ListenerAggregateInterface
      */
     public function __construct(ServiceLocatorInterface $serviceLocator)
     {
-        $this->serviceLocator = $serviceLocator;;
+        $this->serviceLocator = $serviceLocator;
     }
 
     /**

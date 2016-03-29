@@ -75,52 +75,62 @@ class Module implements
             'factories' => [
                 'TranslationModule\Form\Export' => function ($sm) {
                     $form = new Form\Export();
-                    $form->setServiceLocator($sm);
+                    $form->setEntityManager($sm->getServiceLocator()->get('Doctrine\ORM\EntityManager'));
+                    $form->setTranslator($sm->getServiceLocator()->get('MvcTranslator'));
                     return $form;
                 },
                 'TranslationModule\Form\Import' => function ($sm) {
                     $form = new Form\Import();
-                    $form->setServiceLocator($sm);
+                    $form->setEntityManager($sm->getServiceLocator()->get('Doctrine\ORM\EntityManager'));
+                    $form->setTranslator($sm->getServiceLocator()->get('MvcTranslator'));
                     return $form;
                 },
                 'TranslationModule\Form\Language' => function ($sm) {
                     $form = new Form\Language();
-                    $form->setServiceLocator($sm);
+                    $form->setEntityManager($sm->getServiceLocator()->get('Doctrine\ORM\EntityManager'));
+                    $form->setTranslator($sm->getServiceLocator()->get('MvcTranslator'));
                     return $form;
                 },
                 'TranslationModule\Form\LanguageFieldset' => function ($sm) {
                     $form = new Form\LanguageFieldset();
-                    $form->setServiceLocator($sm);
+                    $form->setEntityManager($sm->getServiceLocator()->get('Doctrine\ORM\EntityManager'));
+                    $form->setTranslator($sm->getServiceLocator()->get('MvcTranslator'));
                     return $form;
                 },
                 'TranslationModule\Form\Module' => function ($sm) {
                     $form = new Form\Module();
-                    $form->setServiceLocator($sm);
+                    $form->setEntityManager($sm->getServiceLocator()->get('Doctrine\ORM\EntityManager'));
+                    $form->setTranslator($sm->getServiceLocator()->get('MvcTranslator'));
                     return $form;
                 },
                 'TranslationModule\Form\Settings' => function ($sm) {
                     $form = new Form\Settings();
-                    $form->setServiceLocator($sm);
+                    $form->setEntityManager($sm->getServiceLocator()->get('Doctrine\ORM\EntityManager'));
+                    $form->setTranslator($sm->getServiceLocator()->get('MvcTranslator'));
                     return $form;
                 },
                 'TranslationModule\Form\String' => function ($sm) {
                     $form = new Form\String();
-                    $form->setServiceLocator($sm);
+                    $form->setEntityManager($sm->getServiceLocator()->get('Doctrine\ORM\EntityManager'));
+                    $form->setTranslator($sm->getServiceLocator()->get('MvcTranslator'));
                     return $form;
                 },
                 'TranslationModule\Form\StringFieldset' => function ($sm) {
                     $form = new Form\StringFieldset();
-                    $form->setServiceLocator($sm);
+                    $form->setEntityManager($sm->getServiceLocator()->get('Doctrine\ORM\EntityManager'));
+                    $form->setTranslator($sm->getServiceLocator()->get('MvcTranslator'));
                     return $form;
                 },
                 'TranslationModule\Form\StringFilter' => function ($sm) {
                     $form = new Form\StringFilter();
-                    $form->setServiceLocator($sm);
+                    $form->setEntityManager($sm->getServiceLocator()->get('Doctrine\ORM\EntityManager'));
+                    $form->setTranslator($sm->getServiceLocator()->get('MvcTranslator'));
                     return $form;
                 },
                 'TranslationModule\Form\TranslationFieldset' => function ($sm) {
                     $form = new Form\TranslationFieldset();
-                    $form->setServiceLocator($sm);
+                    $form->setEntityManager($sm->getServiceLocator()->get('Doctrine\ORM\EntityManager'));
+                    $form->setTranslator($sm->getServiceLocator()->get('MvcTranslator'));
                     return $form;
                 },
             ],
