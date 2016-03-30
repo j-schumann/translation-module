@@ -1,11 +1,13 @@
 {
     "name": "vrok/translation-module",
     "description": "Vrok Translation Module",
+    "type": "library",
     "license": "MIT",
     "homepage": "http://www.vrok.de/",
+    "keywords": ["zf2", "translation", "database", "backend"],
 
     "require": {
-        "vrok/vrok-lib": "dev-master"
+        "vrok/vrok-lib": "~0.1.0"
     },
     "autoload": {
         "psr-4": {
