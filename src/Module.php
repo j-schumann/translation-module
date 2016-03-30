@@ -8,8 +8,6 @@
 
 namespace TranslationModule;
 
-use Zend\EventManager\EventInterface;
-use Zend\ModuleManager\Feature\BootstrapListenerInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\ControllerProviderInterface;
 use Zend\ModuleManager\Feature\FormElementProviderInterface;
@@ -18,7 +16,6 @@ use Zend\ModuleManager\Feature\FormElementProviderInterface;
  * Module bootstrapping.
  */
 class Module implements
-    BootstrapListenerInterface,
     ConfigProviderInterface,
     ControllerProviderInterface,
     FormElementProviderInterface
@@ -137,19 +134,5 @@ class Module implements
                 },
             ],
         ];
-    }
-
-    /**
-     * Link the translation service to the I18n\Translator.
-     *
-     * @param \Zend\EventManager\EventInterface $e
-     */
-    public function onBootstrap(EventInterface $e)
-    {
-        $eventManager   = $e->getApplication()->getEventManager();
-        $serviceManager = $e->getApplication()->getServiceManager();
-
-        $translationService = $serviceManager->get('TranslationModule\Service\Translation');
-        $translationService->attach($eventManager);
     }
 }

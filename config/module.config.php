@@ -28,6 +28,11 @@ return [
         ],
     ],
 // </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="listeners">
+    'listeners' => [
+        'TranslationModule\Service\Translation',
+    ],
+// </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="navigation">
     'navigation' => [
         'default' => [
