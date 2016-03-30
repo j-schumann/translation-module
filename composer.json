@@ -1,7 +1,7 @@
 {
     "name": "vrok/translation-module",
     "description": "Vrok Translation Module",
-    "license": "private",
+    "license": "MIT",
     "homepage": "http://www.vrok.de/",
 
     "require": {
