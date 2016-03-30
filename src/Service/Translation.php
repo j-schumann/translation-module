@@ -586,13 +586,14 @@ class Translation implements ListenerAggregateInterface
     /**
      * {@inheritDoc}
      */
-    public function attach(EventManagerInterface $events)
+    public function attach(EventManagerInterface $events, $priority = 1)
     {
         $sharedEvents      = $events->getSharedManager();
         $this->listeners[] = $sharedEvents->attach(
             'translator',
             \Vrok\I18n\Translator\Translator::EVENT_LOAD_MESSAGES,
-            [$this, 'onLoadMessages']
+            [$this, 'onLoadMessages'],
+            $priority
         );
     }
 
