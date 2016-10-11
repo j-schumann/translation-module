@@ -7,7 +7,7 @@
     "keywords": ["zf2", "translation", "database", "backend"],
 
     "require": {
-        "vrok/vrok-lib": "^2.0.0"
+        "vrok/vrok-lib": "dev-master"
     },
     "autoload": {
         "psr-4": {

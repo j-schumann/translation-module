@@ -8,6 +8,7 @@
 
 namespace TranslationModule\Service;
 
+use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -16,20 +17,27 @@ class TranslationFactory implements FactoryInterface
     /**
      * Creates an instance of the translation service, injects the dependencies.
      *
-     * @param ServiceLocatorInterface $serviceLocator
+     * @param ContainerInterface $container
+     * @todo params doc
      *
      * @return Translation
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $translation = new Translation($serviceLocator);
+        $translation = new Translation($container);
 
-        $configuration = $serviceLocator->get('Config');
+        $configuration = $container->get('Config');
         $translation->setOptions(isset($configuration['translator'])
             ? $configuration['translator']
             : []
         );
 
         return $translation;
+    }
+
+    // @todo remove zf3
+    public function createService(ServiceLocatorInterface $services)
+    {
+        return $this($services, Translation::class);
     }
 }
