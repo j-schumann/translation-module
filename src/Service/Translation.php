@@ -11,7 +11,7 @@ namespace TranslationModule\Service;
 use Doctrine\Common\Persistence\ObjectManager;
 use TranslationModule\Entity\Language as LanguageEntity;
 use TranslationModule\Entity\Module as ModuleEntity;
-use TranslationModule\Entity\String as StringEntity;
+use TranslationModule\Entity\Entry as EntryEntity;
 use TranslationModule\Entity\Translation as TranslationEntity;
 use Zend\I18n\Translator\TextDomain;
 use Zend\EventManager\EventInterface;
@@ -128,15 +128,15 @@ class Translation implements ListenerAggregateInterface
     }
 
     /**
-     * Retrieve the repository for all translation strings.
+     * Retrieve the repository for all translation entries.
      *
-     * @return \TranslationModule\Entity\StringRepository
+     * @return \TranslationModule\Entity\EntryRepository
      */
-    public function getStringRepository()
+    public function getEntryRepository()
     {
         $em = $this->getEntityManager();
 
-        return $em->getRepository('TranslationModule\Entity\String');
+        return $em->getRepository('TranslationModule\Entity\Entry');
     }
 
     /**
@@ -257,7 +257,7 @@ class Translation implements ListenerAggregateInterface
         }
 
         $translations  = $this->getTranslationsByLocale($locale, $module);
-        $partialHelper = $this->getServiceLocator()->get('viewhelpermanager')
+        $partialHelper = $this->getServiceLocator()->get('ViewHelperManager')
                 ->get('partial');
         $partial = $partialHelper('translation-module/partials/array.template.phtml', [
             'translations' => $translations,
@@ -331,7 +331,7 @@ class Translation implements ListenerAggregateInterface
     public function getTranslations(LanguageEntity $language,
             ModuleEntity $module = null)
     {
-        $qb = $this->getStringRepository()->createQueryBuilder('s');
+        $qb = $this->getEntryRepository()->createQueryBuilder('s');
         $qb->leftJoin('s.translations', 't')
             ->select('s.string, t.translation')
             ->where($qb->expr()->eq('t.language', $language->getId()))
@@ -383,16 +383,16 @@ class Translation implements ListenerAggregateInterface
     public function getTranslationsByLanguage(LanguageEntity $language,
             ModuleEntity $module = null)
     {
-        $strings = [];
+        $entries = [];
 
         $parent = $language->getParent();
         if ($parent && $parent->getLocale() == $language->getLocale()) {
-            $strings = $this->getTranslationsByLanguage($parent, $module);
+            $entries = $this->getTranslationsByLanguage($parent, $module);
         }
 
         // the merge overwrites entries from the parent languages with the
         // current language
-        return array_merge($strings, $this->getTranslations($language, $module));
+        return array_merge($entries, $this->getTranslations($language, $module));
     }
 
     /**
@@ -486,7 +486,7 @@ class Translation implements ListenerAggregateInterface
         $filename = 'translation';
         $data     = [];
 
-        $qb = $this->getStringRepository()->createQueryBuilder('s');
+        $qb = $this->getEntryRepository()->createQueryBuilder('s');
         $qb->leftJoin('s.translations', 't')
             // NULL means inherit from parent language, so we don't need it here
             // If it is an empty string we want to use it, maybe we don't want
@@ -495,7 +495,7 @@ class Translation implements ListenerAggregateInterface
 
         if ($language) {
             // we do not filter the translations by language_id as we use
-            // $string->getTranslations() afterwards which will return all anyways
+            // $entry->getTranslations() afterwards which will return all anyways
             $filename .= '_'.preg_replace('/\s+/', '', $language->getName());
         }
 
@@ -506,25 +506,25 @@ class Translation implements ListenerAggregateInterface
         }
 
         $result = $qb->getQuery()->getResult();
-        foreach ($result as $string) {
-            /* @var $string StringEntity */
-            $entry = [
-                'string'       => $string->getString(),
-                'context'      => $string->getContext(),
-                'params'       => $string->getParams(),
-                'occurrences'  => $string->getOccurrences(),
-                'module'       => $string->getModule()->getName(),
-                'updatedAt'    => $string->getUpdatedAt()->format('Y-m-d H:i:s'),
+        foreach ($result as $entry) {
+            /* @var $entry EntryEntity */
+            $row = [
+                'string'       => $entry->getString(),
+                'context'      => $entry->getContext(),
+                'params'       => $entry->getParams(),
+                'occurrences'  => $entry->getOccurrences(),
+                'module'       => $entry->getModule()->getName(),
+                'updatedAt'    => $entry->getUpdatedAt()->format('Y-m-d H:i:s'),
                 'translations' => [],
             ];
 
-            foreach ($string->getTranslations() as $translation) {
+            foreach ($entry->getTranslations() as $translation) {
                 /* @var $translation TranslationEntity */
                 if ($language && $language->getId() != $translation->getLanguage()->getId()) {
                     continue;
                 }
 
-                $entry['translations'][] = [
+                $row['translations'][] = [
                     'locale'      => $translation->getLanguage()->getLocale(),
                     'language'    => $translation->getLanguage()->getName(),
                     'translation' => $translation->getTranslation(),
@@ -532,7 +532,7 @@ class Translation implements ListenerAggregateInterface
                 ];
             }
 
-            $data[] = $entry;
+            $data[] = $row;
         }
 
         $json = json_encode($data, JSON_UNESCAPED_UNICODE);
@@ -590,7 +590,8 @@ class Translation implements ListenerAggregateInterface
     {
         $sharedEvents      = $events->getSharedManager();
         $this->listeners[] = $sharedEvents->attach(
-            'translator',
+            //'translator',
+            \Vrok\I18n\Translator\Translator::class,
             \Vrok\I18n\Translator\Translator::EVENT_LOAD_MESSAGES,
             [$this, 'onLoadMessages'],
             $priority

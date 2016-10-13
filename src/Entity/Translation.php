@@ -16,7 +16,7 @@ use Vrok\Doctrine\Entity;
  *
  * @ORM\Entity
  * @ORM\Table(name="translation_translations")
- * @ORM\Entity(repositoryClass="TranslationModule\Entity\StringRepository")
+ * @ORM\Entity(repositoryClass="TranslationModule\Entity\TranslationRepository")
  */
 class Translation extends Entity
 {
@@ -53,35 +53,35 @@ class Translation extends Entity
         return $this;
     }
 // </editor-fold>
-// <editor-fold defaultstate="collapsed" desc="string">
+// <editor-fold defaultstate="collapsed" desc="entry">
     /**
-     * @var String
+     * @var Entry
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="String", inversedBy="translations")
-     * @ORM\JoinColumn(name="string_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     * @ORM\ManyToOne(targetEntity="Entry", inversedBy="translations")
+     * @ORM\JoinColumn(name="entry_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
-    protected $string;
+    protected $entry;
 
     /**
-     * Retrieve the String this translation belongs to.
+     * Retrieve the Entry this translation belongs to.
      *
-     * @return String
+     * @return Entry
      */
-    public function getString()
+    public function getEntry()
     {
-        return $this->string;
+        return $this->entry;
     }
 
     /**
-     * Sets the string.
+     * Sets the entry.
      *
-     * @param String $string
+     * @param Entry $entry
      *
      * @return self
      */
-    public function setString(String $string)
+    public function setEntry(Entry $entry)
     {
-        $this->string = $string;
+        $this->entry = $entry;
 
         return $this;
     }

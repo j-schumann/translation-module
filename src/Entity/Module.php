@@ -29,7 +29,7 @@ class Module extends Entity
      */
     public function __construct()
     {
-        $this->strings = new ArrayCollection();
+        $this->entries = new ArrayCollection();
     }
 
 // <editor-fold defaultstate="collapsed" desc="name">
@@ -63,20 +63,20 @@ class Module extends Entity
         return $this;
     }
 // </editor-fold>
-// <editor-fold defaultstate="collapsed" desc="strings">
+// <editor-fold defaultstate="collapsed" desc="entries">
     /**
-     * @ORM\OneToMany(targetEntity="String", mappedBy="module", fetch="EXTRA_LAZY")
+     * @ORM\OneToMany(targetEntity="Entry", mappedBy="module", fetch="EXTRA_LAZY")
      */
-    protected $strings;
+    protected $entries;
 
     /**
-     * Retrieve the Strings assigned to this Module.
+     * Retrieve the Entrys assigned to this Module.
      *
-     * @return String[]
+     * @return Entry[]
      */
-    public function getStrings()
+    public function getEntries()
     {
-        return $this->strings;
+        return $this->entries;
     }
 
     /**
@@ -84,10 +84,10 @@ class Module extends Entity
      *
      * @param array|ArrayCollection $elements
      */
-    public function addStrings($elements)
+    public function addEntries($elements)
     {
         foreach ($elements as $element) {
-            $this->strings->add($element);
+            $this->entries->add($element);
         }
     }
 
@@ -96,10 +96,10 @@ class Module extends Entity
      *
      * @param array|ArrayCollection $elements
      */
-    public function removeStrings($elements)
+    public function removeEntries($elements)
     {
         foreach ($elements as $element) {
-            $this->strings->removeElement($element);
+            $this->entries->removeElement($element);
         }
     }
 // </editor-fold>

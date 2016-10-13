@@ -19,14 +19,14 @@ class IndexController extends AbstractActionController
     public function indexAction()
     {
         $em = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
-        $sr = $em->getRepository('TranslationModule\Entity\String');
-        $lr = $em->getRepository('TranslationModule\Entity\Language');
-        $mr = $em->getRepository('TranslationModule\Entity\Module');
+        $er = $em->getRepository(\TranslationModule\Entity\Entry::class);
+        $lr = $em->getRepository(\TranslationModule\Entity\Language::class);
+        $mr = $em->getRepository(\TranslationModule\Entity\Module::class);
 
         return $this->createViewModel([
-            'stringCount'   => $sr->count(),
-            'languageCount' => $lr->count(),
-            'moduleCount'   => $mr->count(),
+            'entryCount'    => $er->count([]),
+            'languageCount' => $lr->count([]),
+            'moduleCount'   => $mr->count([]),
         ]);
     }
 }

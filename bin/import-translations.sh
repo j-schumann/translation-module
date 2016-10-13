@@ -28,5 +28,5 @@ $import = $ts->createImport([
 ]);
 $result = $import->importFile($filename);
 $ts->generateTranslationFiles();
-var_dump($result);
+
 echo "imported ".$result['importedTranslations']." translations\n";

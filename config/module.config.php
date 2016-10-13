@@ -77,23 +77,23 @@ return [
                                 'visible'   => false,
                             ],
                             [
-                                'label'     => 'navigation.translation.string',
-                                'route'     => 'translation/string',
-                                'resource'  => 'controller/TranslationModule\Controller\String',
+                                'label'     => 'navigation.translation.entry',
+                                'route'     => 'translation/entry',
+                                'resource'  => 'controller/TranslationModule\Controller\Entry',
                                 'privilege' => 'index',
                                 'pages'     => [
                                     [
-                                        'label' => 'navigation.translation.string.create',
-                                        'route' => 'translation/string/create',
+                                        'label' => 'navigation.translation.entry.create',
+                                        'route' => 'translation/entry/create',
                                     ],
                                     [
-                                        'label'   => 'navigation.translation.string.edit',
-                                        'route'   => 'translation/string/edit',
+                                        'label'   => 'navigation.translation.entry.edit',
+                                        'route'   => 'translation/entry/edit',
                                         'visible' => false,
                                     ],
                                     [
-                                        'label'   => 'navigation.translation.string.delete',
-                                        'route'   => 'translation/string/delete',
+                                        'label'   => 'navigation.translation.entry.delete',
+                                        'route'   => 'translation/entry/delete',
                                         'visible' => false,
                                     ],
                                 ],
@@ -161,12 +161,12 @@ return [
                 ],
                 'may_terminate' => true,
                 'child_routes'  => [
-                    'string' => [
+                    'entry' => [
                         'type'    => 'literal',
                         'options' => [
-                            'route'    => 'string/',
+                            'route'    => 'entry/',
                             'defaults' => [
-                                'controller' => 'TranslationModule\Controller\String',
+                                'controller' => 'TranslationModule\Controller\Entry',
                                 'action'     => 'index',
                             ],
                         ],

@@ -27,15 +27,15 @@
 <table class="table">
     <tr>
         <th>
-            <?php echo $this->translate(['view.translation.string.count', $this->stringCount]); ?>
+            <?php echo $this->translate(['view.translation.entry.count', $this->entryCount]); ?>
         </th>
         <td>
-            <a href="<?php echo $this->url('translation/string'); ?>" title="<?php echo $this->translate('view.translation.string.showAll'); ?>">
-                <?php echo $this->translate('view.translation.string.showAll'); ?>
+            <a href="<?php echo $this->url('translation/entry'); ?>" title="<?php echo $this->translate('view.translation.entry.showAll'); ?>">
+                <?php echo $this->translate('view.translation.entry.showAll'); ?>
             </a>
             <br />
-            <a href="<?php echo $this->url('translation/string/create'); ?>" title="<?php echo $this->translate('view.translation.string.gotoCreate'); ?>">
-                <?php echo $this->translate('view.translation.string.gotoCreate'); ?>
+            <a href="<?php echo $this->url('translation/entry/create'); ?>" title="<?php echo $this->translate('view.translation.entry.gotoCreate'); ?>">
+                <?php echo $this->translate('view.translation.entry.gotoCreate'); ?>
             </a>
         </td>
     </tr>

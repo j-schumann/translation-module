@@ -25,10 +25,10 @@ class Export extends Form implements InputFilterProviderInterface
 
         $translationRepository = $this->getEntityManager()
                 ->getRepository('TranslationModule\Entity\Translation');
-        $stringRepository = $this->getEntityManager()
-                ->getRepository('TranslationModule\Entity\String');
+        $entryRepository = $this->getEntityManager()
+                ->getRepository('TranslationModule\Entity\Entry');
 
-        $module = $stringRepository->getFormElementDefinition('module');
+        $module = $entryRepository->getFormElementDefinition('module');
         unset($module['attributes']['required']);
         $module['options']['empty_option'] = 'view.all';
         $this->add($module);
@@ -53,9 +53,9 @@ class Export extends Form implements InputFilterProviderInterface
      */
     public function getInputFilterSpecification()
     {
-        $stringRepository = $this->getEntityManager()
-                ->getRepository('TranslationModule\Entity\String');
-        $moduleSpec               = $stringRepository->getInputSpecification('module');
+        $entryRepository = $this->getEntityManager()
+                ->getRepository('TranslationModule\Entity\Entry');
+        $moduleSpec               = $entryRepository->getInputSpecification('module');
         $moduleSpec['required']   = false;
         $moduleSpec['allowEmpty'] = true;
 
