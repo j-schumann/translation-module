@@ -590,7 +590,6 @@ class Translation implements ListenerAggregateInterface
     {
         $sharedEvents      = $events->getSharedManager();
         $this->listeners[] = $sharedEvents->attach(
-            //'translator',
             \Vrok\I18n\Translator\Translator::class,
             \Vrok\I18n\Translator\Translator::EVENT_LOAD_MESSAGES,
             [$this, 'onLoadMessages'],
