@@ -2,6 +2,10 @@
 
 The project follows Semantic Versioning (http://semver.org/)
 
+## 3.0.0 - 2017-01-01
+### Changed
+- require VrokLib ^4.0.0, this requires PHP 7.1
+
 ## 2.0.0 - 2016-10-13
 ### Changed
 - require PHP 7.0+
