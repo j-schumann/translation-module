@@ -514,7 +514,10 @@ class Translation implements ListenerAggregateInterface
                 'params'       => $entry->getParams(),
                 'occurrences'  => $entry->getOccurrences(),
                 'module'       => $entry->getModule()->getName(),
-                'updatedAt'    => $entry->getUpdatedAt()->format('Y-m-d H:i:s'),
+                // PHP tries to "correct" 0000-... to '-0001-11-30 00:00:00'
+                'updatedAt'    => $entry->getUpdatedAt()->getTimestamp() < 0
+                    ? "1970-01-01 00:00:00"
+                    : $entry->getUpdatedAt()->format('Y-m-d H:i:s'),
                 'translations' => [],
             ];
 
@@ -528,7 +531,10 @@ class Translation implements ListenerAggregateInterface
                     'locale'      => $translation->getLanguage()->getLocale(),
                     'language'    => $translation->getLanguage()->getName(),
                     'translation' => $translation->getTranslation(),
-                    'updatedAt'   => $translation->getUpdatedAt()->format('Y-m-d H:i:s'),
+                    // PHP tries to "correct" 0000-... to '-0001-11-30 00:00:00'
+                    'updatedAt'    => $translation->getUpdatedAt()->getTimestamp() < 0
+                        ? "1970-01-01 00:00:00"
+                        : $translation->getUpdatedAt()->format('Y-m-d H:i:s'),
                 ];
             }
 
