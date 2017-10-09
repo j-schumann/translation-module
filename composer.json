@@ -7,7 +7,7 @@
     "keywords": ["zf3", "translation", "database", "backend"],
 
     "require": {
-        "vrok/vrok-lib": "^4.0.0"
+        "vrok/vrok-lib": "^4.0.1"
     },
     "autoload": {
         "psr-4": {
@@ -19,8 +19,8 @@
     ],
     "extra": {
         "branch-alias": {
-            "dev-dev": "4.1.x",
-            "dev-master": "4.0.x"
+            "dev-dev": "4.1.x-dev",
+            "dev-master": "4.0.x-dev"
         }
     }
 }
