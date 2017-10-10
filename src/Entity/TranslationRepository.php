@@ -47,7 +47,6 @@ class TranslationRepository extends EntityRepository
         $spec = parent::getInputSpecification($fieldName);
 
         switch ($fieldName) {
-
         }
 
         return $spec;

@@ -251,7 +251,7 @@ class Translation implements ListenerAggregateInterface
     {
         $fileName = $this->getFilename($locale, $module);
         $handle   = fopen($fileName, 'w', false);
-        if (!$handle) {
+        if (! $handle) {
             throw new Exception\RuntimeException('Translation: file "'.$fileName
                 .'" could not be created or overwritten!');
         }
@@ -328,9 +328,11 @@ class Translation implements ListenerAggregateInterface
      *
      * @return array array(string => translation)
      */
-    public function getTranslations(LanguageEntity $language,
-            ModuleEntity $module = null)
-    {
+    public function getTranslations(
+        LanguageEntity $language,
+        ModuleEntity $module = null
+    ) {
+
         $qb = $this->getEntryRepository()->createQueryBuilder('s');
         $qb->leftJoin('s.translations', 't')
             ->select('s.string, t.translation')
@@ -380,9 +382,11 @@ class Translation implements ListenerAggregateInterface
      *
      * @return array
      */
-    public function getTranslationsByLanguage(LanguageEntity $language,
-            ModuleEntity $module = null)
-    {
+    public function getTranslationsByLanguage(
+        LanguageEntity $language,
+        ModuleEntity $module = null
+    ) {
+
         $entries = [];
 
         $parent = $language->getParent();
@@ -564,7 +568,7 @@ class Translation implements ListenerAggregateInterface
     public function loadMessages($locale)
     {
         $files = scandir(getcwd().DIRECTORY_SEPARATOR.$this->getTranslationDir());
-        if (!$files) {
+        if (! $files) {
             // @todo warning? error log?
             return;
         }
@@ -573,13 +577,15 @@ class Translation implements ListenerAggregateInterface
         $domainObject = null;
 
         foreach ($files as $filename) {
-            if (!preg_match('/^'.$locale.'-/', $filename)) {
+            if (! preg_match('/^'.$locale.'-/', $filename)) {
                 continue;
             }
 
-            $new = $loader->load($locale,
-                $this->getTranslationDir().DIRECTORY_SEPARATOR.$filename);
-            if (!$domainObject) {
+            $new = $loader->load(
+                $locale,
+                $this->getTranslationDir().DIRECTORY_SEPARATOR.$filename
+            );
+            if (! $domainObject) {
                 $domainObject = $new;
             } else {
                 $domainObject->merge($new);

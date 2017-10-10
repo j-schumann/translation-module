@@ -8,6 +8,7 @@
 
 namespace TranslationModule\Entity;
 
+use DoctrineModule\Validator\UniqueObject;
 use Vrok\Doctrine\EntityRepository;
 
 /**
@@ -58,7 +59,8 @@ class EntryRepository extends EntityRepository
                         'fields'            => 'string',
                         'object_manager'    => $this->getEntityManager(),
                         'messages'          => [
-                            \DoctrineModule\Validator\UniqueObject::ERROR_OBJECT_NOT_UNIQUE => $this->getTranslationString('string').'.notUnique',
+                            UniqueObject::ERROR_OBJECT_NOT_UNIQUE =>
+                                $this->getTranslationString('string').'.notUnique',
                         ],
                     ],
                 ];
@@ -94,7 +96,7 @@ class EntryRepository extends EntityRepository
 
         parent::updateInstance($instance, $formData, $changeset);
 
-        if (!$instance->getId()) {
+        if (! $instance->getId()) {
             // we need the ID or Doctrine won't persist the following
             // related translations
             $objectManager->flush();
@@ -119,7 +121,8 @@ class EntryRepository extends EntityRepository
             $translation->setEntry($instance);
             $translation->setLanguage($language);
             $translation->setTranslation(
-                $element['isNull'] ? null : $element['translation']);
+                $element['isNull'] ? null : $element['translation']
+            );
             $objectManager->persist($translation);
         }
 

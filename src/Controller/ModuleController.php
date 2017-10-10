@@ -43,12 +43,12 @@ class ModuleController extends AbstractActionController
             'form' => $form,
         ]);
 
-        if (!$this->request->isPost()) {
+        if (! $this->request->isPost()) {
             return $viewModel;
         }
 
         $isValid = $form->setData($this->request->getPost())->isValid();
-        if (!$isValid) {
+        if (! $isValid) {
             return $viewModel;
         }
 
@@ -70,7 +70,7 @@ class ModuleController extends AbstractActionController
     public function editAction()
     {
         $module = $this->getEntityFromParam('TranslationModule\Entity\Module');
-        if (!$module instanceof \TranslationModule\Entity\Module) {
+        if (! $module instanceof \TranslationModule\Entity\Module) {
             $this->getResponse()->setStatusCode(404);
 
             return $this->createViewModel(['message' => $module]);
@@ -88,12 +88,12 @@ class ModuleController extends AbstractActionController
             'module' => $module,
         ]);
 
-        if (!$this->request->isPost()) {
+        if (! $this->request->isPost()) {
             return $viewModel;
         }
 
         $isValid = $form->setData($this->request->getPost())->isValid();
-        if (!$isValid) {
+        if (! $isValid) {
             return $viewModel;
         }
 
@@ -114,7 +114,7 @@ class ModuleController extends AbstractActionController
     public function deleteAction()
     {
         $module = $this->getEntityFromParam('TranslationModule\Entity\Module');
-        if (!$module instanceof \TranslationModule\Entity\Module) {
+        if (! $module instanceof \TranslationModule\Entity\Module) {
             $this->getResponse()->setStatusCode(404);
 
             return $this->createViewModel(['message' => $module]);
@@ -130,12 +130,12 @@ class ModuleController extends AbstractActionController
             'module' => $module,
         ]);
 
-        if (!$this->request->isPost()) {
+        if (! $this->request->isPost()) {
             return $viewModel;
         }
 
         $isValid = $form->setData($this->request->getPost())->isValid();
-        if (!$isValid) {
+        if (! $isValid) {
             return $viewModel;
         }
 

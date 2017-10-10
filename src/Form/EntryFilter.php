@@ -43,8 +43,8 @@ class EntryFilter extends Form implements InputFilterProviderInterface
                             'maxlength' => 255,
                         ],
                     ],
-                ],
-                [
+                 ],
+                 [
                     'spec' => [
                         'type'    => 'Zend\Form\Element\Text',
                         'name'    => 'translationSearch',
@@ -55,11 +55,11 @@ class EntryFilter extends Form implements InputFilterProviderInterface
                             'maxlength' => 255,
                         ],
                     ],
-                ],
-                [
+                 ],
+                 [
                     'spec' => $module,
-                ],
-                [
+                 ],
+                 [
                     'spec' => [
                         'name'       => 'submit',
                         'attributes' => [
@@ -68,7 +68,7 @@ class EntryFilter extends Form implements InputFilterProviderInterface
                             'id'    => 'submit',
                         ],
                     ],
-                ],
+                 ],
             ],
         ]);
     }

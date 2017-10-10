@@ -8,6 +8,7 @@
 
 namespace TranslationModule\Entity;
 
+use DoctrineModule\Validator\UniqueObject;
 use Vrok\Doctrine\EntityRepository;
 
 /**
@@ -100,7 +101,8 @@ class LanguageRepository extends EntityRepository
                         'fields'            => 'name',
                         'object_manager'    => $this->getEntityManager(),
                         'messages'          => [
-                            \DoctrineModule\Validator\UniqueObject::ERROR_OBJECT_NOT_UNIQUE => $this->getTranslationString('name').'.notUnique',
+                            UniqueObject::ERROR_OBJECT_NOT_UNIQUE =>
+                                $this->getTranslationString('name').'.notUnique',
                         ],
                     ],
                 ];

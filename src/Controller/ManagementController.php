@@ -40,8 +40,8 @@ class ManagementController extends AbstractActionController
             'form' => $form,
         ]);
 
-        if (!$this->request->isPost()
-            || !$form->setData($this->request->getPost())->isValid()
+        if (! $this->request->isPost()
+            || ! $form->setData($this->request->getPost())->isValid()
         ) {
             return $viewModel;
         }
@@ -76,12 +76,12 @@ class ManagementController extends AbstractActionController
             'form' => $form,
         ]);
 
-        if (!$this->request->isPost()) {
+        if (! $this->request->isPost()) {
             return $viewModel;
         }
 
         $isValid = $form->setData($this->request->getPost())->isValid();
-        if (!$isValid) {
+        if (! $isValid) {
             return $viewModel;
         }
 
@@ -109,12 +109,12 @@ class ManagementController extends AbstractActionController
             'form' => $form,
         ]);
 
-        if (!$this->request->isPost()) {
+        if (! $this->request->isPost()) {
             return $viewModel;
         }
 
         $isValid = $form->setData($this->request->getPost())->isValid();
-        if (!$isValid) {
+        if (! $isValid) {
             return $viewModel;
         }
 
@@ -146,7 +146,7 @@ class ManagementController extends AbstractActionController
             'result' => null,
         ]);
 
-        if (!$this->request->isPost()) {
+        if (! $this->request->isPost()) {
             return $viewModel;
         }
 
@@ -155,7 +155,7 @@ class ManagementController extends AbstractActionController
             $this->request->getFiles()->toArray()
         );
         $isValid = $form->setData($post)->isValid();
-        if (!$isValid) {
+        if (! $isValid) {
             return $viewModel;
         }
 

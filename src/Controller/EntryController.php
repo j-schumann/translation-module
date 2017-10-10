@@ -46,23 +46,27 @@ class EntryController extends AbstractActionController
         $qb->leftJoin('s.translations', 't');
 
         if ($sessionContainer['entryFilter']
-            && !empty($sessionContainer['entryFilter']['stringSearch'])
+            && ! empty($sessionContainer['entryFilter']['stringSearch'])
         ) {
             $qb->andWhere($qb->expr()->like('s.string', ':stringSearch'));
-            $qb->setParameter('stringSearch',
-                '%'.$sessionContainer['entryFilter']['stringSearch'].'%');
+            $qb->setParameter(
+                'stringSearch',
+                '%'.$sessionContainer['entryFilter']['stringSearch'].'%'
+            );
         }
 
         if ($sessionContainer['entryFilter']
-            && !empty($sessionContainer['entryFilter']['translationSearch'])
+            && ! empty($sessionContainer['entryFilter']['translationSearch'])
         ) {
             $qb->andWhere($qb->expr()->like('t.translation', ':translationSearch'));
-            $qb->setParameter('translationSearch',
-                '%'.$sessionContainer['entryFilter']['translationSearch'].'%');
+            $qb->setParameter(
+                'translationSearch',
+                '%'.$sessionContainer['entryFilter']['translationSearch'].'%'
+            );
         }
 
         if ($sessionContainer['entryFilter']
-            && !empty($sessionContainer['entryFilter']['module'])
+            && ! empty($sessionContainer['entryFilter']['module'])
         ) {
             $qb->andWhere('s.module = :module');
             $qb->setParameter('module', (int) $sessionContainer['entryFilter']['module']);
@@ -92,12 +96,12 @@ class EntryController extends AbstractActionController
             'form' => $form,
         ]);
 
-        if (!$this->request->isPost()) {
+        if (! $this->request->isPost()) {
             return $viewModel;
         }
 
         $isValid = $form->setData($this->request->getPost())->isValid();
-        if (!$isValid) {
+        if (! $isValid) {
             return $viewModel;
         }
 
@@ -123,7 +127,7 @@ class EntryController extends AbstractActionController
     public function editAction()
     {
         $entry = $this->getEntityFromParam('TranslationModule\Entity\Entry');
-        if (!$entry instanceof \TranslationModule\Entity\Entry) {
+        if (! $entry instanceof \TranslationModule\Entity\Entry) {
             $this->getResponse()->setStatusCode(404);
 
             return $this->createViewModel(['message' => $entry]);
@@ -141,12 +145,12 @@ class EntryController extends AbstractActionController
             'entry' => $entry,
         ]);
 
-        if (!$this->request->isPost()) {
+        if (! $this->request->isPost()) {
             return $viewModel;
         }
 
         $isValid = $form->setData($this->request->getPost())->isValid();
-        if (!$isValid) {
+        if (! $isValid) {
             return $viewModel;
         }
         $data = $form->getData();
@@ -167,7 +171,7 @@ class EntryController extends AbstractActionController
     public function deleteAction()
     {
         $entry = $this->getEntityFromParam('TranslationModule\Entity\Entry');
-        if (!$entry instanceof \TranslationModule\Entity\Entry) {
+        if (! $entry instanceof \TranslationModule\Entity\Entry) {
             $this->getResponse()->setStatusCode(404);
 
             return $this->createViewModel(['message' => $entry]);
@@ -183,12 +187,12 @@ class EntryController extends AbstractActionController
             'entry' => $entry,
         ]);
 
-        if (!$this->request->isPost()) {
+        if (! $this->request->isPost()) {
             return $viewModel;
         }
 
         $isValid = $form->setData($this->request->getPost())->isValid();
-        if (!$isValid) {
+        if (! $isValid) {
             return $viewModel;
         }
 

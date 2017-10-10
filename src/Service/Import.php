@@ -105,7 +105,7 @@ class Import
     {
         $json = file_get_contents($filename);
         $data = json_decode($json, true);
-        if (!is_array($data)) {
+        if (! is_array($data)) {
             $result               = $this->importArray([]);
             $result['messages'][] = 'JSON in the given file could not be decoded!';
 
@@ -151,36 +151,46 @@ class Import
         }
 
         if ($this->result['createdEntries']) {
-            $this->result['messages'][] = ['message.translation.entriesCreated', $this->result['createdEntries']];
+            $this->result['messages'][] = ['message.translation.entriesCreated',
+                $this->result['createdEntries']];
         }
         if ($this->result['createdTranslations']) {
-            $this->result['messages'][] = ['message.translation.translationsCreated', $this->result['createdTranslations']];
+            $this->result['messages'][] = ['message.translation.translationsCreated',
+                $this->result['createdTranslations']];
         }
         if ($this->result['importedEntries'] - $this->result['createdEntries']) {
-            $this->result['messages'][] = ['message.translation.entriesUpdated', $this->result['importedEntries'] - $this->result['createdEntries']];
+            $this->result['messages'][] = ['message.translation.entriesUpdated',
+                $this->result['importedEntries'] - $this->result['createdEntries']];
         }
         if ($this->result['importedTranslations'] - $this->result['createdTranslations']) {
-            $this->result['messages'][] = ['message.translation.translationsUpdated', $this->result['importedTranslations'] - $this->result['createdTranslations']];
+            $this->result['messages'][] = ['message.translation.translationsUpdated',
+                $this->result['importedTranslations'] - $this->result['createdTranslations']];
         }
         if ($this->result['deletedEntries']) {
-            $this->result['messages'][] = ['message.translation.entriesDeleted', $this->result['deletedEntries']];
+            $this->result['messages'][] = ['message.translation.entriesDeleted',
+                $this->result['deletedEntries']];
         }
         if ($this->result['deletedTranslations']) {
-            $this->result['messages'][] = ['message.translation.translationsDeleted', $this->result['deletedTranslations']];
+            $this->result['messages'][] = ['message.translation.translationsDeleted',
+                $this->result['deletedTranslations']];
         }
         if (count($this->result['createdModules'])) {
-            $this->result['messages'][] = ['message.translation.modulesCreated', implode(', ', $this->result['createdModules'])];
+            $this->result['messages'][] = ['message.translation.modulesCreated',
+                implode(', ', $this->result['createdModules'])];
         }
         if (count($this->result['createdLanguages'])) {
-            $this->result['messages'][] = ['message.translation.languagesCreated', implode(', ', $this->result['createdLanguages'])];
+            $this->result['messages'][] = ['message.translation.languagesCreated',
+                implode(', ', $this->result['createdLanguages'])];
         }
         if (count($this->result['skippedModules'])) {
-            $this->result['messages'][] = ['message.translation.modulesSkipped', implode(', ', $this->result['skippedModules'])];
+            $this->result['messages'][] = ['message.translation.modulesSkipped',
+                implode(', ', $this->result['skippedModules'])];
         }
         if (count($this->result['skippedLanguages'])) {
-            $this->result['messages'][] = ['message.translation.languagesSkipped', implode(', ', $this->result['skippedLanguages'])];
+            $this->result['messages'][] = ['message.translation.languagesSkipped',
+                implode(', ', $this->result['skippedLanguages'])];
         }
-        if (!count($this->result['messages'])) {
+        if (! count($this->result['messages'])) {
             $this->result['messages'][] = ['message.translation.noImportUpdates'];
         }
 
@@ -213,14 +223,14 @@ class Import
         // do not create new "live" entries if not allowed.
         // allow updates to entries that are moved from another module into "live" or
         // from "live" into another module.
-        if (!$entry && $row['module'] === 'live' && $this->skipLiveModule) {
+        if (! $entry && $row['module'] === 'live' && $this->skipLiveModule) {
             $this->result['skippedModules']['live'] = 'live';
 
             return false;
         }
 
         $entry = $this->updateEntry($row, $entry);
-        if (!$entry) {
+        if (! $entry) {
             // the module could not be created or the entry is in the "live" module
             // -> skip the translations
             return false;
@@ -244,7 +254,7 @@ class Import
     protected function updateEntry(array $row, EntryEntity $entry = null)
     {
         $module = $this->importModule($row['module']);
-        if (!$module) {
+        if (! $module) {
             // module not found and not created -> also skip the translations
             return false;
         }
@@ -261,7 +271,7 @@ class Import
             }
 
             // do not update if the local version is newer
-            if (!$this->overwriteAll
+            if (! $this->overwriteAll
                 && $row['updatedAt'] <= $entry->getUpdatedAt()->format('Y-m-d H:i:s')
             ) {
                 // the entry will not be updated but the translations may be
@@ -285,7 +295,8 @@ class Import
         $entry->setParams(empty($row['params']) ? null : $row['params']);
         // tell the Timestampable extension: this date is already in UTC!
         $entry->setUpdatedAt(
-                new \DateTime($row['updatedAt'], new \DateTimeZone('UTC')));
+            new \DateTime($row['updatedAt'], new \DateTimeZone('UTC'))
+        );
 
         ++$this->result['importedEntries'];
 
@@ -312,7 +323,7 @@ class Import
         }
 
         $language = $this->importLanguage($row);
-        if (!$language) {
+        if (! $language) {
             // language not found and not created -> skip the translation
             return false;
         }
@@ -328,7 +339,7 @@ class Import
 
         if ($translation) {
             // do not update if the local version is newer
-            if (!$this->overwriteAll &&
+            if (! $this->overwriteAll &&
                 $row['updatedAt'] <= $translation->getUpdatedAt()->format('Y-m-d H:i:s')
             ) {
                 return false;
@@ -344,7 +355,8 @@ class Import
         $translation->setTranslation($row['translation']);
         // tell the Timestampable extension: this date is already in UTC!
         $translation->setUpdatedAt(
-                new \DateTime($row['updatedAt'], new \DateTimeZone('UTC')));
+            new \DateTime($row['updatedAt'], new \DateTimeZone('UTC'))
+        );
 
         ++$this->result['importedTranslations'];
 
@@ -370,8 +382,8 @@ class Import
         $language = $this->service->getLanguageRepository()
                     ->findOneBy(['name' => $translationEntry['language']]);
 
-        if (!$language) {
-            if (!$this->createLanguages) {
+        if (! $language) {
+            if (! $this->createLanguages) {
                 $this->result['skippedLanguages'][$translationEntry['locale']]
                         = $translationEntry['language'];
 
@@ -414,8 +426,8 @@ class Import
         $module = $this->service->getModuleRepository()
                     ->findOneBy(['name' => $moduleName]);
 
-        if (!$module) {
-            if (!$this->createModules) {
+        if (! $module) {
+            if (! $this->createModules) {
                 $this->result['skippedModules'][$moduleName] = $moduleName;
 
                 return $this->modules[$moduleName] = false;
@@ -455,7 +467,7 @@ class Import
 
             // the live module probably contains entries created for objects in this
             // instance so they are probably not imported -> ignore
-            if (!$this->skipLiveModule && $moduleName === 'live') {
+            if (! $this->skipLiveModule && $moduleName === 'live') {
                 continue;
             }
 
@@ -471,7 +483,7 @@ class Import
                 }
             }
 
-            if (!$match) {
+            if (! $match) {
                 // also deletes all their translations
                 $this->service->getEntityManager()->remove($entry);
                 ++$this->result['deletedEntries'];
@@ -508,7 +520,7 @@ class Import
                 }
             }
 
-            if (!$match) {
+            if (! $match) {
                 $this->service->getEntityManager()->remove($translation);
                 ++$this->result['deletedTranslations'];
             }

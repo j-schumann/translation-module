@@ -28,8 +28,7 @@ class TranslationFactory implements FactoryInterface
         $configuration = $container->get('Config');
         $translation->setOptions(isset($configuration['translator'])
             ? $configuration['translator']
-            : []
-        );
+            : []);
 
         return $translation;
     }
